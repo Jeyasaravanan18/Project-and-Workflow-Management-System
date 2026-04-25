@@ -1,0 +1,56 @@
+graph LR
+    %% Styling
+    classDef actor fill:#f8f9fa,stroke:#343a40,stroke-width:2px,color:#212529,font-weight:bold
+    classDef usecase fill:#e9ecef,stroke:#6c757d,stroke-width:2px,color:#212529,rx:50,ry:50
+    classDef system fill:#ffffff,stroke:#adb5bd,stroke-width:2px,stroke-dasharray: 5 5
+
+    %% Actors
+    Member["🧑‍💼 Member"]:::actor
+    Manager["🧑‍💼 Manager"]:::actor
+    Admin["🧑‍💻 Admin"]:::actor
+
+    subgraph System ["Enterprise Workflow System"]
+        direction TB
+        %% Member Uses Cases
+        VBW(["View Assigned Work"]):::usecase
+        UTP(["Update Task Progress"]):::usecase
+        LWF(["Log Work Hours & Files"]):::usecase
+        
+        %% Manager Use Cases
+        CMP(["Create & Manage Projects"]):::usecase
+        VWA(["View Workload Analytics"]):::usecase
+        
+        %% Central Use Case
+        RN(["Receive Notifications"]):::usecase
+        
+        %% Admin Use Cases
+        MUR(["Manage User Roles"]):::usecase
+        CI(["Configure Integrations"]):::usecase
+        MAL(["Monitor Audit Logs"]):::usecase
+        PA(["Platform Administration"]):::usecase
+    end
+
+    class System system
+
+    %% Layout to enforce Left-to-Right logic
+    Member --- VBW
+    Member --- UTP
+    Member --- LWF
+    
+    Manager --- CMP
+    Manager --- VWA
+    
+    Admin --- MUR
+    Admin --- CI
+    Admin --- MAL
+    Admin --- PA
+
+    %% Internal includes (dashed lines)
+    VBW -.->|include| RN
+    UTP -.->|include| RN
+    LWF -.->|include| RN
+    CMP -.->|include| RN
+    MUR -.->|include| RN
+    CI -.->|include| RN
+    MAL -.->|include| RN
+    PA -.->|include| RN
