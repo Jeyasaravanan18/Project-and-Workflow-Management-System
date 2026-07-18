@@ -12,8 +12,8 @@ export const SocketProvider = ({ children }) => {
 
     useEffect(() => {
         if (user) {
-            // Use relative path for socket.io - Nginx will proxy this
-            const newSocket = io();
+            const socketUrl = import.meta.env.VITE_SOCKET_URL || undefined;
+            const newSocket = io(socketUrl);
 
             // Authenticate user when connected
             newSocket.on('connect', () => {

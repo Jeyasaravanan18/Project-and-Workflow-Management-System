@@ -392,6 +392,34 @@ Services:
 - MongoDB: `localhost:27017`
 - Redis: `localhost:6379`
 
+### Vercel + Render Deployment
+
+Recommended low-cost demo deployment:
+
+- Frontend: Vercel
+- Backend: Render
+- Database: MongoDB Atlas
+- Redis: optional; the backend continues without Redis for demo use
+
+Render backend:
+
+1. Create a new Blueprint on Render.
+2. Select this GitHub repository.
+3. Render reads `render.yaml` from the repo root.
+4. Add the prompted environment variables:
+   - `MONGODB_URI`: MongoDB Atlas connection string
+   - `FRONTEND_URL`: Vercel frontend URL
+   - `ALLOWED_ORIGINS`: same Vercel frontend URL
+
+Vercel frontend:
+
+1. Import this GitHub repository into Vercel.
+2. Set Root Directory to `frontend`.
+3. Add environment variables:
+   - `VITE_API_BASE_URL=https://your-render-service.onrender.com/api`
+   - `VITE_SOCKET_URL=https://your-render-service.onrender.com`
+4. Deploy.
+
 ## Security Notes
 
 - Passwords are hashed with bcrypt before storage.
