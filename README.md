@@ -399,7 +399,3 @@ Services:
 - Role checks are enforced through backend middleware.
 - Request validation uses express-validator.
 - Common HTTP security protections are configured through Helmet, CORS, rate limiting, NoSQL sanitization, XSS cleanup, and HPP protection.
-
-## License
-
-This project is licensed under the MIT License.
