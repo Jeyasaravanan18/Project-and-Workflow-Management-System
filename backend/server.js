@@ -20,7 +20,37 @@ const server = http.createServer(app);
 // Trust proxy (for rate limiting behind reverse proxy)
 app.set('trust proxy', 1);
 
-// Apply security middleware
+// CORS Configuration — MUST come before Helmet / security middleware
+// so that preflight OPTIONS requests get proper Access-Control-* headers
+// before Helmet can interfere.
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+    ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim())
+    : ['http://localhost:5173', 'http://localhost:5174'];
+
+app.use(cors({
+    origin: (origin, callback) => {
+        // Allow requests with no origin (mobile apps, Postman, curl, etc.)
+        if (!origin) return callback(null, true);
+
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            logger.warn(`CORS blocked origin: ${origin}`);
+            // Return false instead of throwing — throwing causes a 500
+            // which strips all CORS headers from the response
+            callback(null, false);
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+    maxAge: 86400 // 24 hours
+}));
+
+// Explicit preflight handler for all routes (safety net)
+app.options('*', cors());
+
+// Apply security middleware (Helmet, mongo-sanitize, xss-clean, hpp)
 applySecurityMiddleware(app);
 
 // Swagger API Documentation
@@ -30,27 +60,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
 // Compression middleware
 app.use(compression());
-
-// CORS Configuration
-const allowedOrigins = process.env.ALLOWED_ORIGINS
-    ? process.env.ALLOWED_ORIGINS.split(',')
-    : ['http://localhost:5173', 'http://localhost:5174'];
-
-app.use(cors({
-    origin: (origin, callback) => {
-        // Allow requests with no origin (mobile apps, Postman, etc.)
-        if (!origin) return callback(null, true);
-
-        if (allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            logger.warn(`CORS blocked origin: ${origin}`);
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true,
-    maxAge: 86400 // 24 hours
-}));
 
 // Body parser middleware
 app.use(express.json({ limit: '10mb' }));
