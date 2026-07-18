@@ -56,16 +56,16 @@ const Login = () => {
                             <LogoIcon>
                                 <LogIn size={32} />
                             </LogoIcon>
-                            <LogoText>Quantos</LogoText>
+                            <LogoText>ProjectFlow</LogoText>
                         </LogoWrapper>
                         
                         <BrandHero>
-                            <HeroTitle>Enterprise Intelligence. <br/>Simplified Workflow.</HeroTitle>
+                            <HeroTitle>Smart Intelligence. <br/>Simplified Workflow.</HeroTitle>
                         </BrandHero>
 
                         <BrandFooter>
 
-                            <Copyright>© 2026 Quantos — Enterprise Tier</Copyright>
+                            <Copyright>© 2026 ProjectFlow</Copyright>
                         </BrandFooter>
                     </BrandContent>
                 </BrandSide>
@@ -92,7 +92,7 @@ const Login = () => {
                                     <StyledInput
                                         id="email"
                                         type="email"
-                                        placeholder="e.g. user@enterprise.com"
+                                        placeholder="e.g. user@company.com"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         required

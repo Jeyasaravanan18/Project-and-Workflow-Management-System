@@ -4,12 +4,12 @@ const options = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'Harmonic Halo API',
+            title: 'ProjectFlow API',
             version: '1.0.0',
-            description: 'Enterprise Workflow Management System API Documentation',
+            description: 'Project & Workflow Management System API Documentation',
             contact: {
                 name: 'API Support',
-                email: 'support@harmonichalo.com',
+                email: 'support@projectflow.com',
             },
         },
         servers: [

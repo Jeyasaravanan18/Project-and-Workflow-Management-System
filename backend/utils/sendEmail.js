@@ -30,7 +30,7 @@ const sendEmail = async (options) => {
 
     // 2. Define email options
     const message = {
-        from: `${process.env.EMAIL_FROM_NAME || 'Harmonic Halo'} <${process.env.EMAIL_FROM || process.env.EMAIL_USER}>`,
+        from: `${process.env.EMAIL_FROM_NAME || 'ProjectFlow'} <${process.env.EMAIL_FROM || process.env.EMAIL_USER}>`,
         to: options.email,
         subject: options.subject,
         text: options.message,

@@ -244,7 +244,7 @@ const exportAnalytics = catchAsync(async (req, res) => {
         { Field: 'Completed Tasks', Value: allOrgTasks.filter((t) => t.completedAt).length },
         { Field: 'Overdue Tasks', Value: allOrgTasks.filter((t) => t.dueDate && new Date(t.dueDate) < new Date() && !t.completedAt).length },
         { Field: 'Report Type', Value: 'Analytics Dashboard Export' },
-        { Field: 'Platform', Value: 'Harmonic Halo Enterprise' },
+        { Field: 'Platform', Value: 'ProjectFlow Enterprise' },
     ];
     const wsMeta = XLSX.utils.json_to_sheet(metaRows);
     autoWidth(wsMeta, metaRows);

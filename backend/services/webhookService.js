@@ -32,9 +32,9 @@ const dispatchEvent = async (organizationId, event, payload) => {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-Harmonic-Signature': signature,
-                        'X-Harmonic-Event': event,
-                        'X-Harmonic-Timestamp': timestamp.toString()
+                        'X-ProjectFlow-Signature': signature,
+                        'X-ProjectFlow-Event': event,
+                        'X-ProjectFlow-Timestamp': timestamp.toString()
                     },
                     body: payloadString
                 });

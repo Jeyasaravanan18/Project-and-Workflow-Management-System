@@ -52,7 +52,7 @@ const Register = () => {
                             <LogoIcon>
                                 <Building2 size={32} />
                             </LogoIcon>
-                            <LogoText>Quantos</LogoText>
+                            <LogoText>ProjectFlow</LogoText>
                         </LogoWrapper>
                         
                         <BrandHero>
@@ -63,7 +63,7 @@ const Register = () => {
 
                         <BrandFooter>
 
-                            <Copyright>© 2026 Quantos</Copyright>
+                            <Copyright>© 2026 ProjectFlow</Copyright>
                         </BrandFooter>
                     </BrandContent>
                 </BrandSide>

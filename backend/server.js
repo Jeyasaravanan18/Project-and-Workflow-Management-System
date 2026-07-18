@@ -234,7 +234,7 @@ app.get('/health', (req, res) => {
 // Basic Route
 app.get('/', (req, res) => {
     res.json({
-        message: 'Harmonic Halo API',
+        message: 'ProjectFlow API',
         version: '2.0.0',
         status: 'running'
     });

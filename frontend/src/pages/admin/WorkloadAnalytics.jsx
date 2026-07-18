@@ -156,7 +156,7 @@ const WorkloadAnalytics = () => {
                 { Metric: 'Idle Members', Value: summary.idle || 0 },
                 { Metric: 'Total Estimated Hours', Value: summary.totalEstimatedHours || 0 },
                 { Metric: 'Report Generated', Value: new Date().toLocaleString() },
-                { Metric: 'Platform', Value: 'Harmonic Halo Enterprise' },
+                { Metric: 'Platform', Value: 'ProjectFlow' },
             ];
 
             // ── Overloaded members ──

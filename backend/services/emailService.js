@@ -121,9 +121,9 @@ const sendPasswordResetEmail = async ({ to, userName, resetLink }) => {
     htmlTemplate = htmlTemplate.replace(/{{resetLink}}/g, resetLink);
 
     const mailOptions = {
-        from: `"${process.env.APP_NAME || 'Harmonic Halo'}" <${process.env.EMAIL_USER}>`,
+        from: `"${process.env.APP_NAME || 'ProjectFlow'}" <${process.env.EMAIL_USER}>`,
         to,
-        subject: 'Password Reset Request - Harmonic Halo',
+        subject: 'Password Reset Request - ProjectFlow',
         html: htmlTemplate
     };
 
