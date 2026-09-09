@@ -33,9 +33,10 @@ pipeline {
             }
         }
 
-        stage('Docker Check') {
+        stage('Docker Build') {
             steps {
-                bat 'docker --version'
+                bat 'docker build -t projectflow-backend:jenkins ./backend'
+                bat 'docker build -t projectflow-frontend:jenkins ./frontend'
             }
         }
 
