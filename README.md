@@ -427,3 +427,5 @@ Vercel frontend:
 - Role checks are enforced through backend middleware.
 - Request validation uses express-validator.
 - Common HTTP security protections are configured through Helmet, CORS, rate limiting, NoSQL sanitization, XSS cleanup, and HPP protection.
+
+<!-- Jenkins Webhook Integration Verified: 2026-09-30 -->
