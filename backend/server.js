@@ -23,21 +23,32 @@ app.set('trust proxy', 1);
 // CORS Configuration — MUST come before Helmet / security middleware
 // so that preflight OPTIONS requests get proper Access-Control-* headers
 // before Helmet can interfere.
-const allowedOrigins = process.env.ALLOWED_ORIGINS
-    ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim())
-    : ['http://localhost:5173', 'http://localhost:5174'];
+const rawAllowed = [
+    ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : []),
+    process.env.FRONTEND_URL,
+    process.env.FRONTEND_URI,
+    'http://localhost:5173',
+    'http://localhost:5174',
+    'http://localhost:3000'
+].filter(Boolean).map(o => o.trim().replace(/\/+$/, ''));
 
-app.use(cors({
+const allowedOrigins = [...new Set(rawAllowed)];
+
+const isOriginAllowed = (origin) => {
+    if (!origin) return true;
+    const clean = origin.trim().replace(/\/+$/, '');
+    if (allowedOrigins.includes(clean)) return true;
+    // Allow any Vercel deployment preview or production domain, and Render domains
+    if (clean.endsWith('.vercel.app') || clean.endsWith('.onrender.com')) return true;
+    return false;
+};
+
+const corsOptions = {
     origin: (origin, callback) => {
-        // Allow requests with no origin (mobile apps, Postman, curl, etc.)
-        if (!origin) return callback(null, true);
-
-        if (allowedOrigins.indexOf(origin) !== -1) {
+        if (isOriginAllowed(origin)) {
             callback(null, true);
         } else {
             logger.warn(`CORS blocked origin: ${origin}`);
-            // Return false instead of throwing — throwing causes a 500
-            // which strips all CORS headers from the response
             callback(null, false);
         }
     },
@@ -45,10 +56,10 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
     maxAge: 86400 // 24 hours
-}));
+};
 
-// Explicit preflight handler for all routes (safety net)
-app.options('*', cors());
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 // Apply security middleware (Helmet, mongo-sanitize, xss-clean, hpp)
 applySecurityMiddleware(app);
@@ -87,7 +98,13 @@ const initializeServer = async () => {
         // Socket.io Setup - ALWAYS initialize regardless of Redis
         io = new Server(server, {
             cors: {
-                origin: allowedOrigins,
+                origin: (origin, callback) => {
+                    if (isOriginAllowed(origin)) {
+                        callback(null, true);
+                    } else {
+                        callback(new Error('Not allowed by CORS'));
+                    }
+                },
                 methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
                 credentials: true
             },
