@@ -1,24 +1,69 @@
-const { BedrockRuntimeClient, InvokeModelCommand } = require('@aws-sdk/client-bedrock-runtime');
-
-// Initialize Bedrock client with support for both local keys and IAM roles
-const clientConfig = {
-    region: process.env.AWS_REGION || 'us-east-1'
-};
-
-// Only add explicit credentials if they exist in env (Local Dev)
-// Otherwise, let AWS SDK use the default provider chain (IAM Roles on AWS)
-if (process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY) {
-    clientConfig.credentials = {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-    };
-}
-
-const bedrockClient = new BedrockRuntimeClient(clientConfig);
+const axios = require('axios');
 
 // Simple in-memory cache (5 minutes)
 const cache = new Map();
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+/**
+ * Call OpenRouter Chat Completions API
+ * Includes automatic fallback models if the primary free model is temporarily rate-limited.
+ * @param {Object} options
+ * @param {Array} options.messages - Array of chat messages
+ * @param {Number} options.maxTokens - Max tokens to generate
+ * @param {Number} options.temperature - Sampling temperature
+ * @returns {Promise<String>} Response text
+ */
+const callOpenRouter = async ({ messages, maxTokens = 2000, temperature = 0.5 }) => {
+    const apiKey = process.env.OPENROUTER_API_KEY;
+    const baseUrl = (process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1').replace(/\/+$/, '');
+    const primaryModel = process.env.OPENROUTER_MODEL || 'poolside/laguna-s-2.1:free';
+
+    if (!apiKey) {
+        throw new Error('OPENROUTER_API_KEY is not defined in environment variables');
+    }
+
+    // Models to try in sequence if the primary free model hits upstream rate limits
+    const modelsToTry = [
+        primaryModel,
+        'google/gemini-2.0-flash-exp:free',
+        'meta-llama/llama-3.3-70b-instruct:free'
+    ].filter((m, idx, arr) => arr.indexOf(m) === idx);
+
+    let lastError = null;
+
+    for (const model of modelsToTry) {
+        try {
+            const response = await axios.post(
+                `${baseUrl}/chat/completions`,
+                {
+                    model,
+                    messages,
+                    max_tokens: maxTokens,
+                    temperature
+                },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json',
+                        'HTTP-Referer': process.env.FRONTEND_URL || 'http://localhost:5173',
+                        'X-Title': process.env.APP_NAME || 'Enterprise Workflow System'
+                    },
+                    timeout: 45000
+                }
+            );
+
+            const content = response.data?.choices?.[0]?.message?.content;
+            if (content) {
+                return content;
+            }
+        } catch (err) {
+            console.warn(`[AI Service] Model ${model} call failed:`, err.response?.data?.error?.message || err.message);
+            lastError = err;
+        }
+    }
+
+    throw lastError || new Error('All AI models failed to respond');
+};
 
 /**
  * Generate AI recommendations for workflow bottlenecks
@@ -56,7 +101,7 @@ const generateBottleneckRecommendations = async (bottleneckData) => {
             .map(t => `"${t.title}" (${t.daysStuck} days in ${t.stage})`)
             .join(', ');
 
-        // Craft prompt for Bedrock
+        // Craft prompt for OpenRouter
         const prompt = `You are a workflow optimization expert analyzing project bottlenecks.
 
 Current Situation:
@@ -74,58 +119,32 @@ Example: [{"title": "Redistribute workload", "description": "Move 3 tasks from R
 
 Respond ONLY with the JSON array, no other text.`;
 
-        // Call Bedrock API
-        const input = {
-            modelId: process.env.BEDROCK_MODEL_ID || 'amazon.nova-lite-v1:0',
-            contentType: 'application/json',
-            accept: 'application/json',
-            body: JSON.stringify({
-                messages: [
-                    {
-                        role: 'user',
-                        content: [{ text: prompt }]
-                    }
-                ],
-                inferenceConfig: {
-                    maxTokens: 500,
-                    temperature: 0.7,
-                    topP: 0.9
-                }
-            })
-        };
-
-        const command = new InvokeModelCommand(input);
-        const response = await bedrockClient.send(command);
-
-        // Parse response
-        const responseBody = JSON.parse(new TextDecoder().decode(response.body));
-        const aiText = responseBody.output?.message?.content?.[0]?.text || '';
+        // Call OpenRouter API
+        const aiText = await callOpenRouter({
+            messages: [{ role: 'user', content: prompt }],
+            temperature: 0.7,
+            maxTokens: 500
+        });
 
         console.log('[AI Service] Raw AI response:', aiText);
 
         // Extract JSON from response
         let recommendations = [];
         try {
-            // Try to parse as JSON directly
             const jsonMatch = aiText.match(/\[[\s\S]*\]/);
             if (jsonMatch) {
                 recommendations = JSON.parse(jsonMatch[0]);
             } else {
-                // Fallback: parse the entire response
                 recommendations = JSON.parse(aiText);
             }
 
-            // Validate structure
             if (!Array.isArray(recommendations)) {
                 throw new Error('Response is not an array');
             }
 
-            // Ensure we have exactly 3 recommendations
             recommendations = recommendations.slice(0, 3);
-
         } catch (parseError) {
             console.error('[AI Service] Failed to parse AI response:', parseError);
-            // Return fallback recommendations
             recommendations = generateFallbackRecommendations(stageAnalysis, stuckTaskCount);
         }
 
@@ -140,7 +159,6 @@ Respond ONLY with the JSON array, no other text.`;
 
     } catch (error) {
         console.error('[AI Service] Error generating recommendations:', error);
-        // Return fallback recommendations on error
         return generateFallbackRecommendations(bottleneckData.stageAnalysis, bottleneckData.stuckTaskCount);
     }
 };
@@ -170,7 +188,7 @@ const retrieveRelevantDocuments = async (query, organizationId, limit = 5) => {
     try {
         const KnowledgeDocument = require('../models/KnowledgeDocument');
 
-        // Extract keywords from query (simple approach)
+        // Extract keywords from query
         const keywords = query
             .toLowerCase()
             .split(/\s+/)
@@ -185,7 +203,6 @@ const retrieveRelevantDocuments = async (query, organizationId, limit = 5) => {
             $or: []
         };
 
-        // Add text search if keywords exist
         if (keywords.length > 0) {
             const keywordRegex = keywords.join('|');
             searchQuery.$or.push(
@@ -194,11 +211,9 @@ const retrieveRelevantDocuments = async (query, organizationId, limit = 5) => {
                 { tags: { $in: keywords } }
             );
         } else {
-            // If no keywords, search all published documents
             delete searchQuery.$or;
         }
 
-        // Retrieve documents
         const documents = await KnowledgeDocument.find(searchQuery)
             .select('title type content summary tags metadata')
             .sort({ 'metadata.viewCount': -1, 'metadata.helpfulCount': -1, createdAt: -1 })
@@ -241,7 +256,6 @@ const generateAssistantResponse = async (userMessage, conversationHistory = [], 
         if (relevantDocs.length > 0) {
             context = 'RELEVANT KNOWLEDGE BASE DOCUMENTS:\n\n';
             relevantDocs.forEach((doc, idx) => {
-                // Truncate long content to save tokens
                 const truncatedContent = doc.content.length > 800
                     ? doc.content.substring(0, 800) + '...'
                     : doc.content;
@@ -254,17 +268,7 @@ const generateAssistantResponse = async (userMessage, conversationHistory = [], 
             });
         }
 
-        // 3. Build conversation history
-        let historyText = '';
-        if (conversationHistory.length > 0) {
-            historyText = 'CONVERSATION HISTORY:\n';
-            conversationHistory.slice(-6).forEach(msg => { // Last 6 messages for context
-                historyText += `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.content}\n`;
-            });
-            historyText += '\n';
-        }
-
-        // 4. Build system prompt
+        // 3. Build system prompt
         const systemPrompt = `You are an IT Support AI Assistant for an Enterprise Workflow Management System. Your role is to help users with:
 - Workflow and task management questions
 - Troubleshooting technical issues
@@ -282,43 +286,36 @@ Guidelines:
 
 ${context}`;
 
-        // 5. Build user prompt
-        const userPrompt = `${historyText}User: ${userMessage}
+        // 4. Build messages array for chat completion
+        const messages = [
+            { role: 'system', content: systemPrompt }
+        ];
 
-Please provide a helpful response. If you use information from the knowledge base, cite the document name.`;
+        if (conversationHistory.length > 0) {
+            conversationHistory.slice(-6).forEach(msg => {
+                messages.push({
+                    role: msg.role === 'user' ? 'user' : 'assistant',
+                    content: msg.content
+                });
+            });
+        }
 
-        // 6. Call Bedrock API
-        const input = {
-            modelId: process.env.BEDROCK_MODEL_ID || 'amazon.nova-lite-v1:0',
-            contentType: 'application/json',
-            accept: 'application/json',
-            body: JSON.stringify({
-                messages: [
-                    {
-                        role: 'user',
-                        content: [{ text: systemPrompt + '\n\n' + userPrompt }]
-                    }
-                ],
-                inferenceConfig: {
-                    maxTokens: 2000,
-                    temperature: 0.3, // Lower temperature for more factual responses
-                    topP: 0.9
-                }
-            })
-        };
+        messages.push({
+            role: 'user',
+            content: `${userMessage}\n\nPlease provide a helpful response. If you use information from the knowledge base, cite the document name.`
+        });
 
-        const command = new InvokeModelCommand(input);
-        const response = await bedrockClient.send(command);
-
-        // 7. Parse response
-        const responseBody = JSON.parse(new TextDecoder().decode(response.body));
-        const aiText = responseBody.output?.message?.content?.[0]?.text || 'I apologize, but I encountered an error generating a response.';
+        // 5. Call OpenRouter API
+        const aiText = await callOpenRouter({
+            messages,
+            temperature: 0.3,
+            maxTokens: 2000
+        });
 
         const responseTime = Date.now() - startTime;
-
         console.log(`[AI Service] Generated response in ${responseTime}ms`);
 
-        // 8. Build citations
+        // 6. Build citations
         const citations = relevantDocs.map(doc => ({
             documentId: doc._id,
             title: doc.title,
@@ -330,7 +327,7 @@ Please provide a helpful response. If you use information from the knowledge bas
             content: aiText,
             citations,
             metadata: {
-                model: process.env.BEDROCK_MODEL_ID || 'amazon.nova-lite-v1:0',
+                model: process.env.OPENROUTER_MODEL || 'poolside/laguna-s-2.1:free',
                 responseTime,
                 documentsRetrieved: relevantDocs.length
             }
@@ -417,20 +414,11 @@ Rules:
 
 Respond ONLY with the JSON object, no other text.`;
 
-        const input = {
-            modelId: process.env.BEDROCK_MODEL_ID || 'amazon.nova-lite-v1:0',
-            contentType: 'application/json',
-            accept: 'application/json',
-            body: JSON.stringify({
-                messages: [{ role: 'user', content: [{ text: prompt }] }],
-                inferenceConfig: { maxTokens: 2000, temperature: 0.4, topP: 0.9 }
-            })
-        };
-
-        const command = new InvokeModelCommand(input);
-        const response = await bedrockClient.send(command);
-        const responseBody = JSON.parse(new TextDecoder().decode(response.body));
-        const aiText = responseBody.output?.message?.content?.[0]?.text || '';
+        const aiText = await callOpenRouter({
+            messages: [{ role: 'user', content: prompt }],
+            temperature: 0.4,
+            maxTokens: 2000
+        });
 
         console.log('[AI Service] Sprint plan raw response:', aiText.substring(0, 200));
 
@@ -551,20 +539,11 @@ Rules:
 - Keep titles concise but descriptive.
 - Respond ONLY with the JSON object, no other text or explanation.`;
 
-        const input = {
-            modelId: process.env.BEDROCK_MODEL_ID || 'amazon.nova-lite-v1:0',
-            contentType: 'application/json',
-            accept: 'application/json',
-            body: JSON.stringify({
-                messages: [{ role: 'user', content: [{ text: prompt }] }],
-                inferenceConfig: { maxTokens: 4000, temperature: 0.5, topP: 0.9 }
-            })
-        };
-
-        const command = new InvokeModelCommand(input);
-        const response = await bedrockClient.send(command);
-        const responseBody = JSON.parse(new TextDecoder().decode(response.body));
-        const aiText = responseBody.output?.message?.content?.[0]?.text || '';
+        const aiText = await callOpenRouter({
+            messages: [{ role: 'user', content: prompt }],
+            temperature: 0.5,
+            maxTokens: 4000
+        });
 
         console.log('[AI Service] Project scaffold raw response length:', aiText.length);
 

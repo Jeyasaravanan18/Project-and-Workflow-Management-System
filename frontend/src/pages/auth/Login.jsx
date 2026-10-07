@@ -56,7 +56,7 @@ const Login = () => {
                             <LogoIcon>
                                 <LogIn size={32} />
                             </LogoIcon>
-                            <LogoText>Quantos</LogoText>
+                            <LogoText>ProjectFlow</LogoText>
                         </LogoWrapper>
                         
                         <BrandHero>
@@ -65,7 +65,7 @@ const Login = () => {
 
                         <BrandFooter>
 
-                            <Copyright>© 2026 Quantos — Enterprise Tier</Copyright>
+                            <Copyright>© 2026 ProjectFlow — Enterprise Tier</Copyright>
                         </BrandFooter>
                     </BrandContent>
                 </BrandSide>

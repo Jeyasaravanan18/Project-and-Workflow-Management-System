@@ -163,8 +163,8 @@ const inviteUser = catchAsync(async (req, res) => {
     });
 
     // Get organization
-    const organization = await Organization.findById(req.user.organizationId);
-    const invitationLink = `${process.env.FRONTEND_URL}/accept-invitation/${invitationToken}`;
+    const frontendBase = process.env.FRONTEND_URL || process.env.FRONTEND_URI || 'http://localhost:5173';
+    const invitationLink = `${frontendBase}/accept-invitation/${invitationToken}`;
 
     // Send invitation email
     try {

@@ -6,7 +6,7 @@ import { useTheme } from 'styled-components';
 const TOUR_STEPS = [
     {
         target: 'body',
-        content: 'Welcome to Harmonic Halo! Let\'s take a quick tour to get you started.',
+        content: 'Welcome to ProjectFlow! Let\'s take a quick tour to get you started.',
         placement: 'center',
         disableBeacon: true,
     },
@@ -36,7 +36,7 @@ export const OnboardingTour = () => {
 
     React.useEffect(() => {
         // Check if user has already seen the tour
-        const hasSeenTour = localStorage.getItem('harmonic_halo_tour_seen');
+        const hasSeenTour = localStorage.getItem('projectflow_tour_seen');
         if (!hasSeenTour && user) {
             setRun(true);
         }
@@ -46,7 +46,7 @@ export const OnboardingTour = () => {
         const { status } = data;
         if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
             setRun(false);
-            localStorage.setItem('harmonic_halo_tour_seen', 'true');
+            localStorage.setItem('projectflow_tour_seen', 'true');
         }
     };
 

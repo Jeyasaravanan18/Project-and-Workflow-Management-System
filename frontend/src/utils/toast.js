@@ -1,5 +1,5 @@
 /**
- * Centralized toast notification utility for Harmonic Halo.
+ * Centralized toast notification utility for ProjectFlow.
  * Wraps react-hot-toast with consistent styling and enterprise-grade UX patterns.
  *
  * Usage:

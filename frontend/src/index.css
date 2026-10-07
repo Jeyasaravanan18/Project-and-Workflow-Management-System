@@ -1,5 +1,5 @@
 /* ===================================
-   QUANTOS DESIGN SYSTEM - LIGHT THEME
+   PROJECTFLOW DESIGN SYSTEM - LIGHT THEME
    =================================== */
 
 /* ========== CSS Variables ========== */
@@ -1653,7 +1653,7 @@ tbody td {
 
     /* Print header watermark */
     body::before {
-        content: "Quantos — Confidential";
+        content: "ProjectFlow — Confidential";
         display: block;
         font-size: 8pt;
         color: #999;

@@ -97,7 +97,7 @@ const Sidebar = ({ collapsed, onToggle, isMobile }) => {
                         <Building2 size={24} color="white" />
                     </LogoIcon>
                     <BrandText $collapsed={collapsed}>
-                        Quantos
+                        ProjectFlow
                     </BrandText>
                 </Brand>
                 <ToggleBtn onClick={onToggle}>

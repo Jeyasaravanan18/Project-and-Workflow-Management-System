@@ -38,7 +38,8 @@ const forgotPassword = catchAsync(async (req, res) => {
     const resetToken = await PasswordReset.createResetToken(user._id);
 
     // Create reset link
-    const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
+    const frontendBase = process.env.FRONTEND_URL || process.env.FRONTEND_URI || 'http://localhost:5173';
+    const resetLink = `${frontendBase}/reset-password?token=${resetToken}`;
 
     // Send email
     try {

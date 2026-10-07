@@ -143,7 +143,7 @@ const BottleneckAnalysis = () => {
                             <div className="rec-header">
                                 <Zap size={20} className="icon" />
                                 <h3>AI Recommendations</h3>
-                                <span className="badge">Powered by AWS Bedrock</span>
+                                <span className="badge">Powered by OpenRouter AI</span>
                             </div>
                             <RecList>
                                 {(data.aiRecommendations || []).length > 0 ? (
