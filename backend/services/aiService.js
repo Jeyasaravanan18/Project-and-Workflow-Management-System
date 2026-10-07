@@ -269,7 +269,7 @@ const generateAssistantResponse = async (userMessage, conversationHistory = [], 
         }
 
         // 3. Build system prompt
-        const systemPrompt = `You are an IT Support AI Assistant for an Enterprise Workflow Management System. Your role is to help users with:
+        const systemPrompt = `You are an IT Support AI Assistant for a Project & Workflow Management System. Your role is to help users with:
 - Workflow and task management questions
 - Troubleshooting technical issues
 - Understanding analytics and reports

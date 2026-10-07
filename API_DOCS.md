@@ -54,4 +54,4 @@ All endpoints (except auth) require a Bearer Token in the header:
 ### Webhooks
 - `POST /webhooks`: Register webhook URL.
 - **Events**: `task.created`, `task.completed`, `comment.created`.
-- **Payload Signature**: `X-Harmonic-Signature` (HMAC-SHA256).
+- **Payload Signature**: `X-ProjectFlow-Signature` (HMAC-SHA256).

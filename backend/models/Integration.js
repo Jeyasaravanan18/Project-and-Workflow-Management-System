@@ -93,7 +93,7 @@ integrationSchema.methods.testConnection = async function () {
                         const githubTest = await fetch('https://api.github.com/user', {
                             headers: {
                                 'Authorization': `token ${this.config.apiKey}`,
-                                'User-Agent': 'Harmonic-Halo-App',
+                                'User-Agent': 'ProjectFlow-App',
                                 'Accept': 'application/vnd.github.v3+json'
                             }
                         });

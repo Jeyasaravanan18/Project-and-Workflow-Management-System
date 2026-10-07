@@ -1,7 +1,7 @@
 {
-  "name": "quantos-backend",
+  "name": "projectflow-backend",
   "version": "1.0.0",
-  "description": "Quantos Enterprise Workflow Management System Backend",
+  "description": "Project & Workflow Management System",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

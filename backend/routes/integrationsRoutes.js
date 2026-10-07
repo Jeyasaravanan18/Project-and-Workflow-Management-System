@@ -10,7 +10,7 @@ const {
 const { protect, authorize } = require('../middleware/authMiddleware');
 
 // All routes require admin access
-router.use(protect, authorize('admin'));
+router.use(protect, authorize('admin', 'manager'));
 
 router.get('/catalog', getIntegrationCatalog);
 router.get('/connected', getConnectedIntegrations);
