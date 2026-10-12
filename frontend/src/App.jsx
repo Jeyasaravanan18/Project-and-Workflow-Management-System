@@ -34,6 +34,7 @@ const BottleneckAnalysis = lazy(() => import('./pages/system/BottleneckAnalysis'
 const Profile = lazy(() => import('./pages/system/Profile'));
 const NotFound = lazy(() => import('./pages/system/NotFound'));
 const Integrations = lazy(() => import('./pages/admin/IntegrationsPage'));
+const ApiKeysAndWebhooks = lazy(() => import('./pages/admin/Integrations'));
 const Unauthorized = lazy(() => import('./pages/system/Unauthorized'));
 const Automations = lazy(() => import('./pages/admin/Automations'));
 const AutomationBuilder = lazy(() => import('./pages/admin/AutomationBuilder'));
@@ -126,11 +127,12 @@ function App() {
                                         <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
                                             <Route path="/admin" element={<OrgDashboard />} />
                                             <Route path="/admin/users" element={<UserManagement />} />
+                                            <Route path="/users" element={<UserManagement />} />
                                             <Route path="/admin/analytics" element={<AnalyticsDashboard />} />
-                                            <Route path="/admin/integrations" element={<Integrations />} />
+                                            <Route path="/analytics" element={<AnalyticsDashboard />} />
                                         </Route>
 
-                                        {/* Manager & Admin Routes - Projects & Planning */}
+                                        {/* Manager & Admin Routes - Projects, Integrations & Planning */}
                                         <Route element={<ProtectedRoute allowedRoles={['admin', 'manager']} />}>
                                             <Route path="/projects" element={<ProjectsList />} />
                                             <Route path="/sprint-planner" element={<SprintPlannerPage />} />
@@ -138,8 +140,15 @@ function App() {
                                             <Route path="/projects/:projectId/modules/:moduleId" element={<ModuleDetail />} />
                                             <Route path="/analytics/bottlenecks" element={<BottleneckAnalysis />} />
 
+                                            {/* Integrations & API Keys */}
+                                            <Route path="/admin/integrations" element={<Integrations />} />
+                                            <Route path="/integrations" element={<Integrations />} />
+                                            <Route path="/admin/api-keys" element={<ApiKeysAndWebhooks />} />
+                                            <Route path="/api-keys" element={<ApiKeysAndWebhooks />} />
+
                                             {/* Automation Routes */}
                                             <Route path="/admin/automations" element={<Automations />} />
+                                            <Route path="/automations" element={<Automations />} />
                                             <Route path="/admin/automations/new" element={<AutomationBuilder />} />
                                             <Route path="/admin/automations/templates" element={<AutomationTemplates />} />
                                             <Route path="/admin/automations/:id" element={<AutomationBuilder />} />

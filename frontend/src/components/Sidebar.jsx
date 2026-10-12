@@ -8,7 +8,7 @@ import {
     LayoutDashboard, FolderKanban, CheckSquare, Users, BarChart3, Settings,
     Bell, LogOut, ChevronDown, ChevronRight, Building2, Activity,
     AlertTriangle, Menu, X, ArrowLeft, ArrowRight, Plug, Zap, MessageSquare,
-    Moon, Sun, Clock, History, Sparkles
+    Moon, Sun, Clock, History, Sparkles, Key
 } from 'lucide-react';
 import GlobalSearch from './GlobalSearch';
 import OnlineUsersPanel from './OnlineUsersPanel';
@@ -64,8 +64,10 @@ const Sidebar = ({ collapsed, onToggle, isMobile }) => {
                 { path: '/admin', label: 'Dashboard', icon: LayoutDashboard },
                 { path: '/admin/project-scaffolder', label: 'AI Scaffolder', icon: Sparkles },
                 { path: '/admin/users', label: 'User Management', icon: Users },
-                { path: '/admin/analytics', label: 'Activity Logs', icon: Activity },
+                { path: '/admin/analytics', label: 'Analytics', icon: BarChart3 },
+                { path: '/activity-logs', label: 'Activity Logs', icon: Activity },
                 { path: '/admin/integrations', label: 'Integrations', icon: Plug },
+                { path: '/admin/api-keys', label: 'API & Webhooks', icon: Key },
             ]
         },
         manager: {
@@ -76,6 +78,8 @@ const Sidebar = ({ collapsed, onToggle, isMobile }) => {
                 { path: '/sprint-planner', label: 'Sprint Planner', icon: Sparkles },
                 { path: '/analytics/bottlenecks', label: 'Bottleneck Analysis', icon: AlertTriangle },
                 { path: '/admin/automations', label: 'Automations', icon: Zap },
+                { path: '/admin/integrations', label: 'Integrations', icon: Plug },
+                { path: '/activity-logs', label: 'Activity Logs', icon: Activity },
             ]
         },
         system: {
