@@ -88,7 +88,7 @@ const MainContent = styled.main`
     position: relative;
     display: flex;
     flex-direction: column;
-    background: #F8FAFC;
+    background: ${props => props.theme.bg.primary};
     transition: margin-left 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.3s;
 `;
 

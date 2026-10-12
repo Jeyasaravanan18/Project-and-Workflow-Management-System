@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../services/api';
 import styled from 'styled-components';
 import { Zap, Save, Play, ArrowRight, Plus, Trash2, X, ArrowLeft } from 'lucide-react';
+import GetStartedWidget from '../../components/GetStartedWidget';
 
 const AutomationBuilder = () => {
     const navigate = useNavigate();
@@ -141,6 +142,30 @@ const AutomationBuilder = () => {
             <BackNav onClick={() => navigate('/admin/automations')}>
                 <ArrowLeft size={16} /> Back to Automations
             </BackNav>
+
+            {!id && (
+                <GetStartedWidget
+                    title="Get started with Automations"
+                    actionText="Browse templates"
+                    actionPath="/admin/automations/templates"
+                    steps={[
+                        {
+                            number: '1',
+                            title: 'Set trigger event or cron',
+                            description: 'Listen to task creation, status changes, or trigger on scheduled intervals.',
+                            linkText: 'Configure trigger',
+                            linkPath: '#trigger-section'
+                        },
+                        {
+                            number: '2',
+                            title: 'Add automated actions',
+                            description: 'Auto-assign tasks, send notifications, post comments, or fire outbound emails.',
+                            linkText: 'Add an action',
+                            linkPath: '#actions-section'
+                        }
+                    ]}
+                />
+            )}
 
             <Header>
                 <div>
@@ -487,10 +512,11 @@ const AutomationBuilder = () => {
 
 // Styled Components
 const Container = styled.div`
-    padding: 32px;
+    padding: 16px 0 40px 0;
     max-width: 1100px;
     margin: 0 auto;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: inherit;
+    color: ${props => props.theme.text.primary};
 `;
 
 const BackNav = styled.button`
@@ -499,7 +525,7 @@ const BackNav = styled.button`
     gap: 6px;
     background: transparent;
     border: none;
-    color: #64748b;
+    color: ${props => props.theme.text.secondary};
     font-size: 0.84rem;
     font-weight: 500;
     cursor: pointer;
@@ -508,7 +534,7 @@ const BackNav = styled.button`
     transition: color 0.15s;
 
     &:hover {
-        color: #111827;
+        color: ${props => props.theme.text.primary};
     }
 `;
 
@@ -523,26 +549,26 @@ const Badge = styled.div`
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: #EFF6FF;
-    color: #1E40AF;
+    background: ${props => props.theme.mode === 'dark' ? 'rgba(30, 64, 175, 0.25)' : '#EFF6FF'};
+    color: ${props => props.theme.mode === 'dark' ? '#93C5FD' : '#1E40AF'};
+    border: 1px solid ${props => props.theme.mode === 'dark' ? '#1E40AF' : '#BFDBFE'};
     padding: 4px 12px;
     border-radius: 9999px;
     font-size: 0.75rem;
     font-weight: 600;
-    border: 1px solid #a7f3d0;
     margin-bottom: 8px;
 `;
 
 const Title = styled.h1`
     font-size: 1.875rem;
     font-weight: 700;
-    color: #111827;
+    color: ${props => props.theme.text.primary};
     margin: 0;
     letter-spacing: -0.02em;
 `;
 
 const Subtitle = styled.p`
-    color: #64748b;
+    color: ${props => props.theme.text.secondary};
     margin-top: 4px;
     font-size: 0.875rem;
 `;
@@ -558,17 +584,18 @@ const SaveButton = styled.button`
     align-items: center;
     gap: 6px;
     padding: 10px 18px;
-    background: #111827;
+    background: ${props => props.theme.mode === 'dark' ? '#1E40AF' : '#111827'};
     color: #ffffff;
     border: none;
     border-radius: 9999px;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.8125rem;
     cursor: pointer;
     transition: all 0.15s ease;
 
     &:hover:not(:disabled) {
-        background: #1E40AF;
+        background: ${props => props.theme.mode === 'dark' ? '#2563EB' : '#1E40AF'};
+        transform: translateY(-1px);
     }
 
     &:disabled {
@@ -582,9 +609,9 @@ const TestButton = styled.button`
     align-items: center;
     gap: 6px;
     padding: 10px 18px;
-    background: #ffffff;
-    color: #111827;
-    border: 1px solid #e5e7eb;
+    background: ${props => props.theme.mode === 'dark' ? '#131B2A' : '#ffffff'};
+    color: ${props => props.theme.text.primary};
+    border: 1px solid ${props => props.theme.border};
     border-radius: 9999px;
     font-weight: 500;
     font-size: 0.8125rem;
@@ -594,7 +621,7 @@ const TestButton = styled.button`
     &:hover {
         border-color: #1E40AF;
         color: #1E40AF;
-        background: #EFF6FF;
+        background: ${props => props.theme.mode === 'dark' ? 'rgba(30, 64, 175, 0.2)' : '#EFF6FF'};
     }
 `;
 
@@ -605,17 +632,18 @@ const BuilderContainer = styled.div`
 `;
 
 const Section = styled.div`
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 14px;
+    background: ${props => props.theme.bg.card};
+    border: 1px solid ${props => props.theme.border};
+    border-radius: 16px;
     padding: 24px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    box-shadow: ${props => props.theme.shadow.sm};
+    transition: background-color 0.2s, border-color 0.2s;
 `;
 
 const SectionTitle = styled.h2`
     font-size: 1.05rem;
     font-weight: 700;
-    color: #111827;
+    color: ${props => props.theme.text.primary};
     margin: 0 0 20px 0;
     display: flex;
     align-items: center;
@@ -628,9 +656,9 @@ const StepNumber = styled.span`
     justify-content: center;
     width: 28px;
     height: 28px;
-    background: #EFF6FF;
-    color: #1E40AF;
-    border: 1px solid #a7f3d0;
+    background: ${props => props.theme.mode === 'dark' ? 'rgba(30, 64, 175, 0.25)' : '#EFF6FF'};
+    color: ${props => props.theme.mode === 'dark' ? '#93C5FD' : '#1E40AF'};
+    border: 1px solid ${props => props.theme.mode === 'dark' ? '#1E40AF' : '#BFDBFE'};
     border-radius: 50%;
     font-size: 0.8125rem;
     font-weight: 700;
@@ -647,7 +675,7 @@ const FormGroup = styled.div`
 const Label = styled.label`
     display: block;
     font-weight: 600;
-    color: #374151;
+    color: ${props => props.theme.text.primary};
     margin-bottom: 6px;
     font-size: 0.84rem;
 `;
@@ -655,29 +683,29 @@ const Label = styled.label`
 const Input = styled.input`
     width: 100%;
     padding: 10px 14px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid ${props => props.theme.border};
     border-radius: 10px;
     font-size: 0.875rem;
-    color: #111827;
-    background: #ffffff;
+    color: ${props => props.theme.text.primary};
+    background: ${props => props.theme.mode === 'dark' ? '#131B2A' : '#ffffff'};
     box-sizing: border-box;
     transition: all 0.15s ease;
 
     &:focus {
         outline: none;
-        border-color: #1E40AF;
-        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.12);
+        border-color: ${props => props.theme.borderFocus};
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.15);
     }
 `;
 
 const TextArea = styled.textarea`
     width: 100%;
     padding: 10px 14px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid ${props => props.theme.border};
     border-radius: 10px;
     font-size: 0.875rem;
-    color: #111827;
-    background: #ffffff;
+    color: ${props => props.theme.text.primary};
+    background: ${props => props.theme.mode === 'dark' ? '#131B2A' : '#ffffff'};
     font-family: inherit;
     resize: vertical;
     box-sizing: border-box;
@@ -685,33 +713,33 @@ const TextArea = styled.textarea`
 
     &:focus {
         outline: none;
-        border-color: #1E40AF;
-        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.12);
+        border-color: ${props => props.theme.borderFocus};
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.15);
     }
 `;
 
 const Select = styled.select`
     width: 100%;
     padding: 10px 14px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid ${props => props.theme.border};
     border-radius: 10px;
     font-size: 0.875rem;
-    color: #111827;
-    background: #ffffff;
+    color: ${props => props.theme.text.primary};
+    background: ${props => props.theme.mode === 'dark' ? '#131B2A' : '#ffffff'};
     box-sizing: border-box;
     cursor: pointer;
     transition: all 0.15s ease;
 
     &:focus {
         outline: none;
-        border-color: #1E40AF;
-        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.12);
+        border-color: ${props => props.theme.borderFocus};
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.15);
     }
 `;
 
 const Hint = styled.p`
     font-size: 0.78rem;
-    color: #64748b;
+    color: ${props => props.theme.text.tertiary};
     margin-top: 6px;
     margin-bottom: 0;
 `;
@@ -719,7 +747,7 @@ const Hint = styled.p`
 const Arrow = styled.div`
     display: flex;
     justify-content: center;
-    color: #94a3b8;
+    color: ${props => props.theme.text.tertiary};
 `;
 
 const ConditionRow = styled.div`
@@ -736,9 +764,9 @@ const AddButton = styled.button`
     justify-content: center;
     gap: 6px;
     padding: 10px 16px;
-    background: #ffffff;
-    color: #1E40AF;
-    border: 1px dashed #a7f3d0;
+    background: ${props => props.theme.mode === 'dark' ? 'rgba(30, 64, 175, 0.15)' : '#ffffff'};
+    color: ${props => props.theme.mode === 'dark' ? '#93C5FD' : '#1E40AF'};
+    border: 1px dashed ${props => props.theme.mode === 'dark' ? '#2563EB' : '#93C5FD'};
     border-radius: 10px;
     font-weight: 600;
     font-size: 0.8125rem;
@@ -747,14 +775,14 @@ const AddButton = styled.button`
     width: 100%;
 
     &:hover {
-        background: #EFF6FF;
+        background: ${props => props.theme.mode === 'dark' ? 'rgba(30, 64, 175, 0.25)' : '#EFF6FF'};
         border-color: #1E40AF;
     }
 `;
 
 const ActionCard = styled.div`
-    background: #f8fafc;
-    border: 1px solid #e5e7eb;
+    background: ${props => props.theme.mode === 'dark' ? 'rgba(30, 41, 59, 0.45)' : '#F8FAFC'};
+    border: 1px solid ${props => props.theme.border};
     border-radius: 12px;
     padding: 16px;
     margin-bottom: 14px;
@@ -770,15 +798,15 @@ const ActionHeader = styled.div`
 const ActionTitle = styled.h3`
     font-size: 0.875rem;
     font-weight: 700;
-    color: #111827;
+    color: ${props => props.theme.text.primary};
     margin: 0;
     text-transform: capitalize;
 `;
 
 const IconButton = styled.button`
     padding: 6px;
-    background: ${props => props.$danger ? '#fee2e2' : '#f8fafc'};
-    color: ${props => props.$danger ? '#dc2626' : '#64748b'};
+    background: ${props => props.$danger ? (props.theme.mode === 'dark' ? 'rgba(239, 68, 68, 0.2)' : '#FEE2E2') : (props.theme.mode === 'dark' ? 'rgba(30, 41, 59, 0.6)' : '#F8FAFC')};
+    color: ${props => props.$danger ? '#EF4444' : props.theme.text.secondary};
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -788,7 +816,7 @@ const IconButton = styled.button`
     transition: all 0.15s ease;
 
     &:hover {
-        background: ${props => props.$danger ? '#fecaca' : '#e2e8f0'};
+        background: ${props => props.$danger ? (props.theme.mode === 'dark' ? 'rgba(239, 68, 68, 0.35)' : '#FECACA') : props.theme.bg.hover};
     }
 `;
 
@@ -805,9 +833,9 @@ const ActionButtons = styled.div`
 
 const ActionTypeButton = styled.button`
     padding: 10px 14px;
-    background: #ffffff;
-    color: #374151;
-    border: 1px solid #e5e7eb;
+    background: ${props => props.theme.mode === 'dark' ? '#131B2A' : '#ffffff'};
+    color: ${props => props.theme.text.primary};
+    border: 1px solid ${props => props.theme.border};
     border-radius: 9999px;
     font-weight: 500;
     font-size: 0.8125rem;
@@ -816,27 +844,27 @@ const ActionTypeButton = styled.button`
 
     &:hover {
         border-color: #1E40AF;
-        color: #1E40AF;
-        background: #EFF6FF;
+        color: ${props => props.theme.mode === 'dark' ? '#93C5FD' : '#1E40AF'};
+        background: ${props => props.theme.mode === 'dark' ? 'rgba(30, 64, 175, 0.2)' : '#EFF6FF'};
     }
 `;
 
 const VariableHint = styled.div`
-    background: #EFF6FF;
-    border: 1px solid #a7f3d0;
+    background: ${props => props.theme.mode === 'dark' ? 'rgba(30, 64, 175, 0.15)' : '#EFF6FF'};
+    border: 1px solid ${props => props.theme.mode === 'dark' ? 'rgba(30, 64, 175, 0.3)' : '#BFDBFE'};
     border-radius: 12px;
     padding: 14px 18px;
     margin-top: 24px;
-    color: #065f46;
+    color: ${props => props.theme.mode === 'dark' ? '#93C5FD' : '#1E40AF'};
     font-size: 0.84rem;
 
     code {
-        background: #ffffff;
+        background: ${props => props.theme.mode === 'dark' ? '#131B2A' : '#ffffff'};
         padding: 2px 6px;
         border-radius: 6px;
-        border: 1px solid #a7f3d0;
+        border: 1px solid ${props => props.theme.border};
         font-family: monospace;
-        color: #1E40AF;
+        color: ${props => props.theme.mode === 'dark' ? '#93C5FD' : '#1E40AF'};
         font-size: 0.8rem;
     }
 `;

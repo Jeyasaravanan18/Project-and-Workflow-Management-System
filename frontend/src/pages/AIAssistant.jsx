@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styled, { keyframes } from 'styled-components';
-import { MessageSquare, Send, Loader, Bot, User, FileText, Trash2, Plus } from 'lucide-react';
+import styled, { keyframes, useTheme } from 'styled-components';
+import { MessageSquare, Send, Loader, Bot, User, FileText, Trash2, Plus, Sparkles } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import GetStartedWidget from '../components/GetStartedWidget';
 
 const AIAssistant = () => {
     const { user } = useAuth();
+    const theme = useTheme();
     const [conversations, setConversations] = useState([]);
     const [currentConversation, setCurrentConversation] = useState(null);
     const [messages, setMessages] = useState([]);
@@ -111,6 +113,8 @@ const AIAssistant = () => {
         }
     };
 
+    const primaryColor = theme?.primary || '#1E40AF';
+
     return (
         <Container>
             {/* Left: Conversation List */}
@@ -149,7 +153,7 @@ const AIAssistant = () => {
             <ChatPanel>
                 <ChatHeader>
                     <BotAvatarBadge>
-                        <Bot size={22} color="#1E40AF" />
+                        <Bot size={22} color={primaryColor} />
                     </BotAvatarBadge>
                     <HeaderText>
                         <h2>IT Support AI Assistant</h2>
@@ -160,20 +164,41 @@ const AIAssistant = () => {
                 <Messages>
                     {messages.length === 0 ? (
                         <Welcome>
-                            <WelcomeIconWrap>
-                                <Bot size={44} color="#1E40AF" />
-                            </WelcomeIconWrap>
-                            <WelcomeTitle>How can I help you today?</WelcomeTitle>
-                            <WelcomeSub>Select a prompt below or type your question to get instant guidance</WelcomeSub>
+                            <WidgetWrapper>
+                                <GetStartedWidget
+                                    title="Get started with AI Assistant"
+                                    actionLabel="Ask Question"
+                                    onActionClick={() => setInputMessage('How do I create an automated workflow?')}
+                                    steps={[
+                                        {
+                                            number: 1,
+                                            title: 'Ask natural language queries',
+                                            description: 'Analyze project progress, pinpoint bottlenecks, or resolve permissions quickly with real-time system context.',
+                                            linkText: 'Sample queries guide',
+                                            linkUrl: '#',
+                                        },
+                                        {
+                                            number: 2,
+                                            title: 'Execute workflows & actions',
+                                            description: 'Request automated task reassignments, bug triage, and instant project scaffolder generation directly.',
+                                            linkText: 'Browse workflow automations',
+                                            linkUrl: '/admin/automations',
+                                        }
+                                    ]}
+                                />
+                            </WidgetWrapper>
+
+                            <WelcomeTitle>Popular Inquiries</WelcomeTitle>
+                            <WelcomeSub>Click any prompt below or type your question below</WelcomeSub>
                             <SugGrid>
                                 {[
-                                    ['How do I create a new project?', 'Creating projects'],
+                                    ['How do I create a new project with templates?', 'Creating projects'],
                                     ['What should I do if I get a permission denied error?', 'Troubleshooting errors'],
-                                    ['How do I assign tasks effectively?', 'Task management'],
-                                    ['How can I understand workload analytics?', 'Analytics insights'],
+                                    ['How do I assign tasks and configure sprint automations?', 'Task & Sprint management'],
+                                    ['How can I understand workload analytics & SLAs?', 'Analytics & SLAs'],
                                 ].map(([prompt, label]) => (
                                     <Sug key={label} onClick={() => setInputMessage(prompt)}>
-                                        <FileText size={16} color="#1E40AF" />
+                                        <Sparkles size={16} color={primaryColor} />
                                         <span>{label}</span>
                                     </Sug>
                                 ))}
@@ -188,7 +213,7 @@ const AIAssistant = () => {
                                 <MsgBody>
                                     {msg.loading ? (
                                         <ThinkingBubble>
-                                            <Loader className="spin" size={15} color="#1E40AF" />
+                                            <Loader className="spin" size={15} color={primaryColor} />
                                             <span>Thinking...</span>
                                         </ThinkingBubble>
                                     ) : (
@@ -234,7 +259,7 @@ const AIAssistant = () => {
                 <InputRow onSubmit={sendMessage}>
                     <ChatInput
                         type="text"
-                        placeholder="Ask me anything..."
+                        placeholder="Ask me anything about your projects or workflows..."
                         value={inputMessage}
                         onChange={e => setInputMessage(e.target.value)}
                         disabled={loading}
@@ -246,9 +271,7 @@ const AIAssistant = () => {
             </ChatPanel>
         </Container>
     );
-};
-
-// ─── Animations ─────────────────────────────────────────────────────────────
+};// ─── Animations ─────────────────────────────────────────────────────────────
 const spin = keyframes`from { transform: rotate(0deg); } to { transform: rotate(360deg); }`;
 const slideUp = keyframes`from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); }`;
 
@@ -258,15 +281,15 @@ const Container = styled.div`
     margin: -28px -32px;
     height: calc(100vh - 65px);
     overflow: hidden;
-    background: #f8fafc;
+    background: ${p => p.theme.bg?.primary || '#f8fafc'};
 `;
 
 // ─── Conversation Panel ───────────────────────────────────────────────────────
 const ConvPanel = styled.div`
     width: 290px;
     min-width: 240px;
-    background: #ffffff;
-    border-right: 1px solid #e5e7eb;
+    background: ${p => p.theme.bg?.card || '#ffffff'};
+    border-right: 1px solid ${p => p.theme.border || '#e5e7eb'};
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -274,7 +297,7 @@ const ConvPanel = styled.div`
 
 const ConvHeader = styled.div`
     padding: 18px 20px;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid ${p => p.theme.border || '#f1f5f9'};
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -285,7 +308,7 @@ const ConvTitle = styled.h3`
     margin: 0;
     font-size: 0.95rem;
     font-weight: 700;
-    color: #111827;
+    color: ${p => p.theme.text?.primary || '#111827'};
     letter-spacing: -0.01em;
 `;
 
@@ -293,12 +316,12 @@ const NewChatBtn = styled.button`
     width: 34px; height: 34px;
     border-radius: 9999px;
     border: none;
-    background: #111827;
+    background: ${p => p.theme.primary || '#1E40AF'};
     color: white;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
     transition: all 0.2s;
-    &:hover { background: #1E40AF; transform: scale(1.05); }
+    &:hover { background: ${p => p.theme.primaryHover || '#1E3A8A'}; transform: scale(1.05); }
 `;
 
 const ConvList = styled.div`
@@ -306,7 +329,7 @@ const ConvList = styled.div`
     overflow-y: auto;
     padding: 12px;
     &::-webkit-scrollbar { width: 4px; }
-    &::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 4px; }
+    &::-webkit-scrollbar-thumb { background: ${p => p.theme.border || '#e2e8f0'}; border-radius: 4px; }
 `;
 
 const ConvItem = styled.div`
@@ -314,17 +337,17 @@ const ConvItem = styled.div`
     border-radius: 10px;
     margin-bottom: 4px;
     cursor: pointer;
-    background: ${p => p.$active ? '#EFF6FF' : 'transparent'};
-    border: 1px solid ${p => p.$active ? '#BFDBFE' : 'transparent'};
+    background: ${p => p.$active ? (p.theme.primaryLight || '#EFF6FF') : 'transparent'};
+    border: 1px solid ${p => p.$active ? (p.theme.primary || '#BFDBFE') : 'transparent'};
     position: relative;
     transition: all 0.15s;
-    &:hover { background: ${p => p.$active ? '#EFF6FF' : '#f8fafc'}; }
+    &:hover { background: ${p => p.$active ? (p.theme.primaryLight || '#EFF6FF') : (p.theme.bg?.hover || '#f8fafc')}; }
 `;
 
 const ConvName = styled.div`
     font-size: 0.85rem;
     font-weight: 600;
-    color: #111827;
+    color: ${p => p.theme.text?.primary || '#111827'};
     margin-bottom: 3px;
     white-space: nowrap;
     overflow: hidden;
@@ -334,7 +357,7 @@ const ConvName = styled.div`
 
 const ConvMeta = styled.div`
     font-size: 0.72rem;
-    color: #6b7280;
+    color: ${p => p.theme.text?.muted || '#6b7280'};
 `;
 
 const DelBtn = styled.button`
@@ -342,19 +365,19 @@ const DelBtn = styled.button`
     width: 22px; height: 22px;
     border-radius: 6px; border: none;
     background: transparent;
-    color: #9ca3af;
+    color: ${p => p.theme.text?.muted || '#9ca3af'};
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
     opacity: 0;
     transition: all 0.15s;
     ${ConvItem}:hover & { opacity: 1; }
-    &:hover { background: #fee2e2; color: #ef4444; }
+    &:hover { background: rgba(239, 68, 68, 0.12); color: #ef4444; }
 `;
 
 const MutedText = styled.div`
     text-align: center;
     padding: 24px;
-    color: #9ca3af;
+    color: ${p => p.theme.text?.muted || '#9ca3af'};
     font-size: 0.85rem;
 `;
 
@@ -363,25 +386,25 @@ const ChatPanel = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
-    background: #f8fafc;
+    background: ${p => p.theme.bg?.primary || '#f8fafc'};
     min-width: 0;
     overflow: hidden;
 `;
 
 const ChatHeader = styled.div`
     padding: 16px 28px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid ${p => p.theme.border || '#e5e7eb'};
     display: flex;
     align-items: center;
     gap: 14px;
     flex-shrink: 0;
-    background: #ffffff;
+    background: ${p => p.theme.bg?.card || '#ffffff'};
 `;
 
 const BotAvatarBadge = styled.div`
     width: 40px; height: 40px;
     border-radius: 12px;
-    background: #EFF6FF;
+    background: ${p => p.theme.primaryLight || '#EFF6FF'};
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
 `;
@@ -391,13 +414,13 @@ const HeaderText = styled.div`
         margin: 0;
         font-size: 1.05rem;
         font-weight: 700;
-        color: #111827;
+        color: ${p => p.theme.text?.primary || '#111827'};
         letter-spacing: -0.01em;
     }
     p {
         margin: 2px 0 0;
         font-size: 0.8rem;
-        color: #6b7280;
+        color: ${p => p.theme.text?.muted || '#6b7280'};
     }
 `;
 
@@ -409,7 +432,7 @@ const Messages = styled.div`
     flex-direction: column;
     gap: 20px;
     &::-webkit-scrollbar { width: 6px; }
-    &::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 4px; }
+    &::-webkit-scrollbar-thumb { background: ${p => p.theme.border || '#e2e8f0'}; border-radius: 4px; }
 `;
 
 // ─── Welcome Screen ───────────────────────────────────────────────────────────
@@ -417,47 +440,47 @@ const Welcome = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100%;
+    justify-content: flex-start;
+    padding: 8px 0 24px;
+    min-height: 100%;
     text-align: center;
     animation: ${slideUp} 0.4s ease;
 `;
 
-const WelcomeIconWrap = styled.div`
-    width: 72px; height: 72px;
-    border-radius: 20px;
-    background: #EFF6FF;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 8px;
+const WidgetWrapper = styled.div`
+    width: 100%;
+    max-width: 820px;
+    margin-bottom: 24px;
+    text-align: left;
 `;
 
 const WelcomeTitle = styled.h2`
-    margin: 12px 0 6px;
-    font-size: 1.4rem;
+    margin: 8px 0 6px;
+    font-size: 1.15rem;
     font-weight: 700;
-    color: #111827;
-    letter-spacing: -0.02em;
+    color: ${p => p.theme.text?.primary || '#111827'};
+    letter-spacing: -0.01em;
 `;
 
 const WelcomeSub = styled.p`
-    margin: 0 0 24px;
-    color: #6b7280;
-    font-size: 0.9rem;
+    margin: 0 0 16px;
+    color: ${p => p.theme.text?.muted || '#6b7280'};
+    font-size: 0.85rem;
 `;
 
 const SugGrid = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
-    max-width: 560px;
+    max-width: 820px;
     width: 100%;
 `;
 
 const Sug = styled.button`
-    padding: 16px 18px;
+    padding: 14px 16px;
     border-radius: 12px;
-    border: 1px solid #e5e7eb;
-    background: #ffffff;
+    border: 1px solid ${p => p.theme.border || '#e5e7eb'};
+    background: ${p => p.theme.bg?.card || '#ffffff'};
     display: flex;
     align-items: center;
     gap: 12px;
@@ -468,11 +491,11 @@ const Sug = styled.button`
     span {
         font-size: 0.85rem;
         font-weight: 500;
-        color: #111827;
+        color: ${p => p.theme.text?.primary || '#111827'};
     }
     &:hover {
-        border-color: #1E40AF;
-        background: #EFF6FF;
+        border-color: ${p => p.theme.primary || '#1E40AF'};
+        background: ${p => p.theme.primaryLight || '#EFF6FF'};
         transform: translateY(-1px);
         box-shadow: 0 4px 12px rgba(30,64,175,0.08);
     }
@@ -490,15 +513,15 @@ const Msg = styled.div`
 const MsgAvatar = styled.div`
     width: 32px; height: 32px;
     border-radius: 50%;
-    background: ${p => p.$isUser ? '#111827' : '#EFF6FF'};
-    color: ${p => p.$isUser ? '#ffffff' : '#1E40AF'};
+    background: ${p => p.$isUser ? (p.theme.primary || '#1E40AF') : (p.theme.primaryLight || '#EFF6FF')};
+    color: ${p => p.$isUser ? '#ffffff' : (p.theme.primary || '#1E40AF')};
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
 `;
 
 const MsgBody = styled.div`
     flex: 1;
-    max-width: 70%;
+    max-width: 72%;
     display: flex;
     flex-direction: column;
 `;
@@ -507,10 +530,10 @@ const Bubble = styled.div`
     padding: 12px 18px;
     border-radius: 16px;
     ${p => p.$isUser
-        ? `background: #111827; color: white; border-bottom-right-radius: 4px; font-weight: 450;`
-        : `background: #ffffff;
-           color: ${p.$error ? '#dc2626' : '#1f2937'};
-           border: 1px solid #e5e7eb;
+        ? `background: ${p.theme.primary || '#1E40AF'}; color: #ffffff; border-bottom-right-radius: 4px; font-weight: 450;`
+        : `background: ${p.theme.bg?.card || '#ffffff'};
+           color: ${p.$error ? '#ef4444' : (p.theme.text?.primary || '#1f2937')};
+           border: 1px solid ${p.theme.border || '#e5e7eb'};
            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
            border-bottom-left-radius: 4px;`}
     font-size: 0.9rem;
@@ -521,10 +544,10 @@ const Bubble = styled.div`
 const MarkdownContent = styled.div`
     font-size: 0.9rem;
     line-height: 1.65;
-    color: #1f2937;
+    color: ${p => p.theme.text?.primary || '#1f2937'};
 
     h1, h2, h3, h4, h5, h6 {
-        color: #111827;
+        color: ${p => p.theme.text?.primary || '#111827'};
         font-weight: 700;
         margin-top: 14px;
         margin-bottom: 8px;
@@ -570,7 +593,7 @@ const MarkdownContent = styled.div`
 
     strong {
         font-weight: 650;
-        color: #111827;
+        color: ${p => p.theme.text?.primary || '#111827'};
     }
     em {
         font-style: italic;
@@ -579,11 +602,11 @@ const MarkdownContent = styled.div`
     code {
         font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         font-size: 0.85em;
-        background: #f1f5f9;
-        color: #0f172a;
+        background: ${p => p.theme.bg?.secondary || '#f1f5f9'};
+        color: ${p => p.theme.text?.primary || '#0f172a'};
         padding: 2px 6px;
         border-radius: 4px;
-        border: 1px solid #e2e8f0;
+        border: 1px solid ${p => p.theme.border || '#e2e8f0'};
     }
     pre {
         background: #0f172a;
@@ -604,9 +627,9 @@ const MarkdownContent = styled.div`
     blockquote {
         margin: 8px 0;
         padding: 6px 14px;
-        border-left: 3px solid #1E40AF;
-        background: #f8fafc;
-        color: #4b5563;
+        border-left: 3px solid ${p => p.theme.primary || '#1E40AF'};
+        background: ${p => p.theme.bg?.secondary || '#f8fafc'};
+        color: ${p => p.theme.text?.secondary || '#4b5563'};
         font-style: italic;
         border-radius: 0 4px 4px 0;
     }
@@ -618,27 +641,27 @@ const MarkdownContent = styled.div`
         font-size: 0.82rem;
     }
     th, td {
-        border: 1px solid #e5e7eb;
+        border: 1px solid ${p => p.theme.border || '#e5e7eb'};
         padding: 8px 10px;
         text-align: left;
     }
     th {
-        background: #f9fafb;
+        background: ${p => p.theme.bg?.secondary || '#f9fafb'};
         font-weight: 600;
-        color: #111827;
+        color: ${p => p.theme.text?.primary || '#111827'};
     }
 
     a {
-        color: #1E40AF;
+        color: ${p => p.theme.primary || '#1E40AF'};
         text-decoration: underline;
         &:hover {
-            color: #1E3A8A;
+            color: ${p => p.theme.primaryHover || '#1E3A8A'};
         }
     }
 
     hr {
         border: none;
-        border-top: 1px solid #e5e7eb;
+        border-top: 1px solid ${p => p.theme.border || '#e5e7eb'};
         margin: 12px 0;
     }
 `;
@@ -650,9 +673,9 @@ const ThinkingBubble = styled.div`
     padding: 12px 16px;
     border-radius: 16px;
     border-bottom-left-radius: 4px;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    color: #6b7280;
+    background: ${p => p.theme.bg?.card || '#ffffff'};
+    border: 1px solid ${p => p.theme.border || '#e5e7eb'};
+    color: ${p => p.theme.text?.muted || '#6b7280'};
     font-size: 0.85rem;
     .spin { animation: ${spin} 1s linear infinite; }
 `;
@@ -661,8 +684,8 @@ const ThinkingBubble = styled.div`
 const CitationBox = styled.div`
     margin-top: 10px;
     padding: 12px 14px;
-    background: #EFF6FF;
-    border-left: 3px solid #1E40AF;
+    background: ${p => p.theme.primaryLight || '#EFF6FF'};
+    border-left: 3px solid ${p => p.theme.primary || '#1E40AF'};
     border-radius: 8px;
 `;
 
@@ -672,7 +695,7 @@ const CitHeader = styled.div`
     gap: 5px;
     font-size: 0.7rem;
     font-weight: 700;
-    color: #1E3A8A;
+    color: ${p => p.theme.primary || '#1E40AF'};
     text-transform: uppercase;
     letter-spacing: 0.04em;
     margin-bottom: 6px;
@@ -686,8 +709,8 @@ const CitItem = styled.div`
 const CitTag = styled.span`
     display: inline-block;
     padding: 1px 6px;
-    background: #DBEAFE;
-    color: #1E3A8A;
+    background: ${p => p.theme.primaryLight || '#DBEAFE'};
+    color: ${p => p.theme.primary || '#1E40AF'};
     border-radius: 4px;
     font-size: 0.65rem;
     font-weight: 700;
@@ -699,29 +722,29 @@ const CitName = styled.div`
     display: inline;
     font-size: 0.8rem;
     font-weight: 600;
-    color: #1E3A8A;
+    color: ${p => p.theme.text?.primary || '#1E40AF'};
 `;
 
 const CitExcerpt = styled.div`
     margin-top: 3px;
     font-size: 0.72rem;
-    color: #1D4ED8;
+    color: ${p => p.theme.text?.secondary || '#1D4ED8'};
     opacity: 0.9;
 `;
 
 const MsgMeta = styled.div`
     margin-top: 5px;
     font-size: 0.7rem;
-    color: #9ca3af;
+    color: ${p => p.theme.text?.muted || '#9ca3af'};
 `;
 
 // ─── Input Bar ────────────────────────────────────────────────────────────────
 const InputRow = styled.form`
     padding: 16px 28px;
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid ${p => p.theme.border || '#e5e7eb'};
     display: flex;
     gap: 12px;
-    background: #ffffff;
+    background: ${p => p.theme.bg?.card || '#ffffff'};
     flex-shrink: 0;
 `;
 
@@ -729,14 +752,18 @@ const ChatInput = styled.input`
     flex: 1;
     padding: 12px 20px;
     border-radius: 9999px;
-    border: 1px solid #e5e7eb;
-    background: #f8fafc;
-    color: #111827;
+    border: 1px solid ${p => p.theme.border || '#e5e7eb'};
+    background: ${p => p.theme.bg?.secondary || '#f8fafc'};
+    color: ${p => p.theme.text?.primary || '#111827'};
     font-size: 0.9rem;
     outline: none;
     transition: all 0.2s;
-    &::placeholder { color: #9ca3af; }
-    &:focus { border-color: #1E40AF; background: #ffffff; box-shadow: 0 0 0 3px rgba(30,64,175,0.12); }
+    &::placeholder { color: ${p => p.theme.text?.muted || '#9ca3af'}; }
+    &:focus {
+        border-color: ${p => p.theme.primary || '#1E40AF'};
+        background: ${p => p.theme.bg?.card || '#ffffff'};
+        box-shadow: 0 0 0 3px rgba(30,64,175,0.12);
+    }
     &:disabled { opacity: 0.5; cursor: not-allowed; }
 `;
 
@@ -744,15 +771,22 @@ const SendBtn = styled.button`
     width: 44px; height: 44px;
     border-radius: 9999px;
     border: none;
-    background: #111827;
+    background: ${p => p.theme.primary || '#1E40AF'};
     color: white;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
     transition: all 0.2s;
     flex-shrink: 0;
-    &:hover:not(:disabled) { background: #1E40AF; transform: translateY(-1px); }
-    &:disabled { background: #f1f5f9; color: #9ca3af; cursor: not-allowed; }
+    &:hover:not(:disabled) {
+        background: ${p => p.theme.primaryHover || '#1E3A8A'};
+        transform: translateY(-1px);
+    }
+    &:disabled {
+        background: ${p => p.theme.border || '#f1f5f9'};
+        color: ${p => p.theme.text?.muted || '#9ca3af'};
+        cursor: not-allowed;
+    }
     .spin { animation: ${spin} 1s linear infinite; }
 `;
-
 export default AIAssistant;
+

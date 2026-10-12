@@ -6,6 +6,9 @@ const ThemeContext = createContext();
 
 export const lightTheme = {
     mode: 'light',
+    primary: '#1E40AF',
+    primaryHover: '#1E3A8A',
+    primaryLight: '#EFF6FF',
     bg: {
         primary: '#F8FAFC', // Crisp soft background
         secondary: '#FFFFFF', // Card layer
@@ -18,6 +21,7 @@ export const lightTheme = {
         primary: '#111827', // Crisp dark text
         secondary: '#4B5563', // Neutral text
         tertiary: '#9CA3AF', // Muted text
+        muted: '#6B7280',
     },
     border: '#E5E7EB', // Subtle neutral border
     borderFocus: '#1E40AF',
@@ -47,6 +51,9 @@ export const lightTheme = {
 
 export const darkTheme = {
     mode: 'dark',
+    primary: '#3B82F6',
+    primaryHover: '#1D4ED8',
+    primaryLight: 'rgba(59, 130, 246, 0.15)',
     bg: {
         primary: '#0B0F17',
         secondary: '#131B2A',
@@ -59,6 +66,7 @@ export const darkTheme = {
         primary: '#F9FAFB',
         secondary: '#94A3B8',
         tertiary: '#64748B',
+        muted: '#94A3B8',
     },
     border: '#1E293B',
     borderFocus: '#3B82F6',
@@ -103,6 +111,21 @@ export const CustomThemeProvider = ({ children }) => {
             return newMode;
         });
     };
+
+    useEffect(() => {
+        const root = document.documentElement;
+        if (themeMode === 'dark') {
+            root.classList.add('dark');
+            root.setAttribute('data-theme', 'dark');
+            document.body.style.backgroundColor = '#0B0F17';
+            document.body.style.color = '#F9FAFB';
+        } else {
+            root.classList.remove('dark');
+            root.setAttribute('data-theme', 'light');
+            document.body.style.backgroundColor = '#F8FAFC';
+            document.body.style.color = '#111827';
+        }
+    }, [themeMode]);
 
     const theme = themeMode === 'light' ? lightTheme : darkTheme;
 

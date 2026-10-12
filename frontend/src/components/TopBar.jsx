@@ -98,8 +98,8 @@ export default TopBar;
 // Styled Components
 const BarContainer = styled.header`
     height: 56px;
-    background: #ffffff;
-    border-bottom: 1px solid #E5E7EB;
+    background: ${props => props.theme.bg.secondary};
+    border-bottom: 1px solid ${props => props.theme.border};
     padding: 0 28px;
     display: flex;
     align-items: center;
@@ -119,7 +119,7 @@ const LeftSection = styled.div`
 const BreadcrumbText = styled.span`
     font-size: 0.9375rem;
     font-weight: 600;
-    color: #111827;
+    color: ${props => props.theme.text.primary};
 `;
 
 const RightSection = styled.div`
@@ -133,22 +133,21 @@ const AIPillButton = styled.button`
     align-items: center;
     gap: 6px;
     padding: 6px 14px;
-    background: #EEF2FF;
-    border: 1px solid #E0E7FF;
+    background: ${props => props.theme.mode === 'dark' ? 'rgba(30, 64, 175, 0.25)' : '#EFF6FF'};
+    border: 1px solid ${props => props.theme.mode === 'dark' ? '#1E40AF' : '#BFDBFE'};
     border-radius: 9999px;
-    color: #4338CA;
+    color: ${props => props.theme.mode === 'dark' ? '#93C5FD' : '#1E40AF'};
     font-size: 0.8125rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
 
     &:hover {
-        background: #E0E7FF;
+        background: ${props => props.theme.mode === 'dark' ? 'rgba(30, 64, 175, 0.4)' : '#DBEAFE'};
         transform: translateY(-1px);
-        box-shadow: 0 2px 4px rgba(79, 70, 229, 0.1);
+        box-shadow: 0 2px 4px rgba(30, 64, 175, 0.2);
     }
 `;
-
 
 const IconButton = styled.button`
     width: 36px;
@@ -156,7 +155,7 @@ const IconButton = styled.button`
     border-radius: 50%;
     background: transparent;
     border: none;
-    color: #4B5563;
+    color: ${props => props.theme.text.secondary};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -165,8 +164,8 @@ const IconButton = styled.button`
     transition: all 0.15s ease;
 
     &:hover {
-        background: #F3F4F6;
-        color: #111827;
+        background: ${props => props.theme.bg.hover};
+        color: ${props => props.theme.text.primary};
     }
 `;
 
@@ -185,7 +184,7 @@ const NotifBadge = styled.span`
     align-items: center;
     justify-content: center;
     padding: 0 4px;
-    border: 2px solid #ffffff;
+    border: 2px solid ${props => props.theme.bg.secondary};
 `;
 
 const ProfileWrapper = styled.div`
@@ -197,22 +196,22 @@ const ProfilePill = styled.button`
     align-items: center;
     gap: 8px;
     padding: 6px 12px;
-    background: #F9FAFB;
-    border: 1px solid #E5E7EB;
+    background: ${props => props.theme.bg.tertiary};
+    border: 1px solid ${props => props.theme.border};
     border-radius: 9999px;
     cursor: pointer;
     transition: all 0.15s ease;
 
     &:hover {
-        background: #F3F4F6;
-        border-color: #D1D5DB;
+        background: ${props => props.theme.bg.hover};
+        border-color: ${props => props.theme.borderFocus};
     }
 `;
 
 const OrgName = styled.span`
     font-size: 0.8125rem;
     font-weight: 600;
-    color: #1F2937;
+    color: ${props => props.theme.text.primary};
     max-width: 140px;
     white-space: nowrap;
     overflow: hidden;
@@ -230,10 +229,10 @@ const DropdownMenu = styled.div`
     top: calc(100% + 8px);
     right: 0;
     min-width: 220px;
-    background: #ffffff;
-    border: 1px solid #E5E7EB;
+    background: ${props => props.theme.bg.card};
+    border: 1px solid ${props => props.theme.border};
     border-radius: 12px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+    box-shadow: ${props => props.theme.shadow.lg};
     z-index: 50;
     padding: 6px;
     animation: fadeIn 0.15s ease-out;
@@ -246,19 +245,19 @@ const DropdownMenu = styled.div`
 
 const DropdownHeader = styled.div`
     padding: 10px 12px;
-    border-bottom: 1px solid #F3F4F6;
+    border-bottom: 1px solid ${props => props.theme.border};
     margin-bottom: 4px;
 `;
 
 const UserName = styled.div`
     font-size: 0.875rem;
     font-weight: 600;
-    color: #111827;
+    color: ${props => props.theme.text.primary};
 `;
 
 const UserEmail = styled.div`
     font-size: 0.75rem;
-    color: #6B7280;
+    color: ${props => props.theme.text.tertiary};
     margin-top: 2px;
     white-space: nowrap;
     overflow: hidden;
@@ -269,8 +268,8 @@ const RoleBadge = styled.span`
     display: inline-block;
     margin-top: 6px;
     padding: 2px 8px;
-    background: #EFF6FF;
-    color: #065F46;
+    background: ${props => props.theme.mode === 'dark' ? 'rgba(30, 64, 175, 0.25)' : '#EFF6FF'};
+    color: ${props => props.theme.mode === 'dark' ? '#93C5FD' : '#1E40AF'};
     border-radius: 9999px;
     font-size: 0.6875rem;
     font-weight: 600;
@@ -288,19 +287,19 @@ const DropdownItem = styled.button`
     border-radius: 8px;
     font-size: 0.8125rem;
     font-weight: 500;
-    color: ${props => props.$danger ? '#DC2626' : '#374151'};
+    color: ${props => props.$danger ? '#EF4444' : props.theme.text.secondary};
     cursor: pointer;
     text-align: left;
     transition: all 0.15s ease;
 
     &:hover {
-        background: ${props => props.$danger ? '#FEE2E2' : '#F3F4F6'};
-        color: ${props => props.$danger ? '#B91C1C' : '#111827'};
+        background: ${props => props.$danger ? (props.theme.mode === 'dark' ? 'rgba(239, 68, 68, 0.2)' : '#FEE2E2') : props.theme.bg.hover};
+        color: ${props => props.$danger ? '#DC2626' : props.theme.text.primary};
     }
 `;
 
 const Divider = styled.div`
     height: 1px;
-    background: #F3F4F6;
+    background: ${props => props.theme.border};
     margin: 4px 0;
 `;

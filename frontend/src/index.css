@@ -134,6 +134,22 @@
     --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
 }
 
+.dark, [data-theme="dark"] {
+    --bg-primary: #0b0f17;
+    --bg-secondary: #131b2a;
+    --bg-tertiary: #1e293b;
+    --text-primary: #f9fafb;
+    --text-secondary: #94a3b8;
+    --text-tertiary: #64748b;
+    --border: #1e293b;
+    --slate-950: #0f172a;
+    --slate-900: #1e293b;
+    --slate-800: #334155;
+    --slate-700: #475569;
+    --slate-100: #f1f5f9;
+    --slate-50: #f8fafc;
+}
+
 /* ========== Global Styles ========== */
 * {
     margin: 0;
