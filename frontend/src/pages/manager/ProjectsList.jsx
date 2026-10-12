@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import Modal from '../../components/Modal';
 import CreateProjectForm from '../../components/forms/CreateProjectForm';
+import GetStartedWidget from '../../components/GetStartedWidget';
 import { Plus, ArrowUpRight, Clock, MoreVertical, Search, Zap, LayoutGrid, List as ListIcon } from 'lucide-react';
 import { differenceInDays } from 'date-fns';
 import styled, { keyframes, css } from 'styled-components';
@@ -33,6 +34,9 @@ const ProjectsList = () => {
     const [filter, setFilter] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
     const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
+    const [showOnboarding, setShowOnboarding] = useState(() => {
+        return localStorage.getItem('hide_projects_onboarding') !== 'true';
+    });
     const hasFetchedRef = useRef(false);
     const { trackVisit } = useRecentlyViewed();
 
@@ -152,6 +156,40 @@ const ProjectsList = () => {
                     </CreateButton>
                 </ActionGroup>
             </HeaderSection>
+
+            {/* Onboarding Guide Widget */}
+            {showOnboarding && (
+                <OnboardingBannerWrapper>
+                    <GetStartedWidget
+                        title="Get started with ProjectFlow"
+                        subtitle="Follow these core steps to organize your team workflows, track milestones, and deliver projects on time."
+                        actionLabel="Create project"
+                        onActionClick={() => setIsCreateModalOpen(true)}
+                        steps={[
+                            {
+                                number: 1,
+                                title: 'Create a project',
+                                description: 'Pick from our most popular templates to start organizing your work and keeping everyone on the same page.',
+                                linkText: 'Explore templates',
+                                linkUrl: '/admin/project-scaffolder',
+                            },
+                            {
+                                number: 2,
+                                title: 'Explore key features',
+                                description: 'Learn how to set up boards, customize views, automate workflows, and collaborate with your team.',
+                                linkText: 'Read the guide',
+                                linkUrl: '/ai-assistant',
+                            }
+                        ]}
+                    />
+                    <DismissBannerBtn onClick={() => {
+                        setShowOnboarding(false);
+                        localStorage.setItem('hide_projects_onboarding', 'true');
+                    }}>
+                        ✕ Dismiss guide
+                    </DismissBannerBtn>
+                </OnboardingBannerWrapper>
+            )}
 
             {/* Filter & View Controls */}
             <ControlsBar>
@@ -343,16 +381,46 @@ const WelcomeText = styled.div`
     margin-bottom: 12px;
 `;
 
+const OnboardingBannerWrapper = styled.div`
+    margin-bottom: 32px;
+    position: relative;
+`;
+
+const DismissBannerBtn = styled.button`
+    position: absolute;
+    top: 18px;
+    right: 170px;
+    background: transparent;
+    border: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: ${props => props.theme.text?.muted || '#64748B'};
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.15s;
+    &:hover {
+        color: ${props => props.theme.text?.primary || '#111827'};
+        text-decoration: underline;
+    }
+    @media (max-width: 900px) {
+        position: static;
+        margin-top: 10px;
+        display: block;
+    }
+`;
+
 const MainTitle = styled.h1`
     font-size: 2rem;
     font-weight: 700;
-    color: #111827;
+    color: ${props => props.theme.text?.primary || '#111827'};
     line-height: 1.2;
     margin-bottom: 24px;
     letter-spacing: -0.02em;
 
     .highlight {
-        color: #1E40AF; /* Brevo Emerald */
+        color: ${props => props.theme.primary || '#1E40AF'};
         display: inline;
     }
 `;
@@ -368,23 +436,23 @@ const StatBadge = styled.div`
     align-items: center;
     gap: 6px;
     padding: 6px 14px;
-    background: #ffffff;
-    border: 1px solid #E5E7EB;
+    background: ${props => props.theme.bg?.card || '#ffffff'};
+    border: 1px solid ${props => props.theme.border || '#E5E7EB'};
     border-radius: 9999px;
     font-size: 0.75rem;
     font-weight: 600;
-    color: ${props => props.$type === 'danger' ? '#DC2626' : '#4B5563'};
+    color: ${props => props.$type === 'danger' ? '#DC2626' : (props.theme.text?.secondary || '#4B5563')};
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 
     ${props => props.$active && css`
-        color: #1E40AF;
-        background: #EFF6FF;
-        border-color: #A7F3D0;
+        color: ${props => props.theme.primary || '#1E40AF'};
+        background: ${props => props.theme.primaryLight || '#EFF6FF'};
+        border-color: ${props => props.theme.primary || '#BFDBFE'};
         
         .dot {
             width: 7px;
             height: 7px;
-            background: #1E40AF;
+            background: ${props => props.theme.primary || '#1E40AF'};
             border-radius: 50%;
         }
     `}
@@ -404,28 +472,28 @@ const SearchWrapper = styled.div`
         left: 14px;
         top: 50%;
         transform: translateY(-50%);
-        color: #9CA3AF;
+        color: ${props => props.theme.text?.muted || '#9CA3AF'};
     }
 
     input {
         padding: 9px 16px 9px 40px;
         border-radius: 9999px;
-        border: 1px solid #E5E7EB;
+        border: 1px solid ${props => props.theme.border || '#E5E7EB'};
         width: 240px;
         outline: none;
         font-size: 0.875rem;
         transition: all 0.2s ease;
-        background: #ffffff;
-        color: #111827;
+        background: ${props => props.theme.bg?.card || '#ffffff'};
+        color: ${props => props.theme.text?.primary || '#111827'};
 
         &:focus {
-            border-color: #1E40AF;
+            border-color: ${props => props.theme.primary || '#1E40AF'};
             box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
             width: 280px;
         }
 
         &::placeholder {
-            color: #9CA3AF;
+            color: ${props => props.theme.text?.muted || '#9CA3AF'};
         }
     }
 `;
@@ -435,7 +503,7 @@ const CreateButton = styled.button`
     align-items: center;
     gap: 8px;
     padding: 9px 20px;
-    background: #111827; /* Dark black pill */
+    background: ${props => props.theme.primary || '#1E40AF'};
     color: #ffffff;
     font-weight: 600;
     font-size: 0.875rem;
@@ -446,7 +514,7 @@ const CreateButton = styled.button`
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
     &:hover {
-        background: #1F2937;
+        background: ${props => props.theme.primaryHover || '#1E3A8A'};
         transform: translateY(-1px);
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     }
@@ -469,26 +537,26 @@ const FilterGroup = styled.div`
 const FilterTab = styled.button`
     padding: 7px 16px;
     border-radius: 9999px;
-    border: 1px solid ${props => props.$isActive ? '#1E40AF' : '#E5E7EB'};
-    background: ${props => props.$isActive ? '#EFF6FF' : '#ffffff'};
-    color: ${props => props.$isActive ? '#1E40AF' : '#4B5563'};
+    border: 1px solid ${props => props.$isActive ? (props.theme.primary || '#1E40AF') : (props.theme.border || '#E5E7EB')};
+    background: ${props => props.$isActive ? (props.theme.primaryLight || '#EFF6FF') : (props.theme.bg?.card || '#ffffff')};
+    color: ${props => props.$isActive ? (props.theme.primary || '#1E40AF') : (props.theme.text?.secondary || '#4B5563')};
     font-weight: 600;
     font-size: 0.8125rem;
     cursor: pointer;
     transition: all 0.15s ease;
 
     &:hover {
-        background: ${props => props.$isActive ? '#EFF6FF' : '#F9FAFB'};
-        color: ${props => props.$isActive ? '#1E40AF' : '#111827'};
+        background: ${props => props.$isActive ? (props.theme.primaryLight || '#EFF6FF') : (props.theme.bg?.hover || '#F9FAFB')};
+        color: ${props => props.$isActive ? (props.theme.primary || '#1E40AF') : (props.theme.text?.primary || '#111827')};
     }
 `;
 
 const ViewSwitch = styled.div`
     display: flex;
     gap: 4px;
-    background: #ffffff;
+    background: ${props => props.theme.bg?.card || '#ffffff'};
     padding: 3px;
-    border: 1px solid #E5E7EB;
+    border: 1px solid ${props => props.theme.border || '#E5E7EB'};
     border-radius: 8px;
 `;
 
@@ -499,14 +567,14 @@ const ViewBtn = styled.button`
     align-items: center;
     justify-content: center;
     border: none;
-    background: ${props => props.$active ? '#F3F4F6' : 'transparent'};
-    color: ${props => props.$active ? '#111827' : '#9CA3AF'};
+    background: ${props => props.$active ? (props.theme.bg?.hover || '#F3F4F6') : 'transparent'};
+    color: ${props => props.$active ? (props.theme.text?.primary || '#111827') : (props.theme.text?.muted || '#9CA3AF')};
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.15s;
 
     &:hover {
-        color: #111827;
+        color: ${props => props.theme.text?.primary || '#111827'};
     }
 `;
 
@@ -520,12 +588,12 @@ const ProjectGrid = styled.div`
 // --- Gallery Card Styles ---
 const GalleryCard = styled(Link)`
     position: relative;
-    background: #ffffff;
+    background: ${props => props.theme.bg?.card || '#ffffff'};
     border-radius: 14px;
     overflow: hidden;
     text-decoration: none;
     transition: all 0.2s ease;
-    border: 1px solid #E5E7EB;
+    border: 1px solid ${props => props.theme.border || '#E5E7EB'};
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
     animation: ${fadeIn} 0.4s ease-out;
     animation-delay: ${props => props.$delay * 0.05}s;
@@ -533,7 +601,7 @@ const GalleryCard = styled(Link)`
     animation-fill-mode: forwards;
 
     &:hover {
-        border-color: #D1D5DB;
+        border-color: ${props => props.theme.primary || '#D1D5DB'};
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
         transform: translateY(-2px);
     }
