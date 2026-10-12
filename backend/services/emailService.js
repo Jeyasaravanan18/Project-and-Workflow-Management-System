@@ -25,9 +25,43 @@ const getTransporter = () => {
     return transporter;
 };
 
-// Unified email sending function (supports Resend HTTP API and Nodemailer)
+// Unified email sending function (supports Brevo, Resend HTTP API, and Nodemailer)
 const sendEmailMessage = async ({ to, subject, html, text }) => {
-    // 1. Prioritize Resend (HTTP API, port 443 — bypasses Render SMTP firewall block)
+    // 1. Prioritize Brevo (HTTP API, port 443 — sends to ANY recipient without domain restriction)
+    const brevoApiKey = process.env.BREVO_API_KEY || process.env.BREVO_KEY || process.env.SENDINBLUE_API_KEY;
+    if (brevoApiKey) {
+        const fromEmail = process.env.EMAIL_FROM || process.env.BREVO_EMAIL || 'noreply@projectflow.com';
+        const fromName = process.env.EMAIL_FROM_NAME || process.env.APP_NAME || 'ProjectFlow';
+
+        try {
+            const response = await axios.post('https://api.brevo.com/v3/smtp/email', {
+                sender: {
+                    name: fromName,
+                    email: fromEmail
+                },
+                to: [{ email: to }],
+                subject,
+                htmlContent: html,
+                textContent: text || undefined
+            }, {
+                headers: {
+                    'api-key': brevoApiKey.trim(),
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                timeout: 10000
+            });
+
+            logger.info(`✅ Email sent via Brevo to ${to} (MessageId: ${response.data?.messageId})`);
+            return { success: true, messageId: response.data?.messageId };
+        } catch (brevoError) {
+            const errMsg = brevoError.response?.data?.message || brevoError.message;
+            logger.error(`❌ Brevo API delivery error: ${errMsg}`, { data: brevoError.response?.data });
+            throw new Error(`Brevo email delivery failed: ${errMsg}`);
+        }
+    }
+
+    // 2. Resend (HTTP API, port 443 — bypasses Render SMTP firewall block)
     if (process.env.RESEND_API_KEY) {
         const fromEmail = process.env.EMAIL_FROM || 'onboarding@resend.dev';
         const fromName = process.env.EMAIL_FROM_NAME || process.env.APP_NAME || 'ProjectFlow';
@@ -152,6 +186,12 @@ const sendInvitationEmail = async ({ to, userName, organizationName, invitationL
 
 // Verify email configuration on startup
 const verifyEmailConfig = async () => {
+    const brevoApiKey = process.env.BREVO_API_KEY || process.env.BREVO_KEY || process.env.SENDINBLUE_API_KEY;
+    if (brevoApiKey) {
+        logger.info(`✅ Email service initialized with Brevo (HTTP API, Port 443 — sends to any recipient)`);
+        return true;
+    }
+
     if (process.env.RESEND_API_KEY) {
         logger.info('✅ Email service initialized with Resend (HTTP API, Port 443 — Render compatible)');
         return true;
@@ -167,12 +207,12 @@ const verifyEmailConfig = async () => {
             logger.info(`✅ Email service initialized with SMTP (${process.env.EMAIL_USER})`);
             return true;
         } catch (error) {
-            logger.warn(`⚠️ SMTP verification failed/timed out: ${error.message}. (Note: Render Free Tier blocks SMTP ports. Use RESEND_API_KEY for Render deployments.)`);
+            logger.warn(`⚠️ SMTP verification failed/timed out: ${error.message}. (Note: Render Free Tier blocks SMTP ports. Use BREVO_API_KEY or RESEND_API_KEY for Render deployments.)`);
             return false;
         }
     }
 
-    logger.warn('⚠️ No email service configured. Set RESEND_API_KEY (recommended) or EMAIL_USER & EMAIL_PASSWORD.');
+    logger.warn('⚠️ No email service configured. Set BREVO_API_KEY or RESEND_API_KEY in environment variables.');
     return false;
 };
 
