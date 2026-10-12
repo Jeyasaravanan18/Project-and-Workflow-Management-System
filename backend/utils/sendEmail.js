@@ -4,26 +4,26 @@ const logger = require('./logger');
 const sendEmail = async (options) => {
     // 1. Create a transporter
     let transporter;
+    const pass = (process.env.EMAIL_PASSWORD || process.env.SMTP_PASSWORD || '').replace(/\s+/g, '');
+    const service = process.env.EMAIL_SERVICE || (process.env.SMTP_HOST ? null : 'gmail');
 
-    // Check if we are using a specific service (like Gmail)
-    // This is the "Best Solution" for the current dev setup as per user request
-    if (process.env.EMAIL_SERVICE) {
+    if (service) {
         transporter = nodemailer.createTransport({
-            service: process.env.EMAIL_SERVICE, // e.g., 'gmail'
+            service, // e.g., 'gmail'
             auth: {
                 user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASSWORD
+                pass
             }
         });
     } else {
-        // Fallback to standard SMTP (for production providers like SendGrid, AWS SES)
+        // Fallback to standard SMTP (for custom SMTP like SendGrid, AWS SES)
         transporter = nodemailer.createTransport({
             host: process.env.SMTP_HOST || 'smtp.ethereal.email',
             port: process.env.SMTP_PORT || 587,
             secure: false, // true for 465, false for other ports
             auth: {
                 user: process.env.SMTP_EMAIL || process.env.EMAIL_USER,
-                pass: process.env.SMTP_PASSWORD || process.env.EMAIL_PASSWORD
+                pass
             }
         });
     }

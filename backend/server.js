@@ -240,6 +240,12 @@ const initializeServer = async () => {
         // Initialize Realtime Integration Service
         realtimeIntegrationService.init(app);
 
+        // Verify email configuration
+        const { verifyEmailConfig } = require('./services/emailService');
+        await verifyEmailConfig().catch(err => {
+            logger.warn('Email verification failed:', err.message);
+        });
+
     } catch (error) {
         logger.error('Failed to initialize server:', error);
     }
@@ -389,11 +395,6 @@ const startServer = async () => {
         server.listen(PORT, () => {
             logger.info(`🚀 Server running on port ${PORT}`);
             logger.info(`📝 Environment: ${process.env.NODE_ENV || 'development'}`);
-
-            // Verify email config without blocking server startup
-            verifyEmailConfig().catch(err => {
-                logger.warn('Email verification failed, but server is running:', err.message);
-            });
         });
 
     } catch (error) {
@@ -425,9 +426,6 @@ process.on('uncaughtException', (err) => {
     logger.error('Uncaught Exception:', err);
     gracefulShutdown();
 });
-
-// Verify email configuration on startup
-const { verifyEmailConfig } = require('./services/emailService');
 
 // Export app and server for testing
 module.exports = { app, server, startServer };

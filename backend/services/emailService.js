@@ -1,14 +1,21 @@
 const nodemailer = require('nodemailer');
+const fs = require('fs');
+const path = require('path');
+const logger = require('../utils/logger');
 
 // Lazy transporter creation - only create when needed, not at module load
 let transporter = null;
 const getTransporter = () => {
     if (!transporter) {
+        // Strip any spaces if the user copied Google App Password formatted with spaces (e.g. 'abcd efgh ijkl mnop')
+        const pass = process.env.EMAIL_PASSWORD ? process.env.EMAIL_PASSWORD.replace(/\s+/g, '') : '';
+        const service = process.env.EMAIL_SERVICE || 'gmail';
+
         transporter = nodemailer.createTransport({
-            service: 'gmail',
+            service,
             auth: {
                 user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASSWORD // App password, not regular password
+                pass
             }
         });
     }
@@ -23,7 +30,7 @@ const sendInvitationEmail = async ({ to, userName, organizationName, invitationL
     };
 
     const mailOptions = {
-        from: `"${process.env.APP_NAME || 'Workflow System'}" <${process.env.EMAIL_USER}>`,
+        from: `"${process.env.APP_NAME || 'ProjectFlow'}" <${process.env.EMAIL_FROM || process.env.EMAIL_USER}>`,
         to,
         subject: `You've been invited to join ${organizationName}`,
         html: `
@@ -83,45 +90,56 @@ const sendInvitationEmail = async ({ to, userName, organizationName, invitationL
 
     try {
         const info = await getTransporter().sendMail(mailOptions);
-        console.log('✅ Invitation email sent:', info.messageId);
-        console.log('📧 To:', to);
+        logger.info(`✅ Invitation email sent to ${to} (MessageId: ${info.messageId})`);
         return { success: true, messageId: info.messageId };
     } catch (error) {
-        console.error('❌ Email sending failed:', error);
+        logger.error('❌ Failed to send invitation email:', { error: error.message, to });
         throw new Error('Failed to send invitation email: ' + error.message);
     }
 };
 
 // Verify email configuration on startup
 const verifyEmailConfig = async () => {
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
+        logger.warn('⚠️ EMAIL_USER or EMAIL_PASSWORD not set in environment variables. Email sending is currently disabled.');
+        return false;
+    }
+
     try {
         await getTransporter().verify();
-        console.log('✅ Email service is ready to send emails');
+        logger.info(`✅ Email service is ready to send emails via ${process.env.EMAIL_SERVICE || 'gmail'} (${process.env.EMAIL_USER})`);
         return true;
     } catch (error) {
-        console.error('❌ Email service configuration error:', error.message);
-        console.log('\n⚠️  Please configure email settings in .env:');
-        console.log('   EMAIL_USER=your-email@gmail.com');
-        console.log('   EMAIL_PASSWORD=your-app-password\n');
+        logger.error(`❌ Email service configuration verification failed: ${error.message}`);
+        if (error.response && error.response.includes('Username and Password not accepted')) {
+            logger.error('GMAIL HINT: Google requires a 16-character App Password (not your normal Gmail account password). Ensure 2FA is enabled and generate an App Password in your Google Account.');
+        }
         return false;
     }
 };
 
 // Send password reset email
 const sendPasswordResetEmail = async ({ to, userName, resetLink }) => {
-    const fs = require('fs');
-    const path = require('path');
-
     // Read template
     const templatePath = path.join(__dirname, '../templates/email/passwordReset.html');
-    let htmlTemplate = fs.readFileSync(templatePath, 'utf8');
-
-    // Replace placeholders
-    htmlTemplate = htmlTemplate.replace(/{{userName}}/g, userName);
-    htmlTemplate = htmlTemplate.replace(/{{resetLink}}/g, resetLink);
+    let htmlTemplate = '';
+    
+    if (fs.existsSync(templatePath)) {
+        htmlTemplate = fs.readFileSync(templatePath, 'utf8');
+        htmlTemplate = htmlTemplate.replace(/{{userName}}/g, userName || 'User');
+        htmlTemplate = htmlTemplate.replace(/{{resetLink}}/g, resetLink);
+    } else {
+        htmlTemplate = `
+            <h2>Password Reset Request</h2>
+            <p>Hi ${userName || 'User'},</p>
+            <p>You requested a password reset. Please click the link below to set a new password:</p>
+            <p><a href="${resetLink}">Reset Password</a></p>
+            <p>If you did not request this, please ignore this email.</p>
+        `;
+    }
 
     const mailOptions = {
-        from: `"${process.env.APP_NAME || 'ProjectFlow'}" <${process.env.EMAIL_USER}>`,
+        from: `"${process.env.APP_NAME || 'ProjectFlow'}" <${process.env.EMAIL_FROM || process.env.EMAIL_USER}>`,
         to,
         subject: 'Password Reset Request - ProjectFlow',
         html: htmlTemplate
@@ -129,11 +147,10 @@ const sendPasswordResetEmail = async ({ to, userName, resetLink }) => {
 
     try {
         const info = await getTransporter().sendMail(mailOptions);
-        console.log('✅ Password reset email sent:', info.messageId);
-        console.log('📧 To:', to);
+        logger.info(`✅ Password reset email sent to ${to} (MessageId: ${info.messageId})`);
         return { success: true, messageId: info.messageId };
     } catch (error) {
-        console.error('❌ Password reset email failed:', error);
+        logger.error('❌ Failed to send password reset email:', { error: error.message, to });
         throw new Error('Failed to send password reset email: ' + error.message);
     }
 };
@@ -141,5 +158,6 @@ const sendPasswordResetEmail = async ({ to, userName, resetLink }) => {
 module.exports = {
     sendInvitationEmail,
     sendPasswordResetEmail,
-    verifyEmailConfig
+    verifyEmailConfig,
+    getTransporter
 };
