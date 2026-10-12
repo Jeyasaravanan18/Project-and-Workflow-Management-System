@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { MessageSquare, Send, Loader, Bot, User, FileText, Trash2, Plus } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
@@ -147,7 +149,7 @@ const AIAssistant = () => {
             <ChatPanel>
                 <ChatHeader>
                     <BotAvatarBadge>
-                        <Bot size={22} color="#008060" />
+                        <Bot size={22} color="#1E40AF" />
                     </BotAvatarBadge>
                     <HeaderText>
                         <h2>IT Support AI Assistant</h2>
@@ -159,7 +161,7 @@ const AIAssistant = () => {
                     {messages.length === 0 ? (
                         <Welcome>
                             <WelcomeIconWrap>
-                                <Bot size={44} color="#008060" />
+                                <Bot size={44} color="#1E40AF" />
                             </WelcomeIconWrap>
                             <WelcomeTitle>How can I help you today?</WelcomeTitle>
                             <WelcomeSub>Select a prompt below or type your question to get instant guidance</WelcomeSub>
@@ -171,7 +173,7 @@ const AIAssistant = () => {
                                     ['How can I understand workload analytics?', 'Analytics insights'],
                                 ].map(([prompt, label]) => (
                                     <Sug key={label} onClick={() => setInputMessage(prompt)}>
-                                        <FileText size={16} color="#008060" />
+                                        <FileText size={16} color="#1E40AF" />
                                         <span>{label}</span>
                                     </Sug>
                                 ))}
@@ -186,13 +188,21 @@ const AIAssistant = () => {
                                 <MsgBody>
                                     {msg.loading ? (
                                         <ThinkingBubble>
-                                            <Loader className="spin" size={15} color="#008060" />
+                                            <Loader className="spin" size={15} color="#1E40AF" />
                                             <span>Thinking...</span>
                                         </ThinkingBubble>
                                     ) : (
                                         <>
                                             <Bubble $isUser={msg.role === 'user'} $error={msg.error}>
-                                                {msg.content}
+                                                {msg.role === 'user' || msg.error ? (
+                                                    msg.content
+                                                ) : (
+                                                    <MarkdownContent>
+                                                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                                            {msg.content}
+                                                        </ReactMarkdown>
+                                                    </MarkdownContent>
+                                                )}
                                             </Bubble>
                                             {msg.citations?.length > 0 && (
                                                 <CitationBox>
@@ -288,7 +298,7 @@ const NewChatBtn = styled.button`
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
     transition: all 0.2s;
-    &:hover { background: #008060; transform: scale(1.05); }
+    &:hover { background: #1E40AF; transform: scale(1.05); }
 `;
 
 const ConvList = styled.div`
@@ -304,11 +314,11 @@ const ConvItem = styled.div`
     border-radius: 10px;
     margin-bottom: 4px;
     cursor: pointer;
-    background: ${p => p.$active ? '#ecfdf5' : 'transparent'};
-    border: 1px solid ${p => p.$active ? '#a7f3d0' : 'transparent'};
+    background: ${p => p.$active ? '#EFF6FF' : 'transparent'};
+    border: 1px solid ${p => p.$active ? '#BFDBFE' : 'transparent'};
     position: relative;
     transition: all 0.15s;
-    &:hover { background: ${p => p.$active ? '#ecfdf5' : '#f8fafc'}; }
+    &:hover { background: ${p => p.$active ? '#EFF6FF' : '#f8fafc'}; }
 `;
 
 const ConvName = styled.div`
@@ -371,7 +381,7 @@ const ChatHeader = styled.div`
 const BotAvatarBadge = styled.div`
     width: 40px; height: 40px;
     border-radius: 12px;
-    background: #ecfdf5;
+    background: #EFF6FF;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
 `;
@@ -416,7 +426,7 @@ const Welcome = styled.div`
 const WelcomeIconWrap = styled.div`
     width: 72px; height: 72px;
     border-radius: 20px;
-    background: #ecfdf5;
+    background: #EFF6FF;
     display: flex; align-items: center; justify-content: center;
     margin-bottom: 8px;
 `;
@@ -461,10 +471,10 @@ const Sug = styled.button`
         color: #111827;
     }
     &:hover {
-        border-color: #008060;
-        background: #ecfdf5;
+        border-color: #1E40AF;
+        background: #EFF6FF;
         transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(0,128,96,0.08);
+        box-shadow: 0 4px 12px rgba(30,64,175,0.08);
     }
 `;
 
@@ -480,8 +490,8 @@ const Msg = styled.div`
 const MsgAvatar = styled.div`
     width: 32px; height: 32px;
     border-radius: 50%;
-    background: ${p => p.$isUser ? '#111827' : '#ecfdf5'};
-    color: ${p => p.$isUser ? '#ffffff' : '#008060'};
+    background: ${p => p.$isUser ? '#111827' : '#EFF6FF'};
+    color: ${p => p.$isUser ? '#ffffff' : '#1E40AF'};
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
 `;
@@ -505,7 +515,132 @@ const Bubble = styled.div`
            border-bottom-left-radius: 4px;`}
     font-size: 0.9rem;
     line-height: 1.6;
-    white-space: pre-wrap;
+    white-space: ${p => p.$isUser ? 'pre-wrap' : 'normal'};
+`;
+
+const MarkdownContent = styled.div`
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: #1f2937;
+
+    h1, h2, h3, h4, h5, h6 {
+        color: #111827;
+        font-weight: 700;
+        margin-top: 14px;
+        margin-bottom: 8px;
+        line-height: 1.35;
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+    h1 { font-size: 1.18rem; }
+    h2 { font-size: 1.05rem; }
+    h3 { font-size: 0.95rem; }
+    h4 { font-size: 0.9rem; }
+
+    p {
+        margin: 0 0 10px 0;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    ul, ol {
+        margin: 0 0 10px 0;
+        padding-left: 22px;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    ol {
+        list-style-type: decimal;
+    }
+    ul {
+        list-style-type: disc;
+    }
+    li {
+        margin-bottom: 4px;
+        &:last-child {
+            margin-bottom: 0;
+        }
+        & > p {
+            margin-bottom: 4px;
+        }
+    }
+
+    strong {
+        font-weight: 650;
+        color: #111827;
+    }
+    em {
+        font-style: italic;
+    }
+
+    code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.85em;
+        background: #f1f5f9;
+        color: #0f172a;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid #e2e8f0;
+    }
+    pre {
+        background: #0f172a;
+        color: #f8fafc;
+        padding: 12px 14px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 10px 0;
+        code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+            border: none;
+            font-size: 0.82rem;
+        }
+    }
+
+    blockquote {
+        margin: 8px 0;
+        padding: 6px 14px;
+        border-left: 3px solid #1E40AF;
+        background: #f8fafc;
+        color: #4b5563;
+        font-style: italic;
+        border-radius: 0 4px 4px 0;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+        font-size: 0.82rem;
+    }
+    th, td {
+        border: 1px solid #e5e7eb;
+        padding: 8px 10px;
+        text-align: left;
+    }
+    th {
+        background: #f9fafb;
+        font-weight: 600;
+        color: #111827;
+    }
+
+    a {
+        color: #1E40AF;
+        text-decoration: underline;
+        &:hover {
+            color: #1E3A8A;
+        }
+    }
+
+    hr {
+        border: none;
+        border-top: 1px solid #e5e7eb;
+        margin: 12px 0;
+    }
 `;
 
 const ThinkingBubble = styled.div`
@@ -526,8 +661,8 @@ const ThinkingBubble = styled.div`
 const CitationBox = styled.div`
     margin-top: 10px;
     padding: 12px 14px;
-    background: #ecfdf5;
-    border-left: 3px solid #008060;
+    background: #EFF6FF;
+    border-left: 3px solid #1E40AF;
     border-radius: 8px;
 `;
 
@@ -537,7 +672,7 @@ const CitHeader = styled.div`
     gap: 5px;
     font-size: 0.7rem;
     font-weight: 700;
-    color: #065f46;
+    color: #1E3A8A;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     margin-bottom: 6px;
@@ -551,8 +686,8 @@ const CitItem = styled.div`
 const CitTag = styled.span`
     display: inline-block;
     padding: 1px 6px;
-    background: #d1fae5;
-    color: #065f46;
+    background: #DBEAFE;
+    color: #1E3A8A;
     border-radius: 4px;
     font-size: 0.65rem;
     font-weight: 700;
@@ -564,13 +699,13 @@ const CitName = styled.div`
     display: inline;
     font-size: 0.8rem;
     font-weight: 600;
-    color: #065f46;
+    color: #1E3A8A;
 `;
 
 const CitExcerpt = styled.div`
     margin-top: 3px;
     font-size: 0.72rem;
-    color: #047857;
+    color: #1D4ED8;
     opacity: 0.9;
 `;
 
@@ -601,7 +736,7 @@ const ChatInput = styled.input`
     outline: none;
     transition: all 0.2s;
     &::placeholder { color: #9ca3af; }
-    &:focus { border-color: #008060; background: #ffffff; box-shadow: 0 0 0 3px rgba(0,128,96,0.1); }
+    &:focus { border-color: #1E40AF; background: #ffffff; box-shadow: 0 0 0 3px rgba(30,64,175,0.12); }
     &:disabled { opacity: 0.5; cursor: not-allowed; }
 `;
 
@@ -615,7 +750,7 @@ const SendBtn = styled.button`
     cursor: pointer;
     transition: all 0.2s;
     flex-shrink: 0;
-    &:hover:not(:disabled) { background: #008060; transform: translateY(-1px); }
+    &:hover:not(:disabled) { background: #1E40AF; transform: translateY(-1px); }
     &:disabled { background: #f1f5f9; color: #9ca3af; cursor: not-allowed; }
     .spin { animation: ${spin} 1s linear infinite; }
 `;

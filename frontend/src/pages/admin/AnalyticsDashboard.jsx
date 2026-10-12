@@ -631,7 +631,7 @@ const Spinner = styled.div`
   width: 44px;
   height: 44px;
   border: 3px solid #e5e7eb;
-  border-top-color: #008060;
+  border-top-color: #1E40AF;
   border-radius: 50%;
   animation: ${rotate} 0.8s linear infinite;
 `;
@@ -640,7 +640,7 @@ const SpinnerSmall = styled.div`
   width: 16px;
   height: 16px;
   border: 2px solid #e5e7eb;
-  border-top-color: #008060;
+  border-top-color: #1E40AF;
   border-radius: 50%;
   animation: ${rotate} 0.7s linear infinite;
   flex-shrink: 0;
@@ -817,7 +817,7 @@ const RefreshButton = styled.button`
   transition: all 0.2s;
 
   &:hover:not(:disabled) {
-    background: #008060;
+    background: #1E40AF;
   }
 
   &:disabled {
@@ -907,7 +907,7 @@ const NotificationAction = styled.button`
   transition: all 0.2s;
 
   &:hover {
-    background: #008060;
+    background: #1E40AF;
   }
 
   @media (max-width: 768px) {
@@ -969,7 +969,7 @@ const KPIIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #008060;
+  color: #1E40AF;
 `;
 
 const KPIContent = styled.div`
@@ -996,7 +996,7 @@ const KPILabel = styled.div`
 const KPITrend = styled.div`
   font-size: 0.75rem;
   color: ${(props) =>
-    props.$positive ? "#008060" : "#6b7280"};
+    props.$positive ? "#1E40AF" : "#6b7280"};
   font-weight: 500;
 `;
 
@@ -1037,7 +1037,7 @@ const ChartHeader = styled.div`
   }
 
   svg {
-    color: #008060;
+    color: #1E40AF;
   }
 `;
 
@@ -1125,8 +1125,8 @@ const CompletionBadge = styled.span`
   padding: 3px 10px;
   font-size: 0.75rem;
   font-weight: 600;
-  background: #ecfdf5;
-  color: #008060;
+  background: #EFF6FF;
+  color: #1E40AF;
   border-radius: 9999px;
 `;
 
@@ -1141,7 +1141,7 @@ const ProgressBar = styled.div`
 const ProgressFill = styled.div`
   height: 100%;
   width: ${(props) => props.$width}%;
-  background: #008060;
+  background: #1E40AF;
   border-radius: 9999px;
   transition: width 1s ease-out;
   animation: ${fillProgress} 1.4s ease-out;
@@ -1208,8 +1208,8 @@ const MetricIcon = styled.div`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  background: #ecfdf5 !important;
-  color: #008060 !important;
+  background: #EFF6FF !important;
+  color: #1E40AF !important;
 `;
 
 const MetricContent = styled.div`

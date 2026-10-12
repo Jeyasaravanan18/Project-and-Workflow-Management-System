@@ -392,8 +392,8 @@ const Input = styled.input`
     &:focus {
         outline: none;
         background: #ffffff;
-        border-color: #008060;
-        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.1);
+        border-color: #1E40AF;
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.12);
     }
 
     &:disabled {
@@ -417,8 +417,8 @@ const TextArea = styled.textarea`
     &:focus {
         outline: none;
         background: #ffffff;
-        border-color: #008060;
-        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.1);
+        border-color: #1E40AF;
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.12);
     }
 `;
 
@@ -443,8 +443,8 @@ const Select = styled.select`
     &:focus {
         outline: none;
         background: #ffffff;
-        border-color: #008060;
-        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.1);
+        border-color: #1E40AF;
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.12);
     }
 `;
 
@@ -458,11 +458,11 @@ const RoleBadge = styled.span`
     display: inline-block;
     padding: 4px 12px;
     background: ${props =>
-        props.role === 'admin' ? '#ecfdf5' :
+        props.role === 'admin' ? '#EFF6FF' :
             props.role === 'manager' ? '#fffbeb' : '#f1f5f9'
     };
     color: ${props =>
-        props.role === 'admin' ? '#008060' :
+        props.role === 'admin' ? '#1E40AF' :
             props.role === 'manager' ? '#b45309' : '#4b5563'
     };
     border-radius: 9999px;
@@ -486,7 +486,7 @@ const CheckboxLabel = styled.label`
     input[type="checkbox"] {
         width: 16px;
         height: 16px;
-        accent-color: #008060;
+        accent-color: #1E40AF;
         cursor: pointer;
     }
 
@@ -508,7 +508,7 @@ const SaveButton = styled.button`
     transition: all 0.2s;
 
     &:hover:not(:disabled) {
-        background: #008060;
+        background: #1E40AF;
         transform: translateY(-1px);
     }
 
@@ -520,7 +520,7 @@ const SaveButton = styled.button`
 
 const SuccessMessage = styled.div`
     padding: 12px 18px;
-    background: #ecfdf5;
+    background: #EFF6FF;
     border: 1px solid #a7f3d0;
     border-radius: 12px;
     color: #065f46;

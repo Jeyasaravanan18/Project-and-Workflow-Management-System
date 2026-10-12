@@ -705,7 +705,7 @@ const ActionButton = styled.button`
         color: white;
         border: none;
         &:hover {
-            background: #008060;
+            background: #1E40AF;
         }
     }
 
@@ -866,7 +866,7 @@ const SearchInput = styled.div`
         &:focus {
             outline: none;
             background: #ffffff;
-            border-color: #008060;
+            border-color: #1E40AF;
             width: 180px;
         }
 
@@ -892,13 +892,13 @@ const Tab = styled.button`
     font-weight: 500;
     cursor: pointer;
     border: none;
-    background: ${props => props.$active ? '#ecfdf5' : 'transparent'};
-    color: ${props => props.$active ? '#008060' : '#6b7280'};
+    background: ${props => props.$active ? '#EFF6FF' : 'transparent'};
+    color: ${props => props.$active ? '#1E40AF' : '#6b7280'};
     transition: all 0.15s;
 
     &:hover {
-        background: ${props => props.$active ? '#ecfdf5' : '#f8fafc'};
-        color: ${props => props.$active ? '#008060' : '#111827'};
+        background: ${props => props.$active ? '#EFF6FF' : '#f8fafc'};
+        color: ${props => props.$active ? '#1E40AF' : '#111827'};
     }
 `;
 
@@ -987,8 +987,8 @@ const StatusPill = styled.div`
                 `;
             case 'Optimal':
                 return `
-                    background: #ecfdf5;
-                    color: #008060;
+                    background: #EFF6FF;
+                    color: #1E40AF;
                     border: 1px solid #a7f3d0;
                 `;
             default:

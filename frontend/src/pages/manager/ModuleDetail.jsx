@@ -275,7 +275,7 @@ const Spinner = styled.div`
     width: 36px;
     height: 36px;
     border: 3px solid #e5e7eb;
-    border-top-color: #008060;
+    border-top-color: #1E40AF;
     border-radius: 50%;
     animation: ${rotate} 0.8s linear infinite;
 `;
@@ -295,7 +295,7 @@ const PrimaryButton = styled.button`
     transition: all 0.2s ease;
 
     &:hover {
-        background: #008060;
+        background: #1E40AF;
         transform: translateY(-1px);
     }
 `;
@@ -384,7 +384,7 @@ const ProgressLabel = styled.div`
 `;
 
 const ProgressValue = styled.span`
-    color: #008060;
+    color: #1E40AF;
 `;
 
 const ProgressBar = styled.div`
@@ -396,7 +396,7 @@ const ProgressBar = styled.div`
 
 const ProgressFill = styled.div`
     height: 100%;
-    background: #008060;
+    background: #1E40AF;
     border-radius: 9999px;
     transition: width 0.5s ease-out;
 `;
@@ -488,8 +488,8 @@ const ColumnTitle = styled.h3`
 `;
 
 const CountBadge = styled.span`
-    background: #ecfdf5;
-    color: #008060;
+    background: #EFF6FF;
+    color: #1E40AF;
     font-size: 0.75rem;
     font-weight: 700;
     padding: 2px 8px;

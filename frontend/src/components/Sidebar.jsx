@@ -315,7 +315,7 @@ const Brand = styled.div`
 const LogoIcon = styled.div`
     width: 34px;
     height: 34px;
-    background: #008060; /* Brevo Emerald Green */
+    background: #1E40AF; /* Enterprise Dark Blue */
     border-radius: 10px;
     display: flex; 
     align-items: center; 
@@ -323,7 +323,7 @@ const LogoIcon = styled.div`
     flex-shrink: 0;
     z-index: 10;
     position: relative;
-    box-shadow: 0 2px 6px rgba(0, 128, 96, 0.25);
+    box-shadow: 0 2px 6px rgba(30, 64, 175, 0.25);
     transition: transform 0.2s;
 
     &:hover {
@@ -366,7 +366,7 @@ const ToggleBtn = styled.button`
     z-index: 100;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 
-    &:hover { background: #ECFDF5; color: #008060; border-color: #008060; }
+    &:hover { background: #EFF6FF; color: #1E40AF; border-color: #1E40AF; }
 `;
 
 const NavScroller = styled.div`
@@ -453,11 +453,11 @@ const NavItem = styled(NavLink)`
     }
 
     &.active {
-        background: #ECFDF5; /* Brevo Light Emerald Pill */
-        color: #008060; /* Brevo Primary Emerald */
+        background: #EFF6FF; /* Dark Blue Light Tint */
+        color: #1E40AF; /* Dark Blue */
         font-weight: 600;
 
-        // Brevo active right-side pill indicator
+        // Active right-side pill indicator
         &::after {
             content: '';
             position: absolute;
@@ -465,7 +465,7 @@ const NavItem = styled(NavLink)`
             top: 20%;
             height: 60%;
             width: 3px;
-            background: #008060;
+            background: #1E40AF;
             border-radius: 4px 0 0 4px;
         }
     }
@@ -563,7 +563,7 @@ const ProfileCard = styled.div`
 const Avatar = styled.div`
     width: 34px; height: 34px;
     border-radius: 50%;
-    background: #008060;
+    background: #1E40AF;
     color: white;
     display: flex; align-items: center; justify-content: center;
     font-weight: 700;

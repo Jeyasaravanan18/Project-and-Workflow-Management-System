@@ -123,7 +123,7 @@ const HomeButton = styled.button`
     transition: all 0.15s ease;
 
     &:hover {
-        background: #008060;
+        background: #1E40AF;
     }
 `;
 

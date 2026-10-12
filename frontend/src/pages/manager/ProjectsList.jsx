@@ -352,7 +352,7 @@ const MainTitle = styled.h1`
     letter-spacing: -0.02em;
 
     .highlight {
-        color: #008060; /* Brevo Emerald */
+        color: #1E40AF; /* Brevo Emerald */
         display: inline;
     }
 `;
@@ -377,14 +377,14 @@ const StatBadge = styled.div`
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 
     ${props => props.$active && css`
-        color: #008060;
-        background: #ECFDF5;
+        color: #1E40AF;
+        background: #EFF6FF;
         border-color: #A7F3D0;
         
         .dot {
             width: 7px;
             height: 7px;
-            background: #008060;
+            background: #1E40AF;
             border-radius: 50%;
         }
     `}
@@ -419,8 +419,8 @@ const SearchWrapper = styled.div`
         color: #111827;
 
         &:focus {
-            border-color: #008060;
-            box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.1);
+            border-color: #1E40AF;
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
             width: 280px;
         }
 
@@ -469,17 +469,17 @@ const FilterGroup = styled.div`
 const FilterTab = styled.button`
     padding: 7px 16px;
     border-radius: 9999px;
-    border: 1px solid ${props => props.$isActive ? '#008060' : '#E5E7EB'};
-    background: ${props => props.$isActive ? '#ECFDF5' : '#ffffff'};
-    color: ${props => props.$isActive ? '#008060' : '#4B5563'};
+    border: 1px solid ${props => props.$isActive ? '#1E40AF' : '#E5E7EB'};
+    background: ${props => props.$isActive ? '#EFF6FF' : '#ffffff'};
+    color: ${props => props.$isActive ? '#1E40AF' : '#4B5563'};
     font-weight: 600;
     font-size: 0.8125rem;
     cursor: pointer;
     transition: all 0.15s ease;
 
     &:hover {
-        background: ${props => props.$isActive ? '#ECFDF5' : '#F9FAFB'};
-        color: ${props => props.$isActive ? '#008060' : '#111827'};
+        background: ${props => props.$isActive ? '#EFF6FF' : '#F9FAFB'};
+        color: ${props => props.$isActive ? '#1E40AF' : '#111827'};
     }
 `;
 

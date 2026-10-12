@@ -77,7 +77,7 @@ const AutomationTemplates = () => {
             {featuredTemplates.length > 0 && (
                 <FeaturedSection>
                     <SectionTitle>
-                        <TrendingUp size={18} color="#008060" />
+                        <TrendingUp size={18} color="#1E40AF" />
                         Featured Templates
                     </SectionTitle>
                     <TemplateGrid>
@@ -178,8 +178,8 @@ const Badge = styled.div`
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: #ecfdf5;
-    color: #008060;
+    background: #EFF6FF;
+    color: #1E40AF;
     padding: 4px 12px;
     border-radius: 9999px;
     font-size: 0.75rem;
@@ -242,9 +242,9 @@ const CategoryGroup = styled.div`
 
 const CategoryButton = styled.button`
     padding: 6px 14px;
-    background: ${props => props.$active ? '#008060' : '#ffffff'};
+    background: ${props => props.$active ? '#1E40AF' : '#ffffff'};
     color: ${props => props.$active ? '#ffffff' : '#374151'};
-    border: 1px solid ${props => props.$active ? '#008060' : '#e5e7eb'};
+    border: 1px solid ${props => props.$active ? '#1E40AF' : '#e5e7eb'};
     border-radius: 9999px;
     font-size: 0.8125rem;
     font-weight: 500;
@@ -252,8 +252,8 @@ const CategoryButton = styled.button`
     transition: all 0.15s ease;
 
     &:hover {
-        background: ${props => props.$active ? '#008060' : '#f8fafc'};
-        border-color: ${props => props.$active ? '#008060' : '#d1d5db'};
+        background: ${props => props.$active ? '#1E40AF' : '#f8fafc'};
+        border-color: ${props => props.$active ? '#1E40AF' : '#d1d5db'};
     }
 `;
 
@@ -277,7 +277,7 @@ const TemplateCard = styled.div`
     &:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        border-color: ${props => props.$featured ? '#008060' : '#cbd5e1'};
+        border-color: ${props => props.$featured ? '#1E40AF' : '#cbd5e1'};
     }
 `;
 
@@ -285,8 +285,8 @@ const FeaturedBadge = styled.div`
     position: absolute;
     top: 14px;
     right: 14px;
-    background: #ecfdf5;
-    color: #008060;
+    background: #EFF6FF;
+    color: #1E40AF;
     border: 1px solid #a7f3d0;
     padding: 2px 8px;
     border-radius: 9999px;
@@ -356,7 +356,7 @@ const UseButton = styled.button`
     transition: all 0.15s ease;
 
     &:hover {
-        background: #008060;
+        background: #1E40AF;
     }
 `;
 

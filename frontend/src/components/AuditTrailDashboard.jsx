@@ -425,7 +425,7 @@ const Header = styled.div`
     gap: 14px;
 
     svg {
-      color: #008060;
+      color: #1E40AF;
     }
 
     h1 {
@@ -459,7 +459,7 @@ const ExportBtn = styled.button`
   transition: all 0.15s ease;
 
   &:hover {
-    background: #008060;
+    background: #1E40AF;
   }
 `;
 
@@ -566,8 +566,8 @@ const FilterGroup = styled.div`
     color: #111827;
 
     &:focus {
-      border-color: #008060;
-      box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.12);
+      border-color: #1E40AF;
+      box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.12);
     }
   }
 `;
@@ -585,7 +585,7 @@ const ApplyBtn = styled.button`
   transition: all 0.15s ease;
 
   &:hover {
-    background: #008060;
+    background: #1E40AF;
   }
 `;
 
@@ -749,8 +749,8 @@ const Pagination = styled.div`
 
       &:hover:not(:disabled) {
         background: #f8fafc;
-        border-color: #008060;
-        color: #008060;
+        border-color: #1E40AF;
+        color: #1E40AF;
       }
 
       &:disabled {
@@ -778,7 +778,7 @@ const LoadingState = styled.div`
     width: 36px;
     height: 36px;
     border: 3px solid #e2e8f0;
-    border-top-color: #008060;
+    border-top-color: #1E40AF;
     border-radius: 50%;
     animation: ${spin} 0.8s linear infinite;
     margin-bottom: 16px;

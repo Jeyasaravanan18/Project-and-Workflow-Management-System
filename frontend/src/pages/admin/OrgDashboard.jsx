@@ -178,7 +178,7 @@ const OrgDashboard = () => {
                         <StepBox onClick={() => navigate('/projects')}>
                             <StepNumberBox>
                                 <svg width="44" height="60" viewBox="0 0 44 60" fill="none">
-                                    <path d="M14 16 L26 8 L26 56 L16 56" stroke="#008060" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path d="M14 16 L26 8 L26 56 L16 56" stroke="#1E40AF" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" />
                                     <path d="M10 24 C10 10, 28 6, 36 18 C38 32, 16 38, 10 24 Z" fill="#D1FAE5" opacity="0.6" />
                                 </svg>
                             </StepNumberBox>
@@ -196,7 +196,7 @@ const OrgDashboard = () => {
                         <StepBox onClick={() => navigate('/admin/automations')}>
                             <StepNumberBox>
                                 <svg width="44" height="60" viewBox="0 0 44 60" fill="none">
-                                    <path d="M10 18 C12 8, 34 8, 34 22 C34 34, 12 40, 10 52 L36 52" stroke="#008060" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path d="M10 18 C12 8, 34 8, 34 22 C34 34, 12 40, 10 52 L36 52" stroke="#1E40AF" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
                                     <path d="M26 12 C36 12, 42 26, 34 38 C28 42, 18 36, 26 12 Z" fill="#D1FAE5" opacity="0.6" />
                                 </svg>
                             </StepNumberBox>
@@ -220,10 +220,10 @@ const OrgDashboard = () => {
                     <CalloutVisual>
                         <svg width="84" height="84" viewBox="0 0 84 84" fill="none">
                             <rect x="14" y="22" width="46" height="42" rx="6" fill="#FEF3C7" opacity="0.7"/>
-                            <rect x="26" y="14" width="46" height="42" rx="6" fill="#ECFDF5" stroke="#A7F3D0" strokeWidth="1.5"/>
-                            <path d="M36 44 L44 34 L54 40 L64 26" stroke="#008060" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            <circle cx="64" cy="26" r="3.5" fill="#008060" />
-                            <circle cx="42" cy="62" r="12" fill="#008060" />
+                            <rect x="26" y="14" width="46" height="42" rx="6" fill="#EFF6FF" stroke="#A7F3D0" strokeWidth="1.5"/>
+                            <path d="M36 44 L44 34 L54 40 L64 26" stroke="#1E40AF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <circle cx="64" cy="26" r="3.5" fill="#1E40AF" />
+                            <circle cx="42" cy="62" r="12" fill="#1E40AF" />
                         </svg>
                     </CalloutVisual>
                     <CalloutContent>
@@ -245,7 +245,7 @@ const OrgDashboard = () => {
                             <span className="count">{stats.activeProjects} active out of {stats.projectsCount || 1}</span>
                         </UsageItemHeader>
                         <ProgressBar>
-                            <ProgressFill $percent={Math.min(100, Math.round((stats.activeProjects / (stats.projectsCount || 1)) * 100))} $color="#008060" />
+                            <ProgressFill $percent={Math.min(100, Math.round((stats.activeProjects / (stats.projectsCount || 1)) * 100))} $color="#1E40AF" />
                         </ProgressBar>
                     </UsageItem>
 
@@ -273,8 +273,8 @@ const OrgDashboard = () => {
 
             {/* Pinned Cards Bar */}
             <PinnedCardsBar allCards={[
-                { id: 'stat-team-members',   title: 'Team Members',   value: stats.usersCount,     subtitle: 'Total active users',       color: '#008060' },
-                { id: 'stat-active-projects',title: 'Active Projects', value: stats.activeProjects,  subtitle: `of ${stats.projectsCount} total`, color: '#008060' },
+                { id: 'stat-team-members',   title: 'Team Members',   value: stats.usersCount,     subtitle: 'Total active users',       color: '#1E40AF' },
+                { id: 'stat-active-projects',title: 'Active Projects', value: stats.activeProjects,  subtitle: `of ${stats.projectsCount} total`, color: '#1E40AF' },
                 { id: 'stat-active-tasks',   title: 'Active Tasks',   value: stats.tasksCount,     subtitle: 'Currently in progress',    color: '#4F46E5' },
                 { id: 'stat-completion-rate',title: 'Completion Rate', value: `${completionRate}%`, subtitle: 'Project velocity',          color: '#10B981' },
             ]} />
@@ -285,7 +285,7 @@ const OrgDashboard = () => {
                 <LeftSection>
                     <ChartCard>
                         <CardHeader>
-                            <BarChart3 size={20} color="#008060" />
+                            <BarChart3 size={20} color="#1E40AF" />
                             <h3>Team Workload Distribution</h3>
                         </CardHeader>
 
@@ -301,7 +301,7 @@ const OrgDashboard = () => {
                                     <SummaryValue>{workloadSummary.overloaded}</SummaryValue>
                                 </SummaryItem>
                                 <SummaryDivider />
-                                <SummaryItem color="#008060">
+                                <SummaryItem color="#1E40AF">
                                     <SummaryLabel>Optimal</SummaryLabel>
                                     <SummaryValue>{workloadSummary.optimal}</SummaryValue>
                                 </SummaryItem>
@@ -321,7 +321,7 @@ const OrgDashboard = () => {
                                         data={workloadData}
                                         type="bar"
                                         dataKey="tasks"
-                                        color="#008060"
+                                        color="#1E40AF"
                                     />
                                 </ChartWrapper>
                             </>
@@ -338,7 +338,7 @@ const OrgDashboard = () => {
                 <RightSection>
                     <ActivityCard>
                         <CardHeader>
-                            <Activity size={20} color="#008060" />
+                            <Activity size={20} color="#1E40AF" />
                             <h3>Recent Activity</h3>
                         </CardHeader>
                         {recentActivity.length === 0 ? (
@@ -567,7 +567,7 @@ const StepBox = styled.div`
     &:hover {
         background: #ffffff;
         border-color: #A7F3D0;
-        box-shadow: 0 4px 12px rgba(0, 128, 96, 0.08);
+        box-shadow: 0 4px 12px rgba(30, 64, 175, 0.08);
         transform: translateY(-2px);
     }
 `;
@@ -700,7 +700,7 @@ const ProgressBar = styled.div`
 const ProgressFill = styled.div`
     height: 100%;
     width: ${props => props.$percent}%;
-    background: ${props => props.$color || '#008060'};
+    background: ${props => props.$color || '#1E40AF'};
     border-radius: 9999px;
     transition: width 0.4s ease;
 `;
@@ -736,7 +736,7 @@ const ActivityDot = styled.div`
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #008060;
+    background: #1E40AF;
     margin-top: 6px;
     flex-shrink: 0;
 `;
@@ -796,7 +796,7 @@ const Spinner = styled.div`
     width: 44px;
     height: 44px;
     border: 3px solid #E5E7EB;
-    border-top-color: #008060;
+    border-top-color: #1E40AF;
     border-radius: 50%;
     animation: ${rotate} 0.8s linear infinite;
 `;

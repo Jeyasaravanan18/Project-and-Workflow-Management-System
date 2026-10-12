@@ -66,7 +66,7 @@ const Code = styled.div`
     line-height: 1;
     letter-spacing: -0.04em;
     margin-bottom: 16px;
-    background: linear-gradient(135deg, #008060 0%, #a7f3d0 100%);
+    background: linear-gradient(135deg, #1E40AF 0%, #60A5FA 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 `;
@@ -109,7 +109,7 @@ const PrimaryBtn = styled.button`
     transition: all 0.15s ease;
 
     &:hover {
-        background: #008060;
+        background: #1E40AF;
     }
 `;
 

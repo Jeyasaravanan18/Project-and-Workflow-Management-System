@@ -35,7 +35,7 @@ const AutomationHistory = () => {
     const getStatusIcon = (status) => {
         switch (status) {
             case 'completed':
-                return <CheckCircle size={18} color="#008060" />;
+                return <CheckCircle size={18} color="#1E40AF" />;
             case 'failed':
                 return <XCircle size={18} color="#dc2626" />;
             case 'partial':
@@ -48,7 +48,7 @@ const AutomationHistory = () => {
     const getStatusBadgeStyle = (status) => {
         switch (status) {
             case 'completed':
-                return { bg: '#ecfdf5', color: '#008060', border: '#a7f3d0' };
+                return { bg: '#EFF6FF', color: '#1E40AF', border: '#a7f3d0' };
             case 'failed':
                 return { bg: '#fef2f2', color: '#dc2626', border: '#fecaca' };
             case 'partial':
@@ -194,8 +194,8 @@ const Badge = styled.div`
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: #ecfdf5;
-    color: #008060;
+    background: #EFF6FF;
+    color: #1E40AF;
     padding: 4px 12px;
     border-radius: 9999px;
     font-size: 0.75rem;
@@ -319,14 +319,14 @@ const StepNumber = styled.div`
     flex-shrink: 0;
     background: ${props => {
         switch (props.$status) {
-            case 'completed': return '#ecfdf5';
+            case 'completed': return '#EFF6FF';
             case 'failed': return '#fef2f2';
             default: return '#f1f5f9';
         }
     }};
     color: ${props => {
         switch (props.$status) {
-            case 'completed': return '#008060';
+            case 'completed': return '#1E40AF';
             case 'failed': return '#dc2626';
             default: return '#64748b';
         }
@@ -356,7 +356,7 @@ const StepStatus = styled.div`
     font-size: 0.75rem;
     color: ${props => {
         switch (props.$status) {
-            case 'completed': return '#008060';
+            case 'completed': return '#1E40AF';
             case 'failed': return '#dc2626';
             default: return '#64748b';
         }

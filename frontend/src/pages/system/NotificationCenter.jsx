@@ -200,7 +200,7 @@ const LoadingContainer = styled.div`
     .spinner {
         width: 40px; height: 40px;
         border: 3px solid #e5e7eb;
-        border-top-color: #008060;
+        border-top-color: #1E40AF;
         border-radius: 50%;
         animation: ${spinAnim} 0.8s linear infinite;
     }
@@ -239,7 +239,7 @@ const Title = styled.h1`
 
 const BellWrapper = styled.div`
     position: relative;
-    color: #008060;
+    color: #1E40AF;
 `;
 
 const Badge = styled.span`
@@ -277,7 +277,7 @@ const ActionButton = styled.button`
     cursor: pointer;
     transition: all 0.2s;
     &:hover {
-        background: #008060;
+        background: #1E40AF;
         transform: translateY(-1px);
     }
 `;
@@ -313,11 +313,11 @@ const FilterTab = styled.button`
     font-weight: 500;
     cursor: pointer;
     transition: all 0.15s;
-    background: ${p => p.$active ? '#ecfdf5' : 'transparent'};
-    color: ${p => p.$active ? '#008060' : '#4b5563'};
+    background: ${p => p.$active ? '#EFF6FF' : 'transparent'};
+    color: ${p => p.$active ? '#1E40AF' : '#4b5563'};
     &:hover {
-        background: ${p => p.$active ? '#ecfdf5' : '#f8fafc'};
-        color: ${p => p.$active ? '#008060' : '#111827'};
+        background: ${p => p.$active ? '#EFF6FF' : '#f8fafc'};
+        color: ${p => p.$active ? '#1E40AF' : '#111827'};
     }
 `;
 
@@ -350,8 +350,8 @@ const NotifItem = styled.div`
     align-items: center;
     gap: 16px;
     padding: 16px 20px;
-    background: ${p => p.$isRead ? '#ffffff' : '#f0fdf4'};
-    border: 1px solid ${p => p.$isRead ? '#e5e7eb' : '#bbf7d0'};
+    background: ${p => p.$isRead ? '#ffffff' : '#f0f7ff'};
+    border: 1px solid ${p => p.$isRead ? '#e5e7eb' : '#bfdbfe'};
     border-radius: 12px;
     cursor: pointer;
     position: relative;
@@ -362,7 +362,7 @@ const NotifItem = styled.div`
     animation-delay: ${p => p.$delay}s;
 
     &:hover {
-        background: ${p => p.$isRead ? '#f8fafc' : '#ecfdf5'};
+        background: ${p => p.$isRead ? '#f8fafc' : '#EFF6FF'};
         border-color: #cbd5e1;
         transform: translateY(-1px);
         .actions { opacity: 1; transform: translateX(0); }
@@ -428,11 +428,11 @@ const EmptyState = styled.div`
     border-radius: 14px;
     .icon {
         width: 56px; height: 56px;
-        background: #ecfdf5;
+        background: #EFF6FF;
         border-radius: 16px;
         display: flex; align-items: center; justify-content: center;
         margin: 0 auto 16px;
-        color: #008060;
+        color: #1E40AF;
     }
     h3 { margin: 0 0 6px; color: #111827; font-size: 1.05rem; font-weight: 700; }
     p { margin: 0; font-size: 0.85rem; }

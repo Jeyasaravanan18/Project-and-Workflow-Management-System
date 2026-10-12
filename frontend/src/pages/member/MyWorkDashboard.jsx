@@ -566,7 +566,7 @@ const Spinner = styled.div`
     width: 44px;
     height: 44px;
     border: 3px solid #e5e7eb;
-    border-top-color: #008060;
+    border-top-color: #1E40AF;
     border-radius: 50%;
     animation: ${rotate} 0.8s linear infinite;
 `;
@@ -598,7 +598,7 @@ const WelcomeText = styled.h1`
 `;
 
 const NameHighlight = styled.span`
-    color: #008060;
+    color: #1E40AF;
 `;
 
 const SubText = styled.p`
@@ -756,7 +756,7 @@ const CardTitle = styled.h3`
         }
         
         &.success {
-            color: #008060;
+            color: #1E40AF;
         }
     }
 
@@ -780,7 +780,7 @@ const CircleBackground = styled.circle`
 
 const CircleProgress = styled.circle`
     fill: none;
-    stroke: #008060;
+    stroke: #1E40AF;
     stroke-width: 10;
     stroke-linecap: round;
     stroke-dasharray: 377;
@@ -831,8 +831,8 @@ const FocusCard = styled(CardBase)`
 `;
 
 const CountBadge = styled.span`
-    background: #ecfdf5;
-    color: #008060;
+    background: #EFF6FF;
+    color: #1E40AF;
     padding: 3px 10px;
     border-radius: 9999px;
     font-size: 0.75rem;
@@ -860,7 +860,7 @@ const FocusItem = styled.div`
     animation-delay: ${props => props.$delay}s;
 
     &:hover {
-        background: #ecfdf5;
+        background: #EFF6FF;
         border-color: #a7f3d0;
         transform: translateX(2px);
     }
@@ -873,7 +873,7 @@ const FocusItem = styled.div`
 const FocusDot = styled.div`
     width: 8px;
     height: 8px;
-    background: #008060;
+    background: #1E40AF;
     border-radius: 50%;
     flex-shrink: 0;
     box-shadow: 0 0 0 3px #d1fae5;
@@ -906,7 +906,7 @@ const EmptyFocus = styled.div`
     color: #9ca3af;
 
     svg {
-        color: #008060;
+        color: #1E40AF;
         margin-bottom: 10px;
     }
 
@@ -1040,7 +1040,7 @@ const TaskAction = styled.div`
     transition: color 0.2s ease;
 
     ${TaskItem}:hover & {
-        color: #008060;
+        color: #1E40AF;
     }
 `;
 
@@ -1049,7 +1049,7 @@ const TimerButton = styled.button`
     align-items: center;
     gap: 6px;
     padding: 6px 14px;
-    background: ${props => props.$active ? '#008060' : '#f1f5f9'};
+    background: ${props => props.$active ? '#1E40AF' : '#f1f5f9'};
     color: ${props => props.$active ? 'white' : '#475569'};
     border: none;
     border-radius: 9999px;
@@ -1212,7 +1212,7 @@ const CompletedItem = styled.div`
     opacity: 0;
 
     &:hover {
-        border-color: #008060;
+        border-color: #1E40AF;
         background: #f8fafc;
     }
 
@@ -1228,7 +1228,7 @@ const CompletedCheckmark = styled.div`
     justify-content: center;
     font-size: 2rem;
     font-weight: 700;
-    color: #008060;
+    color: #1E40AF;
     margin: 0;
 `;
 
@@ -1246,8 +1246,8 @@ const CompletedTitle = styled.h3`
 
 const CompletedMeta = styled(TaskMeta)`
     .success {
-        background: #ecfdf5;
-        color: #008060;
+        background: #EFF6FF;
+        color: #1E40AF;
     }
 `;
 
@@ -1265,7 +1265,7 @@ const ExpandButton = styled.button`
     transition: all 0.2s ease;
 
     &:hover {
-        background: #008060;
+        background: #1E40AF;
     }
 `;
 
@@ -1288,7 +1288,7 @@ const TaskCheckbox = styled.button`
 
     &:hover {
         background: #f1f5f9;
-        color: #008060;
+        color: #1E40AF;
     }
 `;
 
@@ -1336,7 +1336,7 @@ const BulkBtn = styled.button`
         ? '#ef4444'
         : props.$ghost
             ? 'rgba(255, 255, 255, 0.1)'
-            : '#008060'};
+            : '#1E40AF'};
     color: white;
 
     &:hover {

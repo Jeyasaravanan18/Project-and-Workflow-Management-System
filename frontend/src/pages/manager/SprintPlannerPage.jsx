@@ -12,12 +12,12 @@ import {
 const PRIORITY_MAP = {
     critical: { color: '#DC2626', bg: '#FEF2F2', label: 'Critical' },
     high:     { color: '#F97316', bg: '#FFF7ED', label: 'High' },
-    medium:   { color: '#008060', bg: '#ECFDF5', label: 'Medium' },
+    medium:   { color: '#1E40AF', bg: '#EFF6FF', label: 'Medium' },
     low:      { color: '#6B7280', bg: '#F3F4F6', label: 'Low' },
 };
 
 const RISK_MAP = {
-    low:    { color: '#008060', label: 'Low Risk', icon: Shield },
+    low:    { color: '#1E40AF', label: 'Low Risk', icon: Shield },
     medium: { color: '#F59E0B', label: 'Medium Risk', icon: AlertTriangle },
     high:   { color: '#DC2626', label: 'High Risk', icon: AlertTriangle },
 };
@@ -456,8 +456,8 @@ const HeroBadge = styled.div`
     gap: 6px;
     padding: 4px 12px;
     border-radius: 9999px;
-    background: #ECFDF5;
-    color: #008060;
+    background: #EFF6FF;
+    color: #1E40AF;
     font-size: 11px;
     font-weight: 700;
     text-transform: uppercase;
@@ -486,12 +486,12 @@ const HeroIcon = styled.div`
     width: 80px;
     height: 80px;
     border-radius: 20px;
-    background: #008060;
+    background: #1E40AF;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    box-shadow: 0 4px 14px rgba(0, 128, 96, 0.25);
+    box-shadow: 0 4px 14px rgba(30, 64, 175, 0.25);
     flex-shrink: 0;
 `;
 
@@ -556,8 +556,8 @@ const Select = styled.select`
     transition: all 0.2s;
 
     &:focus { 
-        border-color: #008060;
-        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.1);
+        border-color: #1E40AF;
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
     }
 `;
 
@@ -570,16 +570,16 @@ const DurationBtn = styled.button`
     flex: 1;
     padding: 8px;
     border-radius: 8px;
-    border: 1px solid ${p => p.$active ? '#008060' : '#E5E7EB'};
-    background: ${p => p.$active ? '#ECFDF5' : '#ffffff'};
-    color: ${p => p.$active ? '#008060' : '#4B5563'};
+    border: 1px solid ${p => p.$active ? '#1E40AF' : '#E5E7EB'};
+    background: ${p => p.$active ? '#EFF6FF' : '#ffffff'};
+    color: ${p => p.$active ? '#1E40AF' : '#4B5563'};
     font-weight: 600;
     font-size: 0.8125rem;
     cursor: pointer;
     transition: all 0.15s ease;
 
     &:hover { 
-        background: ${p => p.$active ? '#ECFDF5' : '#F9FAFB'};
+        background: ${p => p.$active ? '#EFF6FF' : '#F9FAFB'};
     }
 `;
 
@@ -595,8 +595,8 @@ const DateInput = styled.input`
     box-sizing: border-box;
 
     &:focus { 
-        border-color: #008060;
-        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.1);
+        border-color: #1E40AF;
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
     }
 `;
 

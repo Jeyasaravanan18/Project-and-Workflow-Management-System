@@ -73,7 +73,7 @@ const PersonalPerformance = () => {
 
             <TopGrid>
                 <MetricCard $delay={0.1}>
-                    <IconBox $color="#008060" $bg="#ecfdf5">
+                    <IconBox $color="#1E40AF" $bg="#eff6ff">
                         <CheckCircle2 size={22} />
                     </IconBox>
                     <MetricContent>
@@ -117,16 +117,16 @@ const PersonalPerformance = () => {
                 <LeftCol>
                     <Card $delay={0.5}>
                         <CardHeader>
-                            <CardTitle><TrendingUp size={18} color="#008060" /> Productivity Velocity</CardTitle>
+                            <CardTitle><TrendingUp size={18} color="#1E40AF" /> Productivity Velocity</CardTitle>
                             <CardSub>Tasks completed per week</CardSub>
                         </CardHeader>
                         <ChartBox>
                             <ResponsiveContainer width="100%" height="100%">
                                 <AreaChart data={velocityTrend}>
                                     <defs>
-                                        <linearGradient id="colorCompEmerald" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="5%" stopColor="#008060" stopOpacity={0.25}/>
-                                            <stop offset="95%" stopColor="#008060" stopOpacity={0.0}/>
+                                        <linearGradient id="colorCompBlue" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="5%" stopColor="#1E40AF" stopOpacity={0.25}/>
+                                            <stop offset="95%" stopColor="#1E40AF" stopOpacity={0.0}/>
                                         </linearGradient>
                                     </defs>
                                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
@@ -135,7 +135,7 @@ const PersonalPerformance = () => {
                                     <Tooltip 
                                         contentStyle={{ borderRadius: '10px', border: '1px solid #e5e7eb', boxShadow: '0 4px 12px rgba(0,0,0,0.06)' }}
                                     />
-                                    <Area type="monotone" dataKey="completed" stroke="#008060" strokeWidth={2.5} fillOpacity={1} fill="url(#colorCompEmerald)" />
+                                    <Area type="monotone" dataKey="completed" stroke="#1E40AF" strokeWidth={2.5} fillOpacity={1} fill="url(#colorCompBlue)" />
                                 </AreaChart>
                             </ResponsiveContainer>
                         </ChartBox>
@@ -143,7 +143,7 @@ const PersonalPerformance = () => {
 
                     <Card $delay={0.6}>
                         <CardHeader>
-                            <CardTitle><LayoutDashboard size={18} color="#008060" /> Top Priorities</CardTitle>
+                            <CardTitle><LayoutDashboard size={18} color="#1E40AF" /> Top Priorities</CardTitle>
                             <CardSub>Curated based on deadlines and task impact</CardSub>
                         </CardHeader>
                         <List>
@@ -236,7 +236,7 @@ const Spinner = styled.div`
     width: 36px;
     height: 36px;
     border: 3px solid #e2e8f0;
-    border-top-color: #008060;
+    border-top-color: #1E40AF;
     border-radius: 50%;
     animation: ${spin} 0.8s linear infinite;
 `;
@@ -255,14 +255,14 @@ const Badge = styled.div`
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: #ecfdf5;
-    color: #008060;
+    background: #eff6ff;
+    color: #1E40AF;
     padding: 4px 10px;
     border-radius: 9999px;
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.02em;
-    border: 1px solid #a7f3d0;
+    border: 1px solid #bfdbfe;
     margin-bottom: 8px;
 `;
 
@@ -281,11 +281,10 @@ const Subtitle = styled.p`
 `;
 
 const EfficiencyScore = styled.div`
-    background: #ffffff;
     padding: 14px 22px;
     border-radius: 14px;
-    border: 1px solid #a7f3d0;
-    background: #ecfdf5;
+    border: 1px solid #bfdbfe;
+    background: #eff6ff;
     text-align: center;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 `;
@@ -293,14 +292,14 @@ const EfficiencyScore = styled.div`
 const ScoreValue = styled.div`
     font-size: 1.875rem;
     font-weight: 800;
-    color: #008060;
+    color: #1E40AF;
     line-height: 1;
 `;
 
 const ScoreLabel = styled.div`
     font-size: 0.72rem;
     font-weight: 600;
-    color: #065f46;
+    color: #1E3A8A;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     margin-top: 4px;
@@ -339,7 +338,7 @@ const IconBox = styled.div`
     height: 48px;
     border-radius: 12px;
     background: ${props => props.$bg || '#f1f5f9'};
-    color: ${props => props.$color || '#008060'};
+    color: ${props => props.$color || '#1E40AF'};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -459,7 +458,7 @@ const AICard = styled.div`
     padding: 24px;
     border-radius: 14px;
     border: 1px solid #a7f3d0;
-    background: linear-gradient(180deg, #ecfdf5 0%, #ffffff 100%);
+    background: linear-gradient(180deg, #EFF6FF 0%, #ffffff 100%);
     box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     animation: ${fadeIn} 0.4s ease-out backwards;
     animation-delay: ${props => props.$delay}s;
@@ -482,7 +481,7 @@ const SparkleIcon = styled.div`
     width: 32px;
     height: 32px;
     border-radius: 8px;
-    background: #008060;
+    background: #1E40AF;
     color: #ffffff;
     display: flex;
     align-items: center;
@@ -500,14 +499,14 @@ const NextTaskBox = styled.div`
     background: #ffffff;
     padding: 16px;
     border-radius: 10px;
-    border: 1px solid #d1fae5;
+    border: 1px solid #dbeafe;
     box-shadow: 0 1px 3px rgba(0,0,0,0.02);
 `;
 
 const NextLabel = styled.div`
     font-size: 0.72rem;
     font-weight: 700;
-    color: #008060;
+    color: #1E40AF;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     margin-bottom: 6px;
@@ -534,7 +533,7 @@ const NextActionBtn = styled.button`
     cursor: pointer;
     transition: all 0.15s;
     &:hover {
-        background: #008060;
+        background: #1E40AF;
     }
 `;
 
@@ -544,7 +543,7 @@ const AIFooter = styled.div`
     align-items: center;
     gap: 6px;
     font-size: 0.72rem;
-    color: #059669;
+    color: #1D4ED8;
 `;
 
 const MilestoneCard = styled(Card)``;
@@ -565,7 +564,7 @@ const MilestoneDot = styled.div`
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: ${props => props.$completed ? '#008060' : '#cbd5e1'};
+    background: ${props => props.$completed ? '#1E40AF' : '#cbd5e1'};
 `;
 
 const MilestoneText = styled.span`

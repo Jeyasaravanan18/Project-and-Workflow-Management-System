@@ -7,12 +7,12 @@ const ThemeContext = createContext();
 export const lightTheme = {
     mode: 'light',
     bg: {
-        primary: '#F8FAFC', // Brevo crisp soft background
+        primary: '#F8FAFC', // Crisp soft background
         secondary: '#FFFFFF', // Card layer
         tertiary: '#F1F5F9', // Subtle accent background
         card: '#FFFFFF',
         hover: '#F8FAFC',
-        activeLight: '#ECFDF5', // Brevo light emerald badge/active
+        activeLight: '#EFF6FF', // Light blue active/badge (blue-50)
     },
     text: {
         primary: '#111827', // Crisp dark text
@@ -20,12 +20,12 @@ export const lightTheme = {
         tertiary: '#9CA3AF', // Muted text
     },
     border: '#E5E7EB', // Subtle neutral border
-    borderFocus: '#008060',
+    borderFocus: '#1E40AF',
     accent: {
-        primary: '#008060', // Brevo Emerald Green
-        secondary: '#006D52', // Darker emerald hover
-        light: '#ECFDF5', // Light green tag/badge
-        dark: '#111827', // High-contrast Brevo action black
+        primary: '#1E40AF', // Enterprise Dark Blue
+        secondary: '#1E3A8A', // Dark navy hover
+        light: '#EFF6FF', // Light blue tag/badge
+        dark: '#111827', // High-contrast action dark
         success: '#10B981',
         danger: '#EF4444',
         warning: '#F59E0B',
@@ -53,7 +53,7 @@ export const darkTheme = {
         tertiary: '#1E293B',
         card: '#131B2A',
         hover: '#1E293B',
-        activeLight: 'rgba(0, 128, 96, 0.15)',
+        activeLight: 'rgba(30, 64, 175, 0.25)',
     },
     text: {
         primary: '#F9FAFB',
@@ -61,11 +61,11 @@ export const darkTheme = {
         tertiary: '#64748B',
     },
     border: '#1E293B',
-    borderFocus: '#10B981',
+    borderFocus: '#3B82F6',
     accent: {
-        primary: '#10B981',
-        secondary: '#059669',
-        light: 'rgba(16, 185, 129, 0.15)',
+        primary: '#3B82F6',
+        secondary: '#1D4ED8',
+        light: 'rgba(59, 130, 246, 0.15)',
         dark: '#F9FAFB',
         success: '#10B981',
         danger: '#F87171',

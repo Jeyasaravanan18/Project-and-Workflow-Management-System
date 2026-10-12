@@ -451,7 +451,7 @@ const ProjectMeta = styled.div`
         .avatar {
             width: 24px; height: 24px;
             background: white;
-            color: #008060;
+            color: #1E40AF;
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             font-size: 0.75rem; font-weight: 700;
@@ -526,7 +526,7 @@ const BentoCard = styled.div`
     `}
     
     ${props => props.$type === 'success' && css`
-        border-bottom: 3px solid #008060;
+        border-bottom: 3px solid #1E40AF;
     `}
 `;
 
@@ -665,8 +665,8 @@ const ModuleCard = styled.div`
     cursor: pointer;
 
     &:hover {
-        border-color: #008060;
-        box-shadow: 0 4px 12px rgba(0, 128, 96, 0.08);
+        border-color: #1E40AF;
+        box-shadow: 0 4px 12px rgba(30, 64, 175, 0.08);
         transform: translateY(-2px);
     }
 

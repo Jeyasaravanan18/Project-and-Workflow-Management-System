@@ -535,8 +535,8 @@ const SearchInput = styled.input`
   }
 
   &:focus {
-    border-color: #008060;
-    box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.1);
+    border-color: #1E40AF;
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
   }
 
   @media (max-width: 768px) {
@@ -591,7 +591,7 @@ const SectionTitle = styled.h2`
   color: #111827;
 
   svg {
-    color: #008060;
+    color: #1E40AF;
   }
 `;
 

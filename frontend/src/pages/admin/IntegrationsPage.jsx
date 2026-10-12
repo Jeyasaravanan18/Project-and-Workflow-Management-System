@@ -594,8 +594,8 @@ const HeroIconWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #ecfdf5;
-    color: #008060;
+    background: #EFF6FF;
+    color: #1E40AF;
     flex-shrink: 0;
 `;
 
@@ -638,7 +638,7 @@ const StatBadge = styled.div`
 const StatValue = styled.div`
     font-size: 1.4rem;
     font-weight: 700;
-    color: #008060;
+    color: #1E40AF;
     line-height: 1;
     margin-bottom: 0.25rem;
 `;
@@ -674,8 +674,8 @@ const SearchBar = styled.div`
     transition: all 0.2s;
 
     &:focus-within {
-        border-color: #008060;
-        box-shadow: 0 0 0 3px rgba(0,128,96,0.1);
+        border-color: #1E40AF;
+        box-shadow: 0 0 0 3px rgba(30, 64, 175,0.1);
     }
 
     svg { color: #9ca3af; }
@@ -713,8 +713,8 @@ const CategoryTab = styled.button`
     gap: 0.5rem;
     padding: 0 1rem;
     height: 40px;
-    background: ${props => props.$active ? '#ecfdf5' : '#ffffff'};
-    color: ${props => props.$active ? '#008060' : '#4b5563'};
+    background: ${props => props.$active ? '#EFF6FF' : '#ffffff'};
+    color: ${props => props.$active ? '#1E40AF' : '#4b5563'};
     border: 1px solid ${props => props.$active ? '#a7f3d0' : '#e5e7eb'};
     border-radius: 9999px;
     font-weight: 500;
@@ -724,7 +724,7 @@ const CategoryTab = styled.button`
     white-space: nowrap;
 
     &:hover {
-        background: ${props => props.$active ? '#ecfdf5' : '#f8fafc'};
+        background: ${props => props.$active ? '#EFF6FF' : '#f8fafc'};
         border-color: ${props => props.$active ? '#a7f3d0' : '#cbd5e1'};
     }
 `;
@@ -735,7 +735,7 @@ const CategoryIconWrapper = styled.div`
     justify-content: center;
     width: 20px;
     height: 20px;
-    color: ${props => props.$active ? '#008060' : props.$color};
+    color: ${props => props.$active ? '#1E40AF' : props.$color};
 
     svg {
         width: 15px;
@@ -765,8 +765,8 @@ const IntegrationCard = styled.div`
     height: 100%;
 
     &:hover {
-        border-color: #008060;
-        box-shadow: 0 6px 18px rgba(0,128,96,0.06);
+        border-color: #1E40AF;
+        box-shadow: 0 6px 18px rgba(30, 64, 175,0.06);
         transform: translateY(-2px);
     }
 `;
@@ -775,8 +775,8 @@ const PopularBadge = styled.div`
     position: absolute;
     top: 16px;
     right: 16px;
-    background: #ecfdf5;
-    color: #008060;
+    background: #EFF6FF;
+    color: #1E40AF;
     padding: 3px 10px;
     font-size: 0.72rem;
     font-weight: 600;
@@ -855,8 +855,8 @@ const StatusBadge = styled.div`
     width: fit-content;
     
     ${props => props.$status === 'connected' && `
-        background: #ecfdf5;
-        color: #008060;
+        background: #EFF6FF;
+        color: #1E40AF;
     `}
     
     ${props => props.$status === 'error' && `
@@ -897,7 +897,7 @@ const Feature = styled.div`
     &:last-child { margin-bottom: 0; }
 
     svg {
-        color: #008060;
+        color: #1E40AF;
         flex-shrink: 0;
         width: 14px;
         height: 14px;
@@ -928,7 +928,7 @@ const PrimaryButton = styled.button`
     transition: all 0.2s;
 
     &:hover {
-        background: #008060;
+        background: #1E40AF;
         transform: translateY(-1px);
     }
 `;
@@ -999,8 +999,8 @@ const DocLink = styled.a`
     transition: all 0.2s;
 
     &:hover {
-        color: #008060;
-        border-color: #008060;
+        color: #1E40AF;
+        border-color: #1E40AF;
     }
 `;
 
@@ -1170,8 +1170,8 @@ const Input = styled.input`
     &:focus {
         outline: none;
         background: #ffffff;
-        border-color: #008060;
-        box-shadow: 0 0 0 3px rgba(0,128,96,0.1);
+        border-color: #1E40AF;
+        box-shadow: 0 0 0 3px rgba(30, 64, 175,0.1);
     }
     
     &::placeholder {
@@ -1185,7 +1185,7 @@ const OAuthPlaceholder = styled.div`
     color: #6b7280;
 
     svg {
-        color: #008060;
+        color: #1E40AF;
         margin-bottom: 1rem;
     }
 
@@ -1224,7 +1224,7 @@ const LogHeader = styled.div`
     color: #6b7280;
     margin-bottom: 0.6rem;
     
-    svg { color: #008060; }
+    svg { color: #1E40AF; }
 `;
 
 const LogList = styled.div`
@@ -1252,10 +1252,10 @@ const LogDot = styled.div`
     
     background: ${props => {
         switch(props.$status) {
-            case 'success': return '#008060';
+            case 'success': return '#1E40AF';
             case 'error': return '#ef4444';
             case 'warning': return '#f59e0b';
-            default: return '#008060';
+            default: return '#1E40AF';
         }
     }};
 `;
@@ -1332,7 +1332,7 @@ const HealthSegment = styled.div`
     border-radius: 9999px;
     background: ${props => {
         switch(props.$status) {
-            case 'connected': return '#008060';
+            case 'connected': return '#1E40AF';
             case 'error': return '#ef4444';
             case 'pending': return '#f59e0b';
             default: return '#94a3b8';

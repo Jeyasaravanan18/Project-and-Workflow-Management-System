@@ -523,8 +523,8 @@ const Badge = styled.div`
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: #ecfdf5;
-    color: #008060;
+    background: #EFF6FF;
+    color: #1E40AF;
     padding: 4px 12px;
     border-radius: 9999px;
     font-size: 0.75rem;
@@ -568,7 +568,7 @@ const SaveButton = styled.button`
     transition: all 0.15s ease;
 
     &:hover:not(:disabled) {
-        background: #008060;
+        background: #1E40AF;
     }
 
     &:disabled {
@@ -592,9 +592,9 @@ const TestButton = styled.button`
     transition: all 0.15s ease;
 
     &:hover {
-        border-color: #008060;
-        color: #008060;
-        background: #ecfdf5;
+        border-color: #1E40AF;
+        color: #1E40AF;
+        background: #EFF6FF;
     }
 `;
 
@@ -628,8 +628,8 @@ const StepNumber = styled.span`
     justify-content: center;
     width: 28px;
     height: 28px;
-    background: #ecfdf5;
-    color: #008060;
+    background: #EFF6FF;
+    color: #1E40AF;
     border: 1px solid #a7f3d0;
     border-radius: 50%;
     font-size: 0.8125rem;
@@ -665,8 +665,8 @@ const Input = styled.input`
 
     &:focus {
         outline: none;
-        border-color: #008060;
-        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.12);
+        border-color: #1E40AF;
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.12);
     }
 `;
 
@@ -685,8 +685,8 @@ const TextArea = styled.textarea`
 
     &:focus {
         outline: none;
-        border-color: #008060;
-        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.12);
+        border-color: #1E40AF;
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.12);
     }
 `;
 
@@ -704,8 +704,8 @@ const Select = styled.select`
 
     &:focus {
         outline: none;
-        border-color: #008060;
-        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.12);
+        border-color: #1E40AF;
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.12);
     }
 `;
 
@@ -737,7 +737,7 @@ const AddButton = styled.button`
     gap: 6px;
     padding: 10px 16px;
     background: #ffffff;
-    color: #008060;
+    color: #1E40AF;
     border: 1px dashed #a7f3d0;
     border-radius: 10px;
     font-weight: 600;
@@ -747,8 +747,8 @@ const AddButton = styled.button`
     width: 100%;
 
     &:hover {
-        background: #ecfdf5;
-        border-color: #008060;
+        background: #EFF6FF;
+        border-color: #1E40AF;
     }
 `;
 
@@ -815,14 +815,14 @@ const ActionTypeButton = styled.button`
     transition: all 0.15s ease;
 
     &:hover {
-        border-color: #008060;
-        color: #008060;
-        background: #ecfdf5;
+        border-color: #1E40AF;
+        color: #1E40AF;
+        background: #EFF6FF;
     }
 `;
 
 const VariableHint = styled.div`
-    background: #ecfdf5;
+    background: #EFF6FF;
     border: 1px solid #a7f3d0;
     border-radius: 12px;
     padding: 14px 18px;
@@ -836,7 +836,7 @@ const VariableHint = styled.div`
         border-radius: 6px;
         border: 1px solid #a7f3d0;
         font-family: monospace;
-        color: #008060;
+        color: #1E40AF;
         font-size: 0.8rem;
     }
 `;

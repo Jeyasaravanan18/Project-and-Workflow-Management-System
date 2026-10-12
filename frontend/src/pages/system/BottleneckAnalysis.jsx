@@ -258,7 +258,7 @@ const PageWrapper = styled.div`
 const LoadingState = styled.div`
     height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
     color: #6b7280;
-    .spinner { width: 40px; height: 40px; border: 3px solid #e5e7eb; border-top-color: #008060; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 16px; }
+    .spinner { width: 40px; height: 40px; border: 3px solid #e5e7eb; border-top-color: #1E40AF; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 16px; }
 `;
 
 const HeroSection = styled.div`
@@ -284,7 +284,7 @@ const HeroContent = styled.div`
 
 const Badge = styled.div`
     display: flex; align-items: center; gap: 6px;
-    padding: 4px 12px; background: #ecfdf5; color: #008060;
+    padding: 4px 12px; background: #EFF6FF; color: #1E40AF;
     border-radius: 9999px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;
 `;
 
@@ -293,7 +293,7 @@ const RefreshButton = styled.button`
     padding: 8px 18px; background: #111827; border: none;
     border-radius: 9999px; font-weight: 500; font-size: 0.85rem; color: #ffffff;
     cursor: pointer; transition: all 0.2s;
-    &:hover { background: #008060; transform: translateY(-1px); }
+    &:hover { background: #1E40AF; transform: translateY(-1px); }
     .spin { animation: spin 1s linear infinite; }
 `;
 
@@ -389,7 +389,7 @@ const GlassCard = styled.div`
 `;
 
 const RecommendationPanel = styled(GlassCard)`
-    background: #ecfdf5; border: 1px solid #a7f3d0;
+    background: #EFF6FF; border: 1px solid #a7f3d0;
     .rec-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; color: #065f46; 
         h3 { font-size: 0.95rem; font-weight: 700; margin: 0; }
         .badge { 
@@ -397,7 +397,7 @@ const RecommendationPanel = styled(GlassCard)`
             font-size: 0.65rem; 
             font-weight: 700; 
             padding: 3px 8px; 
-            background: #008060;
+            background: #1E40AF;
             color: white; 
             border-radius: 9999px; 
             text-transform: uppercase; 
@@ -410,14 +410,14 @@ const RecList = styled.div`display: flex; flex-direction: column; gap: 14px;`;
 
 const RecCard = styled.div`
     display: flex; gap: 14px; align-items: flex-start;
-    .rec-number { width: 22px; height: 22px; border-radius: 50%; background: #008060; color: white; font-weight: 700; font-size: 0.72rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .rec-number { width: 22px; height: 22px; border-radius: 50%; background: #1E40AF; color: white; font-weight: 700; font-size: 0.72rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
     h4 { margin: 0 0 3px; font-size: 0.9rem; font-weight: 600; color: #111827; }
-    p { margin: 0; font-size: 0.8rem; color: #047857; line-height: 1.4; }
+    p { margin: 0; font-size: 0.8rem; color: #1D4ED8; line-height: 1.4; }
 `;
 
 const EmptyState = styled.div`
     text-align: center; color: #9ca3af;
-    .icon-success { width: 56px; height: 56px; background: #ecfdf5; color: #008060; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+    .icon-success { width: 56px; height: 56px; background: #EFF6FF; color: #1E40AF; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
     h3 { color: #111827; margin-bottom: 4px; font-size: 1.1rem; }
 `;
 
@@ -432,7 +432,7 @@ const TableHeader = styled.div`
 
 const StyledSelect = styled.select`
     padding: 7px 14px; border-radius: 9999px; border: 1px solid #e5e7eb; font-size: 0.825rem; outline: none; background: white; cursor: pointer; color: #111827;
-    &:focus { border-color: #008060; }
+    &:focus { border-color: #1E40AF; }
 `;
 
 const Table = styled.table`

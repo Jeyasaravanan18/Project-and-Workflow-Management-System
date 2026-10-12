@@ -1,4 +1,4 @@
-import { Bell, Search, ChevronDown, Settings, LogOut, User, Sparkles, Activity, HelpCircle, Building2 } from 'lucide-react';
+import { Bell, Search, ChevronDown, Settings, LogOut, User, Sparkles, HelpCircle, Building2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -39,15 +39,9 @@ const TopBar = () => {
             <RightSection>
                 {/* Ask AI Pill Button */}
                 <AIPillButton onClick={() => navigate('/ai-assistant')}>
-                    <Sparkles size={15} color="#4F46E5" />
+                    <Sparkles size={15} color="#1E40AF" />
                     <span>Ask AI</span>
                 </AIPillButton>
-
-                {/* Usage & Plan Link */}
-                <NavPillLink onClick={() => navigate('/analytics/workload')}>
-                    <Activity size={15} />
-                    <span>Usage and plan</span>
-                </NavPillLink>
 
                 {/* Notifications */}
                 <IconButton onClick={() => navigate('/notifications')} title="Notifications">
@@ -155,25 +149,6 @@ const AIPillButton = styled.button`
     }
 `;
 
-const NavPillLink = styled.button`
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 10px;
-    background: transparent;
-    border: none;
-    border-radius: 8px;
-    color: #4B5563;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.15s ease;
-
-    &:hover {
-        background: #F3F4F6;
-        color: #111827;
-    }
-`;
 
 const IconButton = styled.button`
     width: 36px;
@@ -294,7 +269,7 @@ const RoleBadge = styled.span`
     display: inline-block;
     margin-top: 6px;
     padding: 2px 8px;
-    background: #ECFDF5;
+    background: #EFF6FF;
     color: #065F46;
     border-radius: 9999px;
     font-size: 0.6875rem;

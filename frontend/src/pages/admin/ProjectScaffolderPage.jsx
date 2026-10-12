@@ -21,8 +21,8 @@ const Badge = styled.div`
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: #ecfdf5;
-    color: #008060;
+    background: #EFF6FF;
+    color: #1E40AF;
     padding: 4px 12px;
     border-radius: 9999px;
     font-size: 0.75rem;
@@ -81,8 +81,8 @@ const Select = styled.select`
 
     &:focus {
         outline: none;
-        border-color: #008060;
-        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.12);
+        border-color: #1E40AF;
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.12);
     }
 
     &:disabled {
@@ -107,8 +107,8 @@ const TextArea = styled.textarea`
 
     &:focus {
         outline: none;
-        border-color: #008060;
-        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.12);
+        border-color: #1E40AF;
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.12);
     }
 
     &:disabled {
@@ -135,7 +135,7 @@ const GenerateBtn = styled.button`
     margin-top: 10px;
 
     &:hover:not(:disabled) {
-        background: #008060;
+        background: #1E40AF;
     }
 
     &:disabled {
@@ -164,14 +164,14 @@ const ResultTitle = styled.h3`
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #008060;
+    color: #1E40AF;
     font-size: 1.125rem;
     font-weight: 700;
     margin: 0 0 12px 0;
 `;
 
 const ResultStat = styled.div`
-    background: #ecfdf5;
+    background: #EFF6FF;
     padding: 14px 18px;
     border-radius: 10px;
     text-align: center;
@@ -189,7 +189,7 @@ const ResultStat = styled.div`
     .value {
         font-size: 1.5rem;
         font-weight: 700;
-        color: #008060;
+        color: #1E40AF;
         margin-top: 2px;
     }
 `;
@@ -275,7 +275,7 @@ const ViewProjectBtn = styled.button`
     transition: all 0.15s ease;
 
     &:hover {
-        background: #008060;
+        background: #1E40AF;
     }
 `;
 
@@ -422,7 +422,7 @@ const ProjectScaffolderPage = () => {
                                     <TaskList>
                                         {mod.tasks?.map((t, tIdx) => (
                                             <TaskItem key={tIdx}>
-                                                <CheckCircle size={14} color="#008060" />
+                                                <CheckCircle size={14} color="#1E40AF" />
                                                 <span>{t.title}</span>
                                                 <span className="priority">{t.priority}</span>
                                                 <span className="hours">{t.estimatedHours}h</span>

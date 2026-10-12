@@ -87,7 +87,7 @@ const Integrations = () => {
         };
         return (
             <IconBtn onClick={handleCopy} title="Copy">
-                {copied ? <Check size={14} color="#008060" /> : <Copy size={14} />}
+                {copied ? <Check size={14} color="#1E40AF" /> : <Copy size={14} />}
             </IconBtn>
         );
     };
@@ -211,9 +211,9 @@ const Tab = styled.button`
     align-items: center;
     gap: 6px;
     padding: 7px 16px;
-    background: ${props => props.$active ? '#008060' : '#ffffff'};
+    background: ${props => props.$active ? '#1E40AF' : '#ffffff'};
     color: ${props => props.$active ? '#ffffff' : '#374151'};
-    border: 1px solid ${props => props.$active ? '#008060' : '#e5e7eb'};
+    border: 1px solid ${props => props.$active ? '#1E40AF' : '#e5e7eb'};
     border-radius: 9999px;
     font-size: 0.8125rem;
     font-weight: 500;
@@ -221,8 +221,8 @@ const Tab = styled.button`
     transition: all 0.15s ease;
 
     &:hover {
-        background: ${props => props.$active ? '#008060' : '#f8fafc'};
-        border-color: ${props => props.$active ? '#008060' : '#d1d5db'};
+        background: ${props => props.$active ? '#1E40AF' : '#f8fafc'};
+        border-color: ${props => props.$active ? '#1E40AF' : '#d1d5db'};
     }
 `;
 
@@ -248,8 +248,8 @@ const Input = styled.input`
 
     &:focus {
         outline: none;
-        border-color: #008060;
-        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.12);
+        border-color: #1E40AF;
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.12);
     }
 `;
 
@@ -266,7 +266,7 @@ const Button = styled.button`
     white-space: nowrap;
     
     &:hover:not(:disabled) {
-        background: #008060;
+        background: #1E40AF;
     }
 
     &:disabled {
@@ -320,8 +320,8 @@ const Actions = styled.div`
 const Status = styled.span`
     font-size: 0.72rem;
     font-weight: 600;
-    color: ${props => props.$active ? '#008060' : '#dc2626'};
-    background: ${props => props.$active ? '#ecfdf5' : '#fef2f2'};
+    color: ${props => props.$active ? '#1E40AF' : '#dc2626'};
+    background: ${props => props.$active ? '#EFF6FF' : '#fef2f2'};
     border: 1px solid ${props => props.$active ? '#a7f3d0' : '#fecaca'};
     padding: 3px 10px;
     border-radius: 9999px;

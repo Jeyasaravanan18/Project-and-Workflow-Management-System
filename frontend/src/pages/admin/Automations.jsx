@@ -136,17 +136,17 @@ const Automations = () => {
                             {/* Sun/Moon circle */}
                             <circle cx="270" cy="70" r="28" fill="#FEF3C7" opacity="0.7"/>
                             {/* Trees / Leaves */}
-                            <path d="M70 160 C70 100, 110 80, 130 160 Z" fill="#008060" />
+                            <path d="M70 160 C70 100, 110 80, 130 160 Z" fill="#1E40AF" />
                             <path d="M110 160 C120 110, 160 90, 180 160 Z" fill="#D1FAE5" />
                             <path d="M250 160 C260 120, 290 100, 310 160 Z" fill="#A7F3D0" />
                             {/* Rolling hill */}
-                            <path d="M20 170 Q 180 130, 340 170 L340 200 L20 200 Z" fill="#ECFDF5" />
-                            <path d="M20 180 Q 180 150, 340 180" stroke="#008060" strokeWidth="1.5" fill="none" />
+                            <path d="M20 170 Q 180 130, 340 170 L340 200 L20 200 Z" fill="#EFF6FF" />
+                            <path d="M20 180 Q 180 150, 340 180" stroke="#1E40AF" strokeWidth="1.5" fill="none" />
                             {/* Sitting character stylized */}
-                            <circle cx="210" cy="105" r="12" fill="#D1FAE5" stroke="#008060" strokeWidth="1.5" />
-                            <path d="M202 118 C202 118, 205 142, 225 142" stroke="#008060" strokeWidth="1.5" fill="none" />
-                            <path d="M202 122 L220 122 L225 150" fill="#008060" />
-                            <path d="M195 150 L225 150 L245 165" stroke="#008060" strokeWidth="1.5" fill="none" />
+                            <circle cx="210" cy="105" r="12" fill="#D1FAE5" stroke="#1E40AF" strokeWidth="1.5" />
+                            <path d="M202 118 C202 118, 205 142, 225 142" stroke="#1E40AF" strokeWidth="1.5" fill="none" />
+                            <path d="M202 122 L220 122 L225 150" fill="#1E40AF" />
+                            <path d="M195 150 L225 150 L245 165" stroke="#1E40AF" strokeWidth="1.5" fill="none" />
                             {/* Sparkles */}
                             <path d="M260 95 L263 90 L266 95 L271 98 L266 101 L263 106 L260 101 L255 98 Z" fill="#34D399" />
                         </svg>
@@ -164,7 +164,7 @@ const Automations = () => {
                             <CardHeader>
                                 <CardTitle>
                                     <IconBox $enabled={automation.enabled}>
-                                        <Zap size={18} color={automation.enabled ? '#008060' : '#9CA3AF'} />
+                                        <Zap size={18} color={automation.enabled ? '#1E40AF' : '#9CA3AF'} />
                                     </IconBox>
                                     <div>
                                         <NameText>{automation.name}</NameText>
@@ -192,7 +192,7 @@ const Automations = () => {
                                     {automation.lastRun && (
                                         <StatItem>
                                             {automation.lastRunStatus === 'success' ? (
-                                                <CheckCircle size={14} color="#008060" />
+                                                <CheckCircle size={14} color="#1E40AF" />
                                             ) : (
                                                 <XCircle size={14} color="#EF4444" />
                                             )}
@@ -322,8 +322,8 @@ const SearchInputWrapper = styled.div`
     transition: border-color 0.2s;
 
     &:focus-within {
-        border-color: #008060;
-        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.1);
+        border-color: #1E40AF;
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
     }
 
     input {
@@ -444,7 +444,7 @@ const IconBox = styled.div`
     width: 36px;
     height: 36px;
     border-radius: 10px;
-    background: ${props => props.$enabled ? '#ECFDF5' : '#F3F4F6'};
+    background: ${props => props.$enabled ? '#EFF6FF' : '#F3F4F6'};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -471,8 +471,8 @@ const StatusPill = styled.span`
     border-radius: 9999px;
     font-size: 0.75rem;
     font-weight: 600;
-    background: ${props => props.$enabled ? '#ECFDF5' : '#F3F4F6'};
-    color: ${props => props.$enabled ? '#008060' : '#6B7280'};
+    background: ${props => props.$enabled ? '#EFF6FF' : '#F3F4F6'};
+    color: ${props => props.$enabled ? '#1E40AF' : '#6B7280'};
 `;
 
 const CardDescription = styled.p`
@@ -514,7 +514,7 @@ const SwitchToggle = styled.button`
     width: 36px;
     height: 20px;
     border-radius: 9999px;
-    background: ${props => props.$checked ? '#008060' : '#D1D5DB'};
+    background: ${props => props.$checked ? '#1E40AF' : '#D1D5DB'};
     border: none;
     position: relative;
     cursor: pointer;
