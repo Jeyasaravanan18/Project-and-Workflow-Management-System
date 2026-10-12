@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Lock, ArrowLeft, Loader2, CheckCircle2, Eye, EyeOff, AlertCircle } from 'lucide-react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 
 const ResetPassword = () => {
-    const { token } = useParams();
+    const { token: paramToken } = useParams();
+    const [searchParams] = useSearchParams();
+    const token = paramToken || searchParams.get('token');
     const navigate = useNavigate();
 
     const [password, setPassword] = useState('');
@@ -15,16 +17,36 @@ const ResetPassword = () => {
     const [status, setStatus] = useState('idle'); // idle, loading, success, error
     const [error, setError] = useState('');
 
+    useEffect(() => {
+        if (!token) {
+            setError('No reset token found in URL. Please click the full link in your email.');
+        }
+    }, [token]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!token) {
+            setError('Missing reset token. Please request a new password reset link.');
+            return;
+        }
 
         if (password !== confirmPassword) {
             setError('Passwords do not match');
             return;
         }
 
-        if (password.length < 6) {
-            setError('Password must be at least 6 characters');
+        if (password.length < 8) {
+            setError('Password must be at least 8 characters long');
+            return;
+        }
+
+        const hasUpper = /[A-Z]/.test(password);
+        const hasLower = /[a-z]/.test(password);
+        const hasNumber = /\d/.test(password);
+
+        if (!hasUpper || !hasLower || !hasNumber) {
+            setError('Password must contain at least one uppercase letter, one lowercase letter, and one number');
             return;
         }
 
@@ -41,7 +63,11 @@ const ResetPassword = () => {
             }, 3000);
         } catch (err) {
             setStatus('error');
-            setError(err.response?.data?.message || 'Failed to reset password. Link may be invalid or expired.');
+            const serverMsg =
+                err.response?.data?.message ||
+                err.response?.data?.error?.message ||
+                'Failed to reset password. Link may be invalid or expired.';
+            setError(serverMsg);
         }
     };
 

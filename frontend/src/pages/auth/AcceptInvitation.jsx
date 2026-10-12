@@ -109,7 +109,11 @@ const AcceptInvitation = () => {
                 status: err.response?.status,
                 fullError: err
             });
-            setError(err.response?.data?.message || 'Failed to accept invitation');
+            const serverMsg =
+                err.response?.data?.message ||
+                err.response?.data?.error?.message ||
+                'Failed to accept invitation';
+            setError(serverMsg);
         } finally {
             setLoading(false);
         }

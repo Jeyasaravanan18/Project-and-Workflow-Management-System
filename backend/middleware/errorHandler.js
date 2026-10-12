@@ -85,6 +85,7 @@ const sendErrorProd = (err, req, res) => {
 
         res.status(err.statusCode).json({
             success: false,
+            message: err.message,
             error: {
                 message: err.message,
                 code: err.errorCode

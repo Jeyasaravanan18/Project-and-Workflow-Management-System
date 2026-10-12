@@ -350,20 +350,22 @@ const forgotPassword = catchAsync(async (req, res, next) => {
 // @desc    Reset Password
 const resetPassword = catchAsync(async (req, res, next) => {
     const crypto = require('crypto');
+    const rawToken = (req.params.resetToken || '').trim();
 
     // Get hashed token
     const resetPasswordToken = crypto
         .createHash('sha256')
-        .update(req.params.resetToken)
+        .update(rawToken)
         .digest('hex');
 
-    const user = await User.findOne({
-        resetPasswordToken,
-        resetPasswordExpire: { $gt: Date.now() }
-    });
+    const user = await User.findOne({ resetPasswordToken });
 
     if (!user) {
-        throw new AuthenticationError('Invalid token');
+        throw new AuthenticationError('Invalid reset token. Please request a new password reset link.');
+    }
+
+    if (!user.resetPasswordExpire || user.resetPasswordExpire < Date.now()) {
+        throw new AuthenticationError('Password reset link has expired. Please request a new link.');
     }
 
     // Set new password
@@ -372,12 +374,10 @@ const resetPassword = catchAsync(async (req, res, next) => {
     user.resetPasswordExpire = undefined;
     await user.save();
 
-    // Log user in immediately? Or ask to login? 
-    // Usually asking to login is safer/standard.
-
     res.status(200).json({
         success: true,
-        data: 'Password updated success'
+        message: 'Password updated successfully',
+        data: 'Password updated successfully'
     });
 });
 
