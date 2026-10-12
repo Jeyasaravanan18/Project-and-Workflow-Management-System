@@ -274,24 +274,25 @@ const Profile = () => {
 
 // Styled Components
 const Container = styled.div`
-    padding: 24px;
-    max-width: 1200px;
+    padding: 8px 0 40px 0;
+    max-width: 1000px;
     margin: 0 auto;
 `;
 
 const Header = styled.div`
-    margin-bottom: 32px;
+    margin-bottom: 28px;
 `;
 
 const Title = styled.h1`
-    font-size: 28px;
+    font-size: 1.85rem;
     font-weight: 700;
-    color: #1f2937;
-    margin: 0 0 8px;
+    color: #111827;
+    letter-spacing: -0.02em;
+    margin: 0 0 6px;
 `;
 
 const Subtitle = styled.p`
-    font-size: 14px;
+    font-size: 0.9rem;
     color: #6b7280;
     margin: 0;
 `;
@@ -302,16 +303,18 @@ const Content = styled.div`
 `;
 
 const Section = styled.div`
-    background: white;
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 28px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 `;
 
 const SectionTitle = styled.h2`
-    font-size: 18px;
-    font-weight: 600;
-    color: #1f2937;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #111827;
+    letter-spacing: -0.01em;
     margin: 0 0 20px;
 `;
 
@@ -323,32 +326,33 @@ const AvatarSection = styled.div`
     gap: 20px;
     margin-bottom: 24px;
     padding-bottom: 24px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #f1f5f9;
 `;
 
 const Avatar = styled.img`
-    width: 96px;
-    height: 96px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #e5e7eb;
+    border: 2px solid #e5e7eb;
 `;
 
 const AvatarUpload = styled.div``;
 
 const UploadButton = styled.button`
-    padding: 8px 16px;
-    background: #f3f4f6;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 14px;
+    padding: 8px 18px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 9999px;
+    font-size: 13px;
     font-weight: 500;
     color: #374151;
     cursor: pointer;
     transition: all 0.2s;
 
     &:hover {
-        background: #e5e7eb;
+        background: #f1f5f9;
+        border-color: #cbd5e1;
     }
 `;
 
@@ -369,7 +373,7 @@ const FormGroup = styled.div`
 
 const Label = styled.label`
     display: block;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     color: #374151;
     margin-bottom: 6px;
@@ -378,19 +382,22 @@ const Label = styled.label`
 const Input = styled.input`
     width: 100%;
     padding: 10px 14px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
     font-size: 14px;
+    background: #f8fafc;
+    color: #111827;
     transition: all 0.2s;
 
     &:focus {
         outline: none;
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        background: #ffffff;
+        border-color: #008060;
+        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.1);
     }
 
     &:disabled {
-        background: #f9fafb;
+        background: #f1f5f9;
         cursor: not-allowed;
     }
 `;
@@ -398,23 +405,26 @@ const Input = styled.input`
 const TextArea = styled.textarea`
     width: 100%;
     padding: 10px 14px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
     font-size: 14px;
+    background: #f8fafc;
+    color: #111827;
     font-family: inherit;
     resize: vertical;
     transition: all 0.2s;
 
     &:focus {
         outline: none;
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        background: #ffffff;
+        border-color: #008060;
+        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.1);
     }
 `;
 
 const CharCount = styled.div`
     font-size: 12px;
-    color: #6b7280;
+    color: #9ca3af;
     text-align: right;
     margin-top: 4px;
 `;
@@ -422,37 +432,40 @@ const CharCount = styled.div`
 const Select = styled.select`
     width: 100%;
     padding: 10px 14px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
     font-size: 14px;
-    background: white;
+    background: #f8fafc;
+    color: #111827;
     cursor: pointer;
+    transition: all 0.2s;
 
     &:focus {
         outline: none;
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        background: #ffffff;
+        border-color: #008060;
+        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.1);
     }
 `;
 
 const Hint = styled.p`
     font-size: 12px;
-    color: #6b7280;
+    color: #9ca3af;
     margin: 4px 0 0;
 `;
 
 const RoleBadge = styled.span`
     display: inline-block;
-    padding: 6px 12px;
+    padding: 4px 12px;
     background: ${props =>
-        props.role === 'admin' ? '#dbeafe' :
-            props.role === 'manager' ? '#fef3c7' : '#e0e7ff'
+        props.role === 'admin' ? '#ecfdf5' :
+            props.role === 'manager' ? '#fffbeb' : '#f1f5f9'
     };
     color: ${props =>
-        props.role === 'admin' ? '#1e40af' :
-            props.role === 'manager' ? '#92400e' : '#3730a3'
+        props.role === 'admin' ? '#008060' :
+            props.role === 'manager' ? '#b45309' : '#4b5563'
     };
-    border-radius: 6px;
+    border-radius: 9999px;
     font-size: 12px;
     font-weight: 600;
 `;
@@ -467,12 +480,13 @@ const PreferenceItem = styled.div``;
 const CheckboxLabel = styled.label`
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     cursor: pointer;
 
     input[type="checkbox"] {
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
+        accent-color: #008060;
         cursor: pointer;
     }
 
@@ -483,42 +497,42 @@ const CheckboxLabel = styled.label`
 `;
 
 const SaveButton = styled.button`
-    padding: 10px 20px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 10px 22px;
+    background: #111827;
     color: white;
     border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
 
     &:hover:not(:disabled) {
+        background: #008060;
         transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
     }
 
     &:disabled {
-        opacity: 0.6;
+        opacity: 0.5;
         cursor: not-allowed;
     }
 `;
 
 const SuccessMessage = styled.div`
-    padding: 12px 16px;
-    background: #d1fae5;
-    border: 1px solid #6ee7b7;
-    border-radius: 8px;
+    padding: 12px 18px;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    border-radius: 12px;
     color: #065f46;
     font-size: 14px;
     margin-bottom: 20px;
 `;
 
 const ErrorMessage = styled.div`
-    padding: 12px 16px;
-    background: #fee2e2;
-    border: 1px solid #fca5a5;
-    border-radius: 8px;
+    padding: 12px 18px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 12px;
     color: #991b1b;
     font-size: 14px;
     margin-bottom: 20px;

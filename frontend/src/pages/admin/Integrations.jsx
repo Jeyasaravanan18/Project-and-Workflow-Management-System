@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Key, Webhook, Trash2, Copy, Check, Plus, AlertCircle } from 'lucide-react';
+import { Key, Webhook, Trash2, Copy, Check, AlertCircle } from 'lucide-react';
 import api from '../../services/api';
 import PageHeader from '../../components/PageHeader';
 
@@ -9,7 +9,7 @@ const Integrations = () => {
     const [keys, setKeys] = useState([]);
     const [webhooks, setWebhooks] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [newKey, setNewKey] = useState(null); // To show the raw key after creation
+    const [newKey, setNewKey] = useState(null);
     const [keyName, setKeyName] = useState('');
     const [webhookUrl, setWebhookUrl] = useState('');
 
@@ -59,7 +59,7 @@ const Integrations = () => {
         try {
             const res = await api.post('/webhooks', {
                 url: webhookUrl,
-                events: ['task.created', 'task.completed', 'comment.created'] // Default all for now
+                events: ['task.created', 'task.completed', 'comment.created']
             });
             setWebhooks([res.data.data, ...webhooks]);
             setWebhookUrl('');
@@ -87,7 +87,7 @@ const Integrations = () => {
         };
         return (
             <IconBtn onClick={handleCopy} title="Copy">
-                {copied ? <Check size={14} color="#22c55e" /> : <Copy size={14} />}
+                {copied ? <Check size={14} color="#008060" /> : <Copy size={14} />}
             </IconBtn>
         );
     };
@@ -95,8 +95,8 @@ const Integrations = () => {
     return (
         <Container>
             <PageHeader
-                title="Integrations"
-                description="Manage API keys and Webhooks for external connections."
+                title="API & Webhooks"
+                description="Manage developer API credentials and outgoing webhook subscriptions."
             />
 
             <Tabs>
@@ -104,13 +104,13 @@ const Integrations = () => {
                     $active={activeTab === 'api-keys'}
                     onClick={() => setActiveTab('api-keys')}
                 >
-                    <Key size={16} /> API Keys
+                    <Key size={15} /> API Keys
                 </Tab>
                 <Tab
                     $active={activeTab === 'webhooks'}
                     onClick={() => setActiveTab('webhooks')}
                 >
-                    <Webhook size={16} /> Webhooks
+                    <Webhook size={15} /> Webhooks
                 </Tab>
             </Tabs>
 
@@ -119,7 +119,7 @@ const Integrations = () => {
                     <>
                         <CreateSection>
                             <Input
-                                placeholder="Key Name (e.g. CI/CD Pipeline)"
+                                placeholder="Key Name (e.g. CI/CD Deployment Pipeline)"
                                 value={keyName}
                                 onChange={(e) => setKeyName(e.target.value)}
                             />
@@ -128,10 +128,10 @@ const Integrations = () => {
 
                         {newKey && newKey.key && (
                             <NewKeyAlert>
-                                <AlertCircle size={20} color="#f59e0b" />
+                                <AlertCircle size={20} color="#d97706" />
                                 <div>
-                                    <h4>Save this key now!</h4>
-                                    <p>This is the only time we'll show you the full API key.</p>
+                                    <h4>Save this secret key now!</h4>
+                                    <p>This is the only time the secret API key will be displayed in full.</p>
                                     <KeyDisplay>
                                         <code>{newKey.key}</code>
                                         <CopyButton text={newKey.key} />
@@ -141,7 +141,7 @@ const Integrations = () => {
                         )}
 
                         <List>
-                            {loading ? <div>Loading...</div> : keys.map(key => (
+                            {loading ? <LoadingText>Loading API keys...</LoadingText> : keys.map(key => (
                                 <ListItem key={key._id}>
                                     <Info>
                                         <Name>{key.name}</Name>
@@ -163,7 +163,7 @@ const Integrations = () => {
                     <>
                         <CreateSection>
                             <Input
-                                placeholder="Webhook URL (https://...)"
+                                placeholder="Webhook Target URL (https://...)"
                                 value={webhookUrl}
                                 onChange={(e) => setWebhookUrl(e.target.value)}
                             />
@@ -171,7 +171,7 @@ const Integrations = () => {
                         </CreateSection>
 
                         <List>
-                            {loading ? <div>Loading...</div> : webhooks.map(hook => (
+                            {loading ? <LoadingText>Loading webhooks...</LoadingText> : webhooks.map(hook => (
                                 <ListItem key={hook._id}>
                                     <Info>
                                         <Name>{hook.url}</Name>
@@ -194,66 +194,81 @@ const Integrations = () => {
 };
 
 const Container = styled.div`
-    padding: 24px;
+    padding: 32px;
+    background: #f8fafc;
+    min-height: 100vh;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 `;
 
 const Tabs = styled.div`
     display: flex;
-    gap: 4px;
+    gap: 8px;
     margin-bottom: 24px;
-    border-bottom: 1px solid #e2e8f0;
 `;
 
 const Tab = styled.button`
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 12px 16px;
-    background: none;
-    border: none;
-    border-bottom: 2px solid ${props => props.$active ? '#0f172a' : 'transparent'};
-    color: ${props => props.$active ? '#0f172a' : '#64748b'};
-    font-weight: 600;
+    gap: 6px;
+    padding: 7px 16px;
+    background: ${props => props.$active ? '#008060' : '#ffffff'};
+    color: ${props => props.$active ? '#ffffff' : '#374151'};
+    border: 1px solid ${props => props.$active ? '#008060' : '#e5e7eb'};
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.15s ease;
 
     &:hover {
-        color: #0f172a;
+        background: ${props => props.$active ? '#008060' : '#f8fafc'};
+        border-color: ${props => props.$active ? '#008060' : '#d1d5db'};
     }
 `;
 
 const Content = styled.div`
-    max-width: 800px;
+    max-width: 860px;
 `;
 
 const CreateSection = styled.div`
     display: flex;
     gap: 12px;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
 `;
 
 const Input = styled.input`
     flex: 1;
-    padding: 10px 16px;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 14px;
+    padding: 10px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    background: #ffffff;
+    color: #111827;
+    transition: all 0.15s ease;
 
     &:focus {
         outline: none;
-        border-color: #64748b;
+        border-color: #008060;
+        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.12);
     }
 `;
 
 const Button = styled.button`
     padding: 10px 20px;
-    background: #0f172a;
+    background: #111827;
     color: white;
     border: none;
-    border-radius: 8px;
-    font-weight: 600;
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 0.8125rem;
     cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
     
+    &:hover:not(:disabled) {
+        background: #008060;
+    }
+
     &:disabled {
         opacity: 0.5;
         cursor: not-allowed;
@@ -263,87 +278,107 @@ const Button = styled.button`
 const List = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 `;
 
 const ListItem = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px;
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
+    padding: 16px 20px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    transition: all 0.15s ease;
+
+    &:hover {
+        border-color: #cbd5e1;
+    }
 `;
 
 const Info = styled.div``;
 
 const Name = styled.div`
     font-weight: 600;
-    color: #1e293b;
-    margin-bottom: 4px;
+    color: #111827;
+    margin-bottom: 2px;
+    font-size: 0.9rem;
 `;
 
 const Meta = styled.div`
-    font-size: 13px;
+    font-size: 0.78rem;
     color: #64748b;
 `;
 
 const Actions = styled.div`
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
 `;
 
 const Status = styled.span`
-    font-size: 12px;
+    font-size: 0.72rem;
     font-weight: 600;
-    color: ${props => props.$active ? '#22c55e' : '#ef4444'};
-    background: ${props => props.$active ? '#dcfce7' : '#fee2e2'};
-    padding: 2px 8px;
-    border-radius: 12px;
+    color: ${props => props.$active ? '#008060' : '#dc2626'};
+    background: ${props => props.$active ? '#ecfdf5' : '#fef2f2'};
+    border: 1px solid ${props => props.$active ? '#a7f3d0' : '#fecaca'};
+    padding: 3px 10px;
+    border-radius: 9999px;
 `;
 
 const IconBtn = styled.button`
     background: none;
     border: none;
     cursor: pointer;
-    color: ${props => props.$danger ? '#ef4444' : '#64748b'};
-    padding: 4px;
-    border-radius: 4px;
+    color: ${props => props.$danger ? '#dc2626' : '#64748b'};
+    padding: 6px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
 
     &:hover {
-        background: ${props => props.$danger ? '#fee2e2' : '#f1f5f9'};
+        background: ${props => props.$danger ? '#fef2f2' : '#f1f5f9'};
     }
 `;
 
 const NewKeyAlert = styled.div`
     background: #fffbeb;
-    border: 1px solid #fcd34d;
-    padding: 16px;
-    border-radius: 8px;
-    margin-bottom: 24px;
+    border: 1px solid #fde68a;
+    padding: 16px 20px;
+    border-radius: 14px;
+    margin-bottom: 20px;
     display: flex;
-    gap: 16px;
+    gap: 14px;
 
-    h4 { margin: 0 0 4px 0; color: #92400e; }
-    p { margin: 0 0 12px 0; color: #b45309; font-size: 14px; }
+    h4 { margin: 0 0 4px 0; color: #92400e; font-size: 0.9rem; }
+    p { margin: 0 0 10px 0; color: #b45309; font-size: 0.8125rem; }
 `;
 
 const KeyDisplay = styled.div`
     display: flex;
     align-items: center;
     gap: 8px;
-    background: white;
+    background: #ffffff;
     padding: 8px 12px;
-    border-radius: 6px;
-    border: 1px solid #fcd34d;
+    border-radius: 8px;
+    border: 1px solid #fde68a;
     
     code {
         font-family: monospace;
-        color: #0f172a;
+        color: #111827;
         font-weight: 600;
+        font-size: 0.84rem;
     }
+`;
+
+const LoadingText = styled.div`
+    padding: 24px;
+    color: #64748b;
+    text-align: center;
+    font-size: 0.875rem;
 `;
 
 export default Integrations;

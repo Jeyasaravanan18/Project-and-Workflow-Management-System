@@ -309,20 +309,21 @@ const Brand = styled.div`
 `;
 
 const LogoIcon = styled.div`
-    width: 32px;
-    height: 32px;
-    background: #0F62FE; /* Carbon Blue 60 */
-    border-radius: 0;
+    width: 34px;
+    height: 34px;
+    background: #008060; /* Brevo Emerald Green */
+    border-radius: 10px;
     display: flex; 
     align-items: center; 
     justify-content: center;
     flex-shrink: 0;
     z-index: 10;
     position: relative;
-    transition: background 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 128, 96, 0.25);
+    transition: transform 0.2s;
 
     &:hover {
-        background: #0043ce;
+        transform: scale(1.04);
     }
 
     svg {
@@ -331,8 +332,8 @@ const LogoIcon = styled.div`
 `;
 
 const BrandText = styled.div`
-    font-size: 1.125rem;
-    font-weight: 600; /* Carbon Semi-Bold */
+    font-size: 1.15rem;
+    font-weight: 700;
     color: ${props => props.theme.text.primary};
     white-space: nowrap;
     visibility: ${props => props.$collapsed ? 'hidden' : 'visible'};
@@ -340,7 +341,7 @@ const BrandText = styled.div`
     width: ${props => props.$collapsed ? '0' : 'auto'};
     overflow: hidden;
     transition: opacity 0.2s, width 0.3s, color 0.3s;
-    letter-spacing: 0;
+    letter-spacing: -0.02em;
     line-height: 1;
 `;
 
@@ -361,13 +362,13 @@ const ToggleBtn = styled.button`
     z-index: 100;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 
-    &:hover { background: ${props => props.theme.bg.hover}; color: #0F62FE; border-color: #0F62FE; }
+    &:hover { background: #ECFDF5; color: #008060; border-color: #008060; }
 `;
 
 const NavScroller = styled.div`
     flex: 1;
     overflow-y: auto;
-    padding: 20px 12px;
+    padding: 16px 12px;
     
     &::-webkit-scrollbar { width: 4px; }
     &::-webkit-scrollbar-track { background: transparent; }
@@ -375,37 +376,37 @@ const NavScroller = styled.div`
 `;
 
 const SectionLabel = styled.div`
-    font-size: 0.75rem;
+    font-size: 0.6875rem;
     font-weight: 700;
-    color: ${props => props.theme.text.tertiary};
+    color: #9CA3AF;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin: 0 12px 12px;
-    height: 20px;
+    letter-spacing: 0.06em;
+    margin: 4px 10px 8px;
+    height: 18px;
     overflow: hidden;
     white-space: nowrap;
     opacity: ${props => props.$collapsed ? 0 : 1};
-    transition: opacity 0.2s, color 0.3s;
+    transition: opacity 0.2s;
 `;
 
 const SectionToggle = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 12px;
-    margin-top: 8px;
-    color: ${props => props.theme.text.tertiary};
-    font-size: 0.75rem;
+    padding: 8px 10px;
+    margin-top: 10px;
+    color: #9CA3AF;
+    font-size: 0.6875rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     cursor: pointer;
-    border-radius: 0;
+    border-radius: 8px;
     transition: all 0.2s;
 
-    &:hover { color: ${props => props.theme.text.primary}; }
+    &:hover { color: #374151; background: #F9FAFB; }
 
-    .flex-row { display: flex; align-items: center; gap: 12px; }
+    .flex-row { display: flex; align-items: center; gap: 10px; }
     .section-icon { flex-shrink: 0; }
     
     ${props => props.$collapsed && css`
@@ -419,58 +420,49 @@ const SubMenu = styled.div`
     max-height: ${props => props.$expanded ? '500px' : '0'};
     opacity: ${props => props.$expanded ? 1 : 0};
     transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
-    padding-left: 0; // Don't indent container, indent items
+    padding-left: 0;
 `;
 
 const NavItem = styled(NavLink)`
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 10px 12px;
-    margin-bottom: 4px;
-    border-radius: 0; /* Carbon brutalism */
-    color: ${props => props.theme.text.secondary};
+    padding: 9px 12px;
+    margin-bottom: 3px;
+    border-radius: 8px;
+    color: #4B5563;
     text-decoration: none;
     font-weight: 500;
-    font-size: 0.9375rem;
-    transition: all 0.2s;
+    font-size: 0.875rem;
+    transition: all 0.15s ease-in-out;
     position: relative;
     justify-content: ${props => props.$collapsed ? 'center' : 'flex-start'};
 
     ${props => props.$submenu && css`
-        padding-left: ${props.$collapsed ? '12px' : '28px'};
+        padding-left: ${props.$collapsed ? '12px' : '26px'};
         font-size: 0.8125rem;
-        font-weight: 400;
-        &::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 0; bottom: 0; width: 4px;
-            background: transparent;
-            transition: background 0.2s;
-        }
     `}
 
     &:hover {
-        background: ${props => props.theme.bg.hover};
-        color: ${props => props.theme.text.primary};
+        background: #F3F4F6;
+        color: #111827;
     }
 
     &.active {
-        background: ${props => props.theme.mode === 'dark' ? '#262626' : '#E5E5E5'}; /* Carbon selected state */
-        color: ${props => props.theme.text.primary};
+        background: #ECFDF5; /* Brevo Light Emerald Pill */
+        color: #008060; /* Brevo Primary Emerald */
         font-weight: 600;
 
-        // Custom indicator for active state (Carbon style left-border instead of right)
-        &::before {
+        // Brevo active right-side pill indicator
+        &::after {
             content: '';
             position: absolute;
-            left: 0; top: 0; bottom: 0; width: 4px;
-            background: #0F62FE; /* Carbon Blue 60 */
-            border-radius: 0;
-        }
-        
-        &::after {
-            display: none; /* Hide old right border */
+            right: 0;
+            top: 20%;
+            height: 60%;
+            width: 3px;
+            background: #008060;
+            border-radius: 4px 0 0 4px;
         }
     }
 `;
@@ -548,15 +540,15 @@ const ProfileCard = styled.div`
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 12px;
-    background: ${props => props.theme.bg.hover};
-    border-radius: 0;
+    padding: 10px 12px;
+    background: #F9FAFB;
+    border-radius: 12px;
     border: 1px solid ${props => props.theme.border};
     transition: all 0.2s;
     overflow: hidden;
 
     ${props => props.$collapsed && css`
-        padding: 12px;
+        padding: 10px;
         justify-content: center;
         background: transparent;
         border-color: transparent;
@@ -565,14 +557,14 @@ const ProfileCard = styled.div`
 `;
 
 const Avatar = styled.div`
-    width: 36px; height: 36px;
+    width: 34px; height: 34px;
     border-radius: 50%;
-    background: #0f172a;
+    background: #008060;
     color: white;
     display: flex; align-items: center; justify-content: center;
     font-weight: 700;
     flex-shrink: 0;
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
 `;
 
 const UserInfo = styled.div`
@@ -588,37 +580,37 @@ const UserInfo = styled.div`
 `;
 
 const LogoutBtn = styled.button`
-    width: 32px; height: 32px;
+    width: 30px; height: 30px;
     display: ${props => props.$collapsed ? 'none' : 'flex'};
     align-items: center;
     justify-content: center;
-    background: ${props => props.theme.bg.primary};
+    background: white;
     border: 1px solid ${props => props.theme.border};
-    border-radius: 0;
+    border-radius: 8px;
     color: ${props => props.theme.text.secondary};
     cursor: pointer;
     transition: all 0.2s;
     flex-shrink: 0;
 
-    &:hover { background: ${props => props.theme.mode === 'dark' ? 'rgba(239, 68, 68, 0.2)' : '#fee2e2'}; color: #ef4444; border-color: ${props => props.theme.mode === 'dark' ? 'rgba(239, 68, 68, 0.4)' : '#da1e28'}; }
+    &:hover { background: #FEE2E2; color: #DC2626; border-color: #FECACA; }
 `;
 
 const ThemeToggleBtn = styled.button`
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 10px 12px;
-    margin-bottom: 12px;
+    padding: 8px 12px;
+    margin-bottom: 8px;
     background: transparent;
     border: none;
-    border-radius: 0;
+    border-radius: 8px;
     cursor: pointer;
     color: ${props => props.theme.text.secondary};
     transition: all 0.2s;
     justify-content: ${props => props.$collapsed ? 'center' : 'flex-start'};
 
     &:hover {
-        background: ${props => props.theme.bg.hover};
+        background: #F3F4F6;
         color: ${props => props.theme.text.primary};
     }
 `;

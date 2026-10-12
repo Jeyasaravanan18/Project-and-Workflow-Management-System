@@ -190,49 +190,48 @@ const fadeIn = keyframes`from { opacity: 0; transform: translateY(10px); } to { 
 const spinAnim = keyframes`from { transform: rotate(0deg); } to { transform: rotate(360deg); }`;
 
 // ─── Styled Components ────────────────────────────────────────────────────────
-const Container = styled.div`
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 40px;
-    min-height: 100vh;
-    background: ${p => p.theme.bg.primary};
-    @media (max-width: 768px) {
-        padding: 24px;
-    }
-`;
 
 const LoadingContainer = styled.div`
-    height: 100vh;
+    height: 70vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: ${p => p.theme.bg.primary};
+    background: transparent;
     .spinner {
         width: 40px; height: 40px;
-        border: 3px solid ${p => p.theme.border};
-        border-top-color: #0f62fe;
-        border-radius: 0;
-        animation: ${spinAnim} 1s linear infinite;
+        border: 3px solid #e5e7eb;
+        border-top-color: #008060;
+        border-radius: 50%;
+        animation: ${spinAnim} 0.8s linear infinite;
     }
+`;
+
+const Container = styled.div`
+    padding: 8px 0 40px 0;
+    max-width: 1200px;
+    margin: 0 auto;
 `;
 
 const Header = styled.div`
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 30px;
-    background: ${p => p.theme.mode === 'dark' ? p.theme.bg.card : '#ffffff'};
-    padding: 30px;
-    border: 1px solid ${p => p.theme.border};
+    align-items: center;
+    margin-bottom: 28px;
+    background: #ffffff;
+    padding: 24px 28px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 `;
 
 const HeaderContent = styled.div``;
 
 const Title = styled.h1`
-    font-size: 2rem;
-    font-weight: 800;
-    color: ${p => p.theme.text.primary};
-    margin: 0 0 8px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #111827;
+    letter-spacing: -0.02em;
+    margin: 0 0 4px;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -240,25 +239,25 @@ const Title = styled.h1`
 
 const BellWrapper = styled.div`
     position: relative;
-    color: #0f62fe;
+    color: #008060;
 `;
 
 const Badge = styled.span`
     position: absolute;
-    top: -5px; right: -5px;
-    background: #da1e28;
+    top: -6px; right: -8px;
+    background: #ef4444;
     color: white;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     font-weight: 700;
-    width: 18px; height: 18px;
-    border-radius: 0;
+    padding: 1px 6px;
+    border-radius: 9999px;
     display: flex; align-items: center; justify-content: center;
-    border: 1px solid ${p => p.theme.bg.primary};
+    border: 2px solid #ffffff;
 `;
 
 const Subtitle = styled.p`
-    font-size: 1rem;
-    color: ${p => p.theme.text.secondary};
+    font-size: 0.875rem;
+    color: #6b7280;
     margin: 0;
 `;
 
@@ -268,25 +267,25 @@ const ActionButton = styled.button`
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 16px;
-    background: ${p => p.theme.bg.card};
-    border: 1px solid ${p => p.theme.border};
-    border-radius: 0;
-    font-weight: 600;
-    font-size: 0.875rem;
-    color: ${p => p.theme.text.secondary};
+    padding: 8px 18px;
+    background: #111827;
+    border: none;
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 0.825rem;
+    color: #ffffff;
     cursor: pointer;
     transition: all 0.2s;
     &:hover {
-        background: ${p => p.theme.bg.hover};
-        color: ${p => p.theme.text.primary};
+        background: #008060;
+        transform: translateY(-1px);
     }
 `;
 
 const Content = styled.div`
     display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 40px;
+    grid-template-columns: 220px 1fr;
+    gap: 28px;
     align-items: start;
     @media (max-width: 768px) {
         grid-template-columns: 1fr;
@@ -296,26 +295,29 @@ const Content = styled.div`
 const Filters = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
     position: sticky;
     top: 24px;
+    background: #ffffff;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
 `;
 
 const FilterTab = styled.button`
-    padding: 12px 16px;
-    border-radius: 0;
+    padding: 10px 14px;
+    border-radius: 9999px;
     border: none;
     text-align: left;
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-size: 0.85rem;
+    font-weight: 500;
     cursor: pointer;
-    transition: background 0.2s;
-    background: ${p => p.$active ? (p.theme.mode === 'dark' ? '#393939' : '#e0e0e0') : 'transparent'};
-    color: ${p => p.$active ? p.theme.text.primary : p.theme.text.secondary};
-    border-left: 3px solid ${p => p.$active ? '#0f62fe' : 'transparent'};
+    transition: all 0.15s;
+    background: ${p => p.$active ? '#ecfdf5' : 'transparent'};
+    color: ${p => p.$active ? '#008060' : '#4b5563'};
     &:hover {
-        color: ${p => p.theme.text.primary};
-        background: ${p => p.theme.mode === 'dark' ? '#393939' : '#e0e0e0'};
+        background: ${p => p.$active ? '#ecfdf5' : '#f8fafc'};
+        color: ${p => p.$active ? '#008060' : '#111827'};
     }
 `;
 
@@ -328,54 +330,48 @@ const NotificationFeed = styled.div`
 const GroupSection = styled.div`margin-bottom: 24px;`;
 
 const GroupTitle = styled.h3`
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     font-weight: 700;
-    color: ${p => p.theme.text.tertiary};
+    color: #9ca3af;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    margin-bottom: 12px;
-    margin-left: 0;
+    margin-bottom: 10px;
+    margin-left: 4px;
 `;
 
-const NotifList = styled.div`display: flex; flex-direction: column; gap: 0; border: 1px solid ${p => p.theme.border}; border-bottom: none;`;
+const NotifList = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+`;
 
 const NotifItem = styled.div`
     display: flex;
     align-items: center;
     gap: 16px;
-    padding: 16px;
-    background: ${p => p.$isRead
-        ? p.theme.bg.card
-        : (p.theme.mode === 'dark' ? 'rgba(15,98,254,0.1)' : '#edf5ff')};
-    border-bottom: 1px solid ${p => p.theme.border};
-    border-radius: 0;
+    padding: 16px 20px;
+    background: ${p => p.$isRead ? '#ffffff' : '#f0fdf4'};
+    border: 1px solid ${p => p.$isRead ? '#e5e7eb' : '#bbf7d0'};
+    border-radius: 12px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    transition: background 0.2s;
+    transition: all 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     animation: ${fadeIn} 0.4s ease-out backwards;
     animation-delay: ${p => p.$delay}s;
 
-    ${p => !p.$isRead && `
-        &::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 0; bottom: 0;
-            width: 4px;
-            background: #0f62fe;
-            border-radius: 0;
-        }
-    `}
-
     &:hover {
-        background: ${p => p.theme.mode === 'dark' ? '#393939' : '#e5e5e5'};
+        background: ${p => p.$isRead ? '#f8fafc' : '#ecfdf5'};
+        border-color: #cbd5e1;
+        transform: translateY(-1px);
         .actions { opacity: 1; transform: translateX(0); }
     }
 `;
 
 const IconBox = styled.div`
-    width: 40px; height: 40px;
-    border-radius: 0;
+    width: 38px; height: 38px;
+    border-radius: 10px;
     background: ${p => p.$color}18;
     color: ${p => p.$color};
     display: flex; align-items: center; justify-content: center;
@@ -385,63 +381,61 @@ const IconBox = styled.div`
 const NotifBody = styled.div`flex: 1; min-width: 0;`;
 
 const NotifTitle = styled.div`
-    font-size: 0.9375rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    color: ${p => p.theme.text.primary};
-    margin-bottom: 4px;
+    color: #111827;
+    margin-bottom: 3px;
     line-height: 1.4;
 `;
 
 const NotifMeta = styled.div`
     font-size: 0.72rem;
-    color: ${p => p.theme.text.tertiary};
+    color: #6b7280;
     font-weight: 500;
     text-transform: capitalize;
 `;
 
 const NotifActions = styled.div`
     display: flex;
-    gap: 8px;
+    gap: 6px;
     opacity: 0;
     transition: all 0.2s;
     @media (max-width: 768px) { opacity: 1; }
 `;
 
 const IconButton = styled.button`
-    width: 32px; height: 32px;
+    width: 30px; height: 30px;
     display: flex; align-items: center; justify-content: center;
-    border-radius: 0;
-    border: 1px solid ${p => p.theme.border};
-    background: ${p => p.theme.bg.card};
-    color: ${p => p.$danger ? '#da1e28' : p.theme.text.secondary};
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: ${p => p.$danger ? '#ef4444' : '#6b7280'};
     cursor: pointer;
     transition: all 0.2s;
     &:hover {
-        background: ${p => p.$danger
-            ? (p.theme.mode === 'dark' ? 'rgba(218,30,40,0.15)' : '#ffe9e8')
-            : (p.theme.mode === 'dark' ? '#4c4c4c' : '#d1d1d1')};
-        border-color: ${p => p.$danger ? '#da1e28' : p.theme.border};
-        color: ${p => p.$danger ? '#da1e28' : p.theme.text.primary};
+        background: ${p => p.$danger ? '#fee2e2' : '#f1f5f9'};
+        border-color: ${p => p.$danger ? '#fca5a5' : '#cbd5e1'};
+        color: ${p => p.$danger ? '#dc2626' : '#111827'};
     }
 `;
 
 const EmptyState = styled.div`
     text-align: center;
-    padding: 60px 20px;
-    color: ${p => p.theme.text.tertiary};
-    border: 1px solid ${p => p.theme.border};
-    background: ${p => p.theme.bg.card};
-    border-radius: 0;
+    padding: 60px 24px;
+    color: #9ca3af;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    border-radius: 14px;
     .icon {
-        width: 64px; height: 64px;
-        background: ${p => p.theme.bg.hover};
-        border-radius: 0;
+        width: 56px; height: 56px;
+        background: #ecfdf5;
+        border-radius: 16px;
         display: flex; align-items: center; justify-content: center;
         margin: 0 auto 16px;
-        color: ${p => p.theme.text.tertiary};
+        color: #008060;
     }
-    h3 { margin: 0 0 8px; color: ${p => p.theme.text.primary}; font-size: 1.125rem; }
-    p { margin: 0; font-size: 0.875rem; }
+    h3 { margin: 0 0 6px; color: #111827; font-size: 1.05rem; font-weight: 700; }
+    p { margin: 0; font-size: 0.85rem; }
 `;
 
 export default NotificationCenter;

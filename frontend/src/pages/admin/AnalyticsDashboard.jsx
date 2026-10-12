@@ -606,12 +606,12 @@ const fillProgress = keyframes`
 
 // Styled Components
 const Container = styled.div`
-  padding: 48px;
-  background: #f4f4f4; /* Carbon Gray 10 */
+  padding: 8px 0 40px 0;
+  background: transparent;
   min-height: 100vh;
   max-width: 1600px;
   margin: 0 auto;
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: inherit;
 `;
 
 const Loading = styled.div`
@@ -620,26 +620,28 @@ const Loading = styled.div`
   align-items: center;
   justify-content: center;
   height: 70vh;
-  color: #525252;
+  color: #6b7280;
   p {
-    margin-top: 20px;
+    margin-top: 16px;
     font-size: 0.875rem;
   }
 `;
 
 const Spinner = styled.div`
-  width: 48px;
-  height: 48px;
-  border: 4px solid #e0e0e0;
-  border-top-color: #0f62fe;
+  width: 44px;
+  height: 44px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #008060;
+  border-radius: 50%;
   animation: ${rotate} 0.8s linear infinite;
 `;
 
 const SpinnerSmall = styled.div`
   width: 16px;
   height: 16px;
-  border: 2px solid #e0e0e0;
-  border-top-color: #0f62fe;
+  border: 2px solid #e5e7eb;
+  border-top-color: #008060;
+  border-radius: 50%;
   animation: ${rotate} 0.7s linear infinite;
   flex-shrink: 0;
 `;
@@ -648,27 +650,31 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 48px;
+  margin-bottom: 32px;
   animation: ${fadeIn} 0.4s ease-out;
+  flex-wrap: wrap;
+  gap: 16px;
 `;
 
 const HeaderLeft = styled.div``;
 
 const Title = styled.h1`
-  font-size: 2.5rem;
-  font-weight: 300; /* Carbon Light weight for large titles */
-  color: #161616;
-  margin-bottom: 8px;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
 `;
 
 const Subtitle = styled.p`
-  font-size: 0.875rem;
-  color: #525252;
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin: 0;
 `;
 
 const HeaderActions = styled.div`
   display: flex;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
 `;
 
@@ -678,21 +684,22 @@ const DateFilter = styled.div`
   gap: 8px;
   padding: 0 16px;
   background: white;
-  border: 1px solid #e0e0e0;
-  height: 48px;
+  border: 1px solid #e5e7eb;
+  border-radius: 9999px;
+  height: 40px;
 
   select {
     border: none;
     background: none;
-    font-size: 0.875rem;
-    color: #161616;
+    font-size: 0.85rem;
+    color: #111827;
     cursor: pointer;
     outline: none;
-    font-weight: 400;
+    font-weight: 500;
   }
 
   svg {
-    color: #525252;
+    color: #9ca3af;
   }
 `;
 
@@ -706,15 +713,18 @@ const ExportButton = styled.button`
   gap: 8px;
   padding: 0 16px;
   background: white;
-  color: #161616;
-  border: 1px solid #e0e0e0;
-  height: 48px;
-  font-size: 0.875rem;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+  border-radius: 9999px;
+  height: 40px;
+  font-size: 0.85rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
 
   &:hover:not(:disabled) {
-    background: #f4f4f4;
+    background: #f8fafc;
+    border-color: #cbd5e1;
   }
 
   &:disabled {
@@ -730,11 +740,12 @@ const dropdownFade = keyframes`
 
 const ExportDropdownMenu = styled.div`
   position: absolute;
-  top: 48px;
+  top: 46px;
   right: 0;
   background: white;
-  border: 1px solid #e0e0e0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   min-width: 240px;
   z-index: 1000;
   padding: 8px 0;
@@ -743,72 +754,75 @@ const ExportDropdownMenu = styled.div`
 
 const ExportDropdownLabel = styled.div`
   padding: 8px 16px;
-  font-size: 0.625rem;
-  font-weight: 600;
+  font-size: 0.65rem;
+  font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  color: #525252;
+  color: #9ca3af;
 `;
 
 const ExportDropdownItem = styled.button`
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   width: 100%;
   padding: 8px 16px;
   border: none;
   background: transparent;
-  color: #161616;
-  font-size: 0.8125rem;
+  color: #111827;
+  font-size: 0.825rem;
   cursor: pointer;
   text-align: left;
+  transition: background 0.15s;
 
   &:hover {
-    background: #f4f4f4;
+    background: #f8fafc;
   }
 
   svg {
-    color: #525252;
+    color: #6b7280;
     flex-shrink: 0;
   }
 `;
 
 const ExportDropdownSeparator = styled.div`
   height: 1px;
-  background: #e0e0e0;
+  background: #f1f5f9;
   margin: 4px 0;
 `;
 
 const ExportBadge = styled.span`
   margin-left: auto;
   padding: 2px 6px;
-  font-size: 0.625rem;
+  font-size: 0.65rem;
   font-weight: 600;
-  background: #f4f4f4;
-  color: #525252;
-  border: 1px solid #e0e0e0;
+  background: #f1f5f9;
+  color: #4b5563;
+  border-radius: 4px;
 `;
 
 const RefreshButton = styled.button`
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 0 24px;
-  background: #0f62fe;
+  padding: 0 18px;
+  background: #111827;
   color: white;
   border: none;
-  height: 48px;
-  font-size: 0.875rem;
-  font-weight: 400;
+  border-radius: 9999px;
+  height: 40px;
+  font-size: 0.85rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
 
   &:hover:not(:disabled) {
-    background: #0043ce;
+    background: #008060;
   }
 
   &:disabled {
-    background: #c6c6c6;
+    background: #e2e8f0;
+    color: #9ca3af;
     cursor: not-allowed;
   }
 
@@ -827,32 +841,35 @@ const RichNotification = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  padding: 16px 24px;
-  background: white;
-  border: 1px solid #e0e0e0;
-  border-left: 4px solid #da1e28; /* Carbon Red 60 */
-  margin-bottom: 32px;
+  gap: 20px;
+  padding: 14px 20px;
+  background: #fff5f5;
+  border: 1px solid #fee2e2;
+  border-radius: 12px;
+  margin-bottom: 24px;
   animation: ${fadeIn} 0.4s ease-out;
 
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: flex-start;
-    gap: 16px;
+    gap: 14px;
   }
 `;
 
 const OverdueNotification = styled(RichNotification)`
-  border-left-color: #f1c21b; /* Carbon Yellow 30 */
+  background: #fffbeb;
+  border-color: #fef3c7;
 `;
 
 const NotificationIcon = styled.div`
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #fee2e2;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #da1e28;
+  color: #ef4444;
   flex-shrink: 0;
 `;
 
@@ -860,16 +877,16 @@ const NotificationContent = styled.div`
   flex: 1;
 
   h4 {
-    margin: 0 0 4px;
-    color: #161616;
+    margin: 0 0 2px;
+    color: #111827;
     font-size: 0.875rem;
     font-weight: 600;
   }
 
   p {
     margin: 0;
-    color: #525252;
-    font-size: 0.875rem;
+    color: #6b7280;
+    font-size: 0.825rem;
     line-height: 1.4;
   }
 `;
@@ -877,19 +894,20 @@ const NotificationContent = styled.div`
 const NotificationAction = styled.button`
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 0 16px;
-  background: #161616;
+  gap: 6px;
+  padding: 0 14px;
+  background: #111827;
   color: white;
   border: none;
+  border-radius: 9999px;
   height: 32px;
-  font-weight: 400;
-  font-size: 0.875rem;
+  font-weight: 500;
+  font-size: 0.8rem;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
 
   &:hover {
-    background: #393939;
+    background: #008060;
   }
 
   @media (max-width: 768px) {
@@ -903,7 +921,7 @@ const ChartHint = styled.div`
   bottom: 8px;
   right: 8px;
   padding: 4px 12px;
-  background: rgba(71, 85, 105, 0.9);
+  background: rgba(17, 24, 39, 0.8);
   color: white;
   font-size: 0.75rem;
   border-radius: 6px;
@@ -914,10 +932,8 @@ const ChartHint = styled.div`
 const KPIGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1px; /* Carbon-style grid line */
-  background: #e0e0e0;
-  border: 1px solid #e0e0e0;
-  margin-bottom: 32px;
+  gap: 16px;
+  margin-bottom: 24px;
 
   @media (max-width: 1200px) {
     grid-template-columns: repeat(2, 1fr);
@@ -926,29 +942,34 @@ const KPIGrid = styled.div`
 
 const KPICard = styled.div`
   background: white;
-  padding: 24px;
+  padding: 22px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
   animation: ${fadeIn} 0.4s ease-out;
   animation-delay: ${(props) => props.$delay}s;
   opacity: 0;
   animation-fill-mode: forwards;
-  position: relative;
+  transition: all 0.2s;
 
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: ${(props) => props.color};
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.04);
   }
 `;
 
 const KPIIcon = styled.div`
-  color: ${(props) => props.theme.text.secondary};
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #008060;
 `;
 
 const KPIContent = styled.div`
@@ -957,32 +978,33 @@ const KPIContent = styled.div`
 `;
 
 const KPIValue = styled.div`
-  font-size: 2.5rem;
-  font-weight: 300;
-  color: #161616;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111827;
   line-height: 1;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
 `;
 
 const KPILabel = styled.div`
-  font-size: 0.8125rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  color: #525252;
+  color: #6b7280;
   margin-bottom: 4px;
 `;
 
 const KPITrend = styled.div`
   font-size: 0.75rem;
   color: ${(props) =>
-    props.$positive ? "#24a148" : "#525252"};
-  font-weight: 400;
+    props.$positive ? "#008060" : "#6b7280"};
+  font-weight: 500;
 `;
 
 const ChartsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  margin-bottom: 32px;
+  gap: 20px;
+  margin-bottom: 24px;
 
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
@@ -991,8 +1013,10 @@ const ChartsGrid = styled.div`
 
 const ChartCard = styled.div`
   background: white;
-  padding: 24px;
-  border: 1px solid #e0e0e0;
+  padding: 22px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
   animation: ${fadeIn} 0.4s ease-out;
   animation-delay: ${(props) => props.$delay}s;
   opacity: 0;
@@ -1002,17 +1026,18 @@ const ChartCard = styled.div`
 const ChartHeader = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 32px;
+  gap: 10px;
+  margin-bottom: 24px;
 
   h3 {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #161616;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
   }
 
   svg {
-    color: #525252;
+    color: #008060;
   }
 `;
 
@@ -1031,22 +1056,24 @@ const ChartWrapper = styled.div`
 const EmptyChart = styled.div`
   text-align: center;
   padding: 60px 20px;
-  color: ${(props) => props.theme.text.tertiary};
+  color: #9ca3af;
 
   svg {
     margin: 0 auto 16px;
   }
 
   p {
-    color: ${(props) => props.theme.text.secondary};
+    color: #6b7280;
     font-size: 0.875rem;
   }
 `;
 
 const TableCard = styled.div`
   background: white;
-  padding: 24px;
-  border: 1px solid #e0e0e0;
+  padding: 22px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
   animation: ${fadeIn} 0.4s ease-out;
   animation-delay: ${(props) => props.$delay}s;
   opacity: 0;
@@ -1061,22 +1088,24 @@ const ProgressTable = styled.table`
     th {
       text-align: left;
       padding: 12px 16px;
-      background: #f4f4f4;
-      border-bottom: 1px solid #e0e0e0;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #525252;
+      background: #f8fafc;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #6b7280;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
+      &:first-child { border-top-left-radius: 8px; }
+      &:last-child { border-top-right-radius: 8px; }
     }
   }
 
   tbody {
     tr {
-      border-bottom: 1px solid #e0e0e0;
+      border-bottom: 1px solid #f1f5f9;
 
       &:hover {
-        background: #f4f4f4;
+        background: #f8fafc;
       }
 
       &:last-child {
@@ -1084,61 +1113,64 @@ const ProgressTable = styled.table`
       }
 
       td {
-        padding: 16px;
-        font-size: 0.8125rem;
-        color: #161616;
+        padding: 14px 16px;
+        font-size: 0.85rem;
+        color: #111827;
       }
     }
   }
 `;
 
 const CompletionBadge = styled.span`
-  padding: 2px 8px;
+  padding: 3px 10px;
   font-size: 0.75rem;
-  font-weight: 400;
-  background: #f4f4f4;
-  color: #161616;
-  border: 1px solid #e0e0e0;
+  font-weight: 600;
+  background: #ecfdf5;
+  color: #008060;
+  border-radius: 9999px;
 `;
 
 const ProgressBar = styled.div`
   width: 100%;
-  height: 4px;
-  background: #e0e0e0;
+  height: 6px;
+  background: #f1f5f9;
+  border-radius: 9999px;
   overflow: hidden;
 `;
 
 const ProgressFill = styled.div`
   height: 100%;
   width: ${(props) => props.$width}%;
-  background: #0f62fe;
+  background: #008060;
+  border-radius: 9999px;
   transition: width 1s ease-out;
   animation: ${fillProgress} 1.4s ease-out;
 `;
 
 const EmptyState = styled.div`
   text-align: center;
-  padding: 60px 24px;
-  color: ${(props) => props.theme.text.tertiary};
+  padding: 50px 24px;
+  color: #9ca3af;
 
   svg {
-    color: ${(props) => props.theme.text.tertiary};
-    margin-bottom: 16px;
+    color: #9ca3af;
+    margin-bottom: 12px;
   }
 
   p {
     font-size: 0.875rem;
+    margin: 0;
   }
 `;
 
 const TrendIndicator = styled.div`
-  font-size: 0.625rem;
-  color: #525252;
-  font-weight: 400;
-  margin-top: 8px;
+  font-size: 0.7rem;
+  color: #6b7280;
+  font-weight: 500;
+  margin-top: 6px;
   padding: 2px 8px;
-  background: #f4f4f4;
-  border: 1px solid #e0e0e0;
+  background: #f1f5f9;
+  border-radius: 4px;
   width: fit-content;
 `;
 
@@ -1146,7 +1178,7 @@ const ExtendedMetricsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 
   @media (max-width: 1200px) {
     grid-template-columns: repeat(2, 1fr);
@@ -1156,7 +1188,9 @@ const ExtendedMetricsGrid = styled.div`
 const MetricCard = styled.div`
   background: white;
   padding: 16px;
-  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
   display: flex;
   align-items: center;
   gap: 12px;
@@ -1167,14 +1201,15 @@ const MetricCard = styled.div`
 `;
 
 const MetricIcon = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  background: #f4f4f4 !important;
-  color: #525252 !important;
+  background: #ecfdf5 !important;
+  color: #008060 !important;
 `;
 
 const MetricContent = styled.div`
@@ -1183,15 +1218,15 @@ const MetricContent = styled.div`
 
 const MetricValue = styled.div`
   font-size: 1.25rem;
-  font-weight: 400;
-  color: #161616;
+  font-weight: 700;
+  color: #111827;
   line-height: 1.2;
 `;
 
 const MetricLabel = styled.div`
   font-size: 0.75rem;
-  font-weight: 400;
-  color: #525252;
+  font-weight: 500;
+  color: #6b7280;
 `;
 
 export default AnalyticsDashboard;

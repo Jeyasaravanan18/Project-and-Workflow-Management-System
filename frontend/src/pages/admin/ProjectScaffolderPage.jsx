@@ -1,198 +1,226 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Sparkles, Loader2, CheckCircle, AlertTriangle, ArrowRight } from 'lucide-react';
+import { Sparkles, Loader2, CheckCircle, ArrowRight } from 'lucide-react';
 import api from '../../services/api';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 const PageContainer = styled.div`
-    padding: 2rem;
-    max-width: 800px;
+    padding: 32px 24px;
+    max-width: 860px;
     margin: 0 auto;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 `;
 
 const Header = styled.div`
-    margin-bottom: 2rem;
+    margin-bottom: 28px;
     text-align: center;
 `;
 
+const Badge = styled.div`
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ecfdf5;
+    color: #008060;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid #a7f3d0;
+    margin-bottom: 12px;
+`;
+
 const Title = styled.h1`
-    font-size: 2rem;
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
+    font-size: 1.875rem;
+    color: #111827;
+    margin: 0 0 8px 0;
+    font-weight: 700;
+    letter-spacing: -0.02em;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 8px;
 `;
 
 const Subtitle = styled.p`
-    color: var(--text-secondary);
-    font-size: 1.1rem;
+    color: #64748b;
+    font-size: 0.9375rem;
+    margin: 0;
 `;
 
 const Card = styled.div`
-    background: var(--bg-surface);
-    border-radius: 0;
-    padding: 2rem;
-    border: 1px solid var(--border-color);
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 28px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 `;
 
 const FormGroup = styled.div`
-    margin-bottom: 1.5rem;
+    margin-bottom: 20px;
 `;
 
 const Label = styled.label`
     display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: var(--text-primary);
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #1f2937;
 `;
 
 const Select = styled.select`
     width: 100%;
-    padding: 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: 0;
-    background: var(--bg-surface);
-    color: var(--text-primary);
-    font-size: 1rem;
-    transition: border-color 0.2s;
-    border-bottom: 1px solid var(--border-color);
+    padding: 10px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #111827;
+    font-size: 0.875rem;
+    transition: all 0.15s ease;
 
     &:focus {
-        outline: 2px solid #0f62fe; /* Carbon focus */
-        outline-offset: -2px;
-        border-color: #0f62fe;
+        outline: none;
+        border-color: #008060;
+        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.12);
+    }
+
+    &:disabled {
+        background: #f8fafc;
+        cursor: not-allowed;
     }
 `;
 
 const TextArea = styled.textarea`
     width: 100%;
-    padding: 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: 0;
-    background: var(--bg-surface);
-    color: var(--text-primary);
-    font-size: 1rem;
-    min-height: 150px;
+    padding: 12px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #111827;
+    font-size: 0.875rem;
+    min-height: 140px;
     resize: vertical;
-    transition: border-color 0.2s;
-    border-bottom: 1px solid var(--border-color);
+    line-height: 1.5;
+    transition: all 0.15s ease;
+    box-sizing: border-box;
 
     &:focus {
-        outline: 2px solid #0f62fe;
-        outline-offset: -2px;
-        border-color: #0f62fe;
+        outline: none;
+        border-color: #008060;
+        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.12);
+    }
+
+    &:disabled {
+        background: #f8fafc;
+        cursor: not-allowed;
     }
 `;
 
 const GenerateBtn = styled.button`
     width: 100%;
-    padding: 1rem;
-    background: #0f62fe; /* Carbon Blue */
-    color: white;
+    padding: 12px 20px;
+    background: #111827;
+    color: #ffffff;
     border: none;
-    border-radius: 0;
+    border-radius: 9999px;
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 0.875rem;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    transition: background 0.2s;
+    gap: 8px;
+    transition: all 0.15s ease;
+    margin-top: 10px;
 
     &:hover:not(:disabled) {
-        background: #0043ce;
+        background: #008060;
     }
 
     &:disabled {
-        opacity: 0.5;
+        opacity: 0.55;
         cursor: not-allowed;
     }
 `;
 
 const HelperText = styled.p`
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    margin-top: 0.5rem;
+    font-size: 0.78rem;
+    color: #64748b;
+    margin-top: 6px;
+    margin-bottom: 0;
 `;
 
 const ResultCard = styled.div`
-    background: var(--bg-surface);
-    border: 1px solid #24a148; /* Carbon Green */
-    border-radius: 0;
-    padding: 1.5rem;
-    margin-top: 2rem;
-    color: var(--text-primary);
-    position: relative;
-
-    &::before {
-        content: '';
-        position: absolute;
-        left: 0; top: 0; bottom: 0;
-        width: 4px;
-        background: #24a148;
-    }
+    background: #ffffff;
+    border: 1px solid #a7f3d0;
+    border-radius: 14px;
+    padding: 24px;
+    margin-top: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 `;
 
 const ResultTitle = styled.h3`
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    color: #24a148; /* Carbon Green */
-    margin-bottom: 1rem;
+    gap: 8px;
+    color: #008060;
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin: 0 0 12px 0;
 `;
 
 const ResultStat = styled.div`
-    background: var(--bg-surface);
-    padding: 1rem;
-    border-radius: 0;
+    background: #ecfdf5;
+    padding: 14px 18px;
+    border-radius: 10px;
     text-align: center;
-    border: 1px solid var(--border-color);
+    border: 1px solid #d1fae5;
     flex: 1;
 
     .label {
-        font-size: 0.875rem;
-        color: var(--text-secondary);
+        font-size: 0.75rem;
+        color: #065f46;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.04em;
+        font-weight: 600;
     }
 
     .value {
         font-size: 1.5rem;
         font-weight: 700;
-        color: var(--text-primary);
-        margin-top: 0.25rem;
+        color: #008060;
+        margin-top: 2px;
     }
 `;
 
 const StatsGrid = styled.div`
     display: flex;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    gap: 14px;
+    margin-bottom: 20px;
 `;
 
 const ModuleListContainer = styled.div`
-    margin-bottom: 2rem;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 12px;
 `;
 
 const ModuleItem = styled.div`
-    border: 1px solid var(--border-color);
-    background: var(--bg-surface);
-    border-radius: 0;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
 `;
 
 const ModuleHeader = styled.div`
-    padding: 1rem;
-    background: rgba(15, 98, 254, 0.05); /* very light Carbon Blue */
-    border-bottom: 1px solid var(--border-color);
+    padding: 10px 14px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e5e7eb;
     font-weight: 600;
-    color: var(--text-primary);
+    font-size: 0.875rem;
+    color: #1f2937;
 `;
 
 const TaskList = styled.div`
@@ -200,51 +228,54 @@ const TaskList = styled.div`
 `;
 
 const TaskItem = styled.div`
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid var(--border-color);
+    padding: 10px 14px;
+    border-bottom: 1px solid #f1f5f9;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    font-size: 0.9rem;
-    color: var(--text-secondary);
+    gap: 10px;
+    font-size: 0.84rem;
+    color: #374151;
 
     &:last-child {
         border-bottom: none;
     }
 
     .priority {
-        font-size: 0.75rem;
-        padding: 0.1rem 0.4rem;
-        background: var(--bg-hover);
+        font-size: 0.7rem;
+        padding: 2px 8px;
+        background: #f1f5f9;
         text-transform: capitalize;
-        border: 1px solid var(--border-color);
+        border-radius: 9999px;
+        font-weight: 500;
+        color: #475569;
     }
     
     .hours {
         margin-left: auto;
-        font-size: 0.8rem;
-        color: var(--text-tertiary);
+        font-size: 0.75rem;
+        color: #64748b;
+        font-weight: 500;
     }
 `;
 
 const ViewProjectBtn = styled.button`
     width: 100%;
-    padding: 0.75rem;
-    background: transparent;
-    border: 1px solid #0f62fe; /* Carbon Blue */
-    color: #0f62fe;
-    border-radius: 0;
+    padding: 12px 20px;
+    background: #111827;
+    color: #ffffff;
+    border: none;
+    border-radius: 9999px;
     font-weight: 500;
+    font-size: 0.875rem;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    transition: background 0.2s, color 0.2s;
+    gap: 8px;
+    transition: all 0.15s ease;
 
     &:hover {
-        background: #0f62fe;
-        color: white;
+        background: #008060;
     }
 `;
 
@@ -262,11 +293,9 @@ const ProjectScaffolderPage = () => {
 
     const fetchProjects = async () => {
         try {
-            // Re-using the sprint planner endpoint logic to get active projects
             const response = await api.get('/projects');
             setProjects(response.data.data);
             if (response.data.data.length > 0) {
-                // Select the first one by default if it's new/empty (naive assumption here)
                 setSelectedProject(response.data.data[0]._id);
             }
         } catch (error) {
@@ -296,7 +325,7 @@ const ProjectScaffolderPage = () => {
             if (response.data.success) {
                 toast.success('Project scaffolded successfully!');
                 setResult(response.data);
-                setDescription(''); // clear description
+                setDescription('');
             }
         } catch (error) {
             const msg = error.response?.data?.message || 'Failed to scaffold project';
@@ -310,11 +339,11 @@ const ProjectScaffolderPage = () => {
     return (
         <PageContainer>
             <Header>
+                <Badge><Sparkles size={12} /> AI Project Architect</Badge>
                 <Title>
-                    <Sparkles size={28} color="#0f62fe" />
                     AI Project Scaffolder
                 </Title>
-                <Subtitle>Describe your project in plain text, and AI will automatically build the modules and tasks.</Subtitle>
+                <Subtitle>Describe your requirements in plain text and let AI organize modules and tasks automatically.</Subtitle>
             </Header>
 
             <Card>
@@ -333,31 +362,31 @@ const ProjectScaffolderPage = () => {
                             </option>
                         ))}
                     </Select>
-                    <HelperText>Choose an empty or new project to avoid confusing existing tasks with new ones.</HelperText>
+                    <HelperText>Select an existing or new project to populate with structure.</HelperText>
                 </FormGroup>
 
                 <FormGroup>
                     <Label htmlFor="description">Project Description & Requirements</Label>
                     <TextArea
                         id="description"
-                        placeholder="e.g., Build a mobile app for a food delivery service with user auth, menus, cart, and payments."
+                        placeholder="e.g., Build a customer onboarding mobile application with authentication, multi-step profile setup, document verification, and welcome tours."
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         disabled={isGenerating}
                     />
-                    <HelperText>Be as descriptive as you like. The AI supports defining roles, features, and specific milestones.</HelperText>
+                    <HelperText>Include key user roles, primary modules, and milestone requirements for best results.</HelperText>
                 </FormGroup>
 
                 <GenerateBtn onClick={handleGenerate} disabled={isGenerating || !selectedProject || !description.trim()}>
                     {isGenerating ? (
                         <>
-                            <Loader2 size={20} className="animate-spin" />
-                            Generating Architecture... This may take a minute.
+                            <Loader2 size={16} className="animate-spin" />
+                            Generating Architecture... Please wait.
                         </>
                     ) : (
                         <>
-                            <Sparkles size={20} />
-                            Generate & Build Project
+                            <Sparkles size={16} />
+                            Generate & Build Structure
                         </>
                     )}
                 </GenerateBtn>
@@ -366,34 +395,34 @@ const ProjectScaffolderPage = () => {
             {result && (
                 <ResultCard>
                     <ResultTitle>
-                        <CheckCircle size={24} />
+                        <CheckCircle size={20} />
                         Scaffolding Complete!
                     </ResultTitle>
-                    <p style={{ marginBottom: '1.5rem', fontStyle: 'italic' }}>
+                    <p style={{ marginBottom: '16px', color: '#4b5563', fontSize: '0.875rem', fontStyle: 'italic' }}>
                         "{result.summary}"
                     </p>
 
                     <StatsGrid>
                         <ResultStat>
                             <div className="label">Modules Created</div>
-                            <div className="value">{result.stats.modulesCreated}</div>
+                            <div className="value">{result.stats?.modulesCreated || 0}</div>
                         </ResultStat>
                         <ResultStat>
                             <div className="label">Tasks Created</div>
-                            <div className="value">{result.stats.tasksCreated}</div>
+                            <div className="value">{result.stats?.tasksCreated || 0}</div>
                         </ResultStat>
                     </StatsGrid>
 
                     {result.modules && result.modules.length > 0 && (
                         <ModuleListContainer>
-                            <h4 style={{ marginBottom: '0.5rem', color: 'var(--text-primary)' }}>Generated Structure</h4>
+                            <h4 style={{ margin: '0 0 10px 0', fontSize: '0.875rem', fontWeight: 600, color: '#111827' }}>Generated Modules</h4>
                             {result.modules.map((mod, idx) => (
                                 <ModuleItem key={idx}>
                                     <ModuleHeader>{mod.name}</ModuleHeader>
                                     <TaskList>
                                         {mod.tasks?.map((t, tIdx) => (
                                             <TaskItem key={tIdx}>
-                                                <CheckCircle size={14} color="var(--text-tertiary)" />
+                                                <CheckCircle size={14} color="#008060" />
                                                 <span>{t.title}</span>
                                                 <span className="priority">{t.priority}</span>
                                                 <span className="hours">{t.estimatedHours}h</span>
@@ -407,7 +436,7 @@ const ProjectScaffolderPage = () => {
 
                     <ViewProjectBtn onClick={() => navigate(`/projects/${selectedProject}`)}>
                         Go to Project Dashboard
-                        <ArrowRight size={18} />
+                        <ArrowRight size={16} />
                     </ViewProjectBtn>
                 </ResultCard>
             )}

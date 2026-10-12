@@ -521,26 +521,22 @@ const SearchIcon = styled.div`
 
 const SearchInput = styled.input`
   width: 280px;
-  padding: 10px 14px 10px 42px;
-  background: ${(props) => props.theme.bg.card};
-  border: 2px solid ${(props) => props.theme.border};
-  border-radius: 10px;
+  padding: 9px 14px 9px 40px;
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 9999px;
   font-size: 0.875rem;
-  color: ${(props) => props.theme.text.primary};
+  color: #111827;
   outline: none;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 
   &::placeholder {
-    color: ${(props) => props.theme.text.tertiary};
+    color: #9CA3AF;
   }
 
   &:focus {
-    border-color: ${(props) => props.theme.text.secondary};
-    box-shadow: 0 0 0 3px
-      ${(props) =>
-        props.theme.mode === "dark"
-          ? "rgba(255, 255, 255, 0.1)"
-          : "rgba(71, 85, 105, 0.1)"};
+    border-color: #008060;
+    box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.1);
   }
 
   @media (max-width: 768px) {
@@ -552,52 +548,50 @@ const InviteButton = styled.button`
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 20px;
-  background: ${(props) =>
-    props.theme.mode === "dark" ? "#f8fafc" : "#475569"};
-  color: ${(props) => (props.theme.mode === "dark" ? "#0f172a" : "white")};
+  padding: 9px 20px;
+  background: #111827;
+  color: #ffffff;
   border: none;
-  border-radius: 10px;
+  border-radius: 9999px;
   font-weight: 600;
   font-size: 0.875rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(71, 85, 105, 0.2);
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   white-space: nowrap;
 
   &:hover {
-    background: ${(props) =>
-      props.theme.mode === "dark" ? "#e2e8f0" : "#334155"};
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(71, 85, 105, 0.3);
+    background: #1F2937;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   }
 `;
 
 /* Section Styles */
 const SectionContainer = styled.div`
-  margin-bottom: 48px;
-  animation: ${fadeIn} 0.5s ease-out;
+  margin-bottom: 40px;
+  animation: ${fadeIn} 0.4s ease-out;
 `;
 
 const SectionHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 2px solid ${(props) => props.theme.border};
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #E5E7EB;
 `;
 
 const SectionTitle = styled.h2`
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 1.375rem;
+  gap: 10px;
+  font-size: 1.25rem;
   font-weight: 700;
-  color: ${(props) => props.theme.text.primary};
+  color: #111827;
 
   svg {
-    color: ${(props) => props.theme.text.secondary};
+    color: #008060;
   }
 `;
 

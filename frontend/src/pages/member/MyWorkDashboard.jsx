@@ -544,13 +544,12 @@ const rotate = keyframes`
 
 // Styled Components
 const DashboardContainer = styled.div`
-    padding: 32px;
-    background: ${props => props.theme.bg.primary};
+    padding: 8px 0 32px 0;
+    background: transparent;
     min-height: 100vh;
     max-width: 1600px;
     margin: 0 auto;
-    font-family: 'IBM Plex Sans', sans-serif;
-    transition: background-color 0.3s;
+    font-family: inherit;
 `;
 
 const LoadingOverlay = styled.div`
@@ -559,15 +558,15 @@ const LoadingOverlay = styled.div`
     align-items: center;
     justify-content: center;
     height: 70vh;
-    color: ${props => props.theme.text.secondary};
+    color: #6b7280;
     gap: 16px;
 `;
 
 const Spinner = styled.div`
-    width: 48px;
-    height: 48px;
-    border: 3px solid ${props => props.theme.border};
-    border-top-color: #f97316;
+    width: 44px;
+    height: 44px;
+    border: 3px solid #e5e7eb;
+    border-top-color: #008060;
     border-radius: 50%;
     animation: ${rotate} 0.8s linear infinite;
 `;
@@ -576,8 +575,8 @@ const HeroSection = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
-    animation: ${fadeInUp} 0.6s ease-out;
+    margin-bottom: 32px;
+    animation: ${fadeInUp} 0.5s ease-out;
 
     @media (max-width: 968px) {
         flex-direction: column;
@@ -586,59 +585,63 @@ const HeroSection = styled.div`
     }
 `;
 
-const GreetingSection = styled.div``;
+const GreetingSection = styled.div`
+    margin-bottom: 20px;
+`;
 
 const WelcomeText = styled.h1`
-    font-size: 2rem;
-    font-weight: 800;
-    color: ${props => props.theme.text.primary};
-    letter-spacing: -0.025em;
-    margin-bottom: 8px;
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: #111827;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
 `;
 
 const NameHighlight = styled.span`
-    color: #0F62FE; /* Carbon Blue */
+    color: #008060;
 `;
 
 const SubText = styled.p`
-    font-size: 1rem;
-    color: ${props => props.theme.text.secondary};
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin: 0;
 `;
 
 const QuickStats = styled.div`
     display: flex;
-    gap: 20px;
+    gap: 16px;
+    flex-wrap: wrap;
 `;
 
 const StatBubble = styled.div`
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 16px 24px;
-    background: ${props => props.theme.bg.card};
-    border: 1px solid ${props => props.theme.border};
-    border-radius: 0; /* Carbon */
-    box-shadow: none; /* Carbon */
-    animation: ${fadeInUp} 0.6s ease-out;
+    gap: 14px;
+    padding: 14px 20px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    animation: ${fadeInUp} 0.5s ease-out;
     animation-delay: ${props => props.$delay}s;
     opacity: 0;
     animation-fill-mode: forwards;
-    transition: all 0.3s ease;
-    min-width: 160px;
+    transition: all 0.2s ease;
+    min-width: 150px;
 
     &:hover {
-        background: ${props => props.theme.bg.tertiary};
-        border-color: ${props => props.color};
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
 `;
 
 const HeatmapWrapper = styled.div`
     flex: 1;
     max-width: 600px;
-    background: ${props => props.theme.bg.card};
-    border: 1px solid ${props => props.theme.border};
-    border-radius: 0; /* Carbon */
-    box-shadow: none; /* Carbon */
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     padding: 16px;
     
     @media (max-width: 1400px) {
@@ -647,14 +650,13 @@ const HeatmapWrapper = styled.div`
 `;
 
 const StatIconWrapper = styled.div`
-    width: 48px;
-    height: 48px;
-    border-radius: 0; /* Carbon */
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
     background: ${props => props.$color};
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: none; /* Carbon */
 `;
 
 const StatContent = styled.div`
@@ -663,22 +665,22 @@ const StatContent = styled.div`
 `;
 
 const StatValue = styled.div`
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: ${props => props.theme.text.primary};
-    line-height: 1;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.1;
 `;
 
 const StatLabel = styled.div`
-    font-size: 0.875rem;
-    color: ${props => props.theme.text.secondary};
-    font-weight: 600;
+    font-size: 0.8rem;
+    color: #6b7280;
+    font-weight: 500;
 `;
 
 const MainGrid = styled.div`
     display: grid;
     grid-template-columns: 320px 1fr 340px;
-    gap: 32px;
+    gap: 28px;
 
     @media (max-width: 1400px) {
         grid-template-columns: 300px 1fr;
@@ -714,11 +716,11 @@ const RightColumn = styled.div`
 `;
 
 const CardBase = styled.div`
-    background: ${props => props.theme.bg.card};
-    border-radius: 0; /* Carbon */
-    padding: 24px;
-    border: 1px solid ${props => props.theme.border};
-    box-shadow: none;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 22px 24px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
 `;
 
 const ProgressCard = styled(CardBase)`
@@ -729,11 +731,11 @@ const CardHeader = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 
     &.urgent {
-        padding-bottom: 16px;
-        border-bottom: 1px solid ${props => props.theme.mode === 'dark' ? 'rgba(239, 68, 68, 0.2)' : '#fee2e2'};
+        padding-bottom: 14px;
+        border-bottom: 1px solid #fee2e2;
     }
 `;
 
@@ -741,20 +743,20 @@ const CardTitle = styled.h3`
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 700;
-    color: ${props => props.theme.text.primary};
+    color: #111827;
     margin: 0;
 
     .icon {
-        color: ${props => props.theme.text.tertiary};
+        color: #6b7280;
         
         &.amber {
-            color: #f97316;
+            color: #d97706;
         }
         
         &.success {
-            color: #22c55e;
+            color: #008060;
         }
     }
 
@@ -767,20 +769,20 @@ const ProgressRing = styled.div`
     position: relative;
     width: 140px;
     height: 140px;
-    margin: 0 auto 20px;
+    margin: 0 auto 18px;
 `;
 
 const CircleBackground = styled.circle`
     fill: none;
-    stroke: ${props => props.theme.bg.tertiary};
+    stroke: #f1f5f9;
     stroke-width: 10;
 `;
 
 const CircleProgress = styled.circle`
     fill: none;
-    stroke: #0F62FE; /* Carbon Blue */
+    stroke: #008060;
     stroke-width: 10;
-    stroke-linecap: square; /* Carbon */
+    stroke-linecap: round;
     stroke-dasharray: 377;
     stroke-dashoffset: ${props => 377 - (377 * props.$progress) / 100};
     transform: rotate(-90deg);
@@ -797,82 +799,84 @@ const ProgressValueWrapper = styled.div`
 `;
 
 const ProgressValue = styled.div`
-    font-size: 2rem;
-    font-weight: 800;
-    color: ${props => props.theme.text.primary};
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: #111827;
     line-height: 1;
 `;
 
 const ProgressLabel = styled.div`
-    font-size: 0.75rem;
-    color: ${props => props.theme.text.secondary};
+    font-size: 0.72rem;
+    color: #6b7280;
     font-weight: 600;
     text-transform: uppercase;
     margin-top: 4px;
+    letter-spacing: 0.04em;
 `;
 
 const ProgressStat = styled.p`
-    font-size: 0.875rem;
-    color: ${props => props.theme.text.secondary};
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin: 0;
     
     strong {
-        color: ${props => props.theme.text.primary};
+        color: #111827;
         font-weight: 600;
     }
 `;
 
 const FocusCard = styled(CardBase)`
-    border-color: ${props => props.theme.mode === 'dark' ? 'rgba(249, 115, 22, 0.2)' : '#ffedd5'};
-    background: ${props => props.theme.mode === 'dark' ? 'rgba(249, 115, 22, 0.05)' : '#fff7ed'};
+    background: #ffffff;
+    border-color: #e5e7eb;
 `;
 
 const CountBadge = styled.span`
-    background: #0f62fe; /* Carbon Blue */
-    color: white;
-    padding: 2px 8px;
-    border-radius: 0;
+    background: #ecfdf5;
+    color: #008060;
+    padding: 3px 10px;
+    border-radius: 9999px;
     font-size: 0.75rem;
-    font-weight: 400;
+    font-weight: 600;
 `;
 
 const FocusList = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 `;
 
 const FocusItem = styled.div`
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 16px;
-    background: ${props => props.theme.bg.card};
-    border-radius: 0;
-    border: 1px solid ${props => props.theme.border};
+    gap: 14px;
+    padding: 12px 14px;
+    background: #f8fafc;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: none;
     opacity: 0;
-    animation: ${fadeInUp} 0.5s ease-out forwards;
+    animation: ${fadeInUp} 0.4s ease-out forwards;
     animation-delay: ${props => props.$delay}s;
 
     &:hover {
-        background: ${props => props.theme.bg.hover};
-        border-color: #0f62fe;
+        background: #ecfdf5;
+        border-color: #a7f3d0;
+        transform: translateX(2px);
     }
     
     svg {
-        color: ${props => props.theme.text.tertiary};
+        color: #9ca3af;
     }
 `;
 
 const FocusDot = styled.div`
-    width: 10px;
-    height: 10px;
-    background: #f97316;
+    width: 8px;
+    height: 8px;
+    background: #008060;
     border-radius: 50%;
     flex-shrink: 0;
-    box-shadow: 0 0 0 4px ${props => props.theme.mode === 'dark' ? 'rgba(249, 115, 22, 0.2)' : '#ffedd5'};
+    box-shadow: 0 0 0 3px #d1fae5;
 `;
 
 const FocusContent = styled.div`
@@ -880,10 +884,10 @@ const FocusContent = styled.div`
     min-width: 0;
 
     h4 {
-        font-size: 0.9375rem;
+        font-size: 0.875rem;
         font-weight: 600;
-        color: ${props => props.theme.text.primary};
-        margin-bottom: 4px;
+        color: #111827;
+        margin-bottom: 2px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -891,18 +895,24 @@ const FocusContent = styled.div`
 
     p {
         font-size: 0.75rem;
-        color: ${props => props.theme.text.secondary};
+        color: #6b7280;
+        margin: 0;
     }
 `;
 
 const EmptyFocus = styled.div`
     text-align: center;
-    padding: 32px 16px;
-    color: ${props => props.theme.text.tertiary};
+    padding: 28px 16px;
+    color: #9ca3af;
 
     svg {
-        color: #22c55e;
-        margin-bottom: 12px;
+        color: #008060;
+        margin-bottom: 10px;
+    }
+
+    p {
+        margin: 0;
+        font-size: 0.85rem;
     }
 `;
 
@@ -910,58 +920,53 @@ const TaskListCard = styled(CardBase)``;
 
 const FilterGroup = styled.div`
     display: flex;
-    background: ${props => props.theme.bg.tertiary};
-    padding: 2px;
-    border-radius: 0;
-    border: 1px solid ${props => props.theme.border};
+    gap: 6px;
+    background: #f1f5f9;
+    padding: 3px;
+    border-radius: 9999px;
 `;
 
 const FilterButton = styled.button`
-    padding: 6px 16px;
-    border-radius: 0; /* Carbon */
+    padding: 5px 14px;
+    border-radius: 9999px;
     border: none;
-    background: transparent;
-    color: ${props => props.$active ? props.theme.text.primary : props.theme.text.secondary};
-    font-size: 0.8125rem;
+    background: ${props => props.$active ? '#111827' : 'transparent'};
+    color: ${props => props.$active ? '#ffffff' : '#6b7280'};
+    font-size: 0.8rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
-    border-bottom: 2px solid ${props => props.$active ? '#0F62FE' : 'transparent'}; /* Carbon active indicator */
 
     &:hover {
-        color: ${props => props.theme.text.primary};
-        background: ${props => props.theme.bg.hover};
+        color: ${props => props.$active ? '#ffffff' : '#111827'};
     }
 `;
 
 const TasksList = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     max-height: 600px;
     overflow-y: auto;
-    padding-right: 8px;
+    padding-right: 6px;
     
     &::-webkit-scrollbar {
-        width: 6px;
-    }
-    &::-webkit-scrollbar-track {
-        background: transparent;
+        width: 4px;
     }
     &::-webkit-scrollbar-thumb {
-        background: ${props => props.theme.border};
-        border-radius: 3px;
+        background: #e2e8f0;
+        border-radius: 4px;
     }
 `;
 
 const TaskItem = styled.div`
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 16px;
-    background: ${props => props.theme.bg.card};
-    border: 1px solid ${props => props.theme.border};
-    border-radius: 0; /* Carbon */
+    gap: 14px;
+    padding: 14px 16px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
     cursor: pointer;
     transition: all 0.2s ease;
     animation: ${fadeInUp} 0.4s ease-out forwards;
@@ -969,17 +974,18 @@ const TaskItem = styled.div`
     opacity: 0;
 
     &:hover {
-        background: ${props => props.theme.bg.hover};
-        border-color: #0F62FE; /* Carbon Blue hover outline */
+        background: #f8fafc;
+        border-color: #cbd5e1;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     }
 `;
 
 const StatusStrip = styled.div`
-    width: 4px;
+    width: 3px;
     height: 100%;
-    align-self: stretch; /* Stretch to fill parent height */
+    align-self: stretch;
     background: ${props => props.$color};
-    border-radius: 0; /* Carbon */
+    border-radius: 3px;
     flex-shrink: 0;
 `;
 
@@ -989,35 +995,36 @@ const TaskContent = styled.div`
 `;
 
 const TaskTitle = styled.h4`
-    font-size: 0.9375rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    color: ${props => props.theme.text.primary};
-    margin-bottom: 6px;
+    color: #111827;
+    margin-bottom: 4px;
 `;
 
 const TaskMeta = styled.div`
     display: flex;
-    gap: 16px;
+    gap: 12px;
+    flex-wrap: wrap;
 `;
 
 const MetaTag = styled.span`
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 0.75rem;
-    color: ${props => props.theme.text.secondary};
+    gap: 5px;
+    font-size: 0.72rem;
+    color: #6b7280;
     font-weight: 500;
 
     svg {
-        color: ${props => props.theme.text.tertiary};
+        color: #9ca3af;
     }
 
     &.priority {
         color: ${props => props.$color};
         background: ${props => props.$color}15;
         padding: 2px 8px;
-        border-radius: 0;
-        border: 1px solid ${props => props.$color};
+        border-radius: 9999px;
+        font-weight: 600;
 
         svg {
             color: ${props => props.$color};
@@ -1026,34 +1033,35 @@ const MetaTag = styled.span`
 `;
 
 const TaskAction = styled.div`
-    color: ${props => props.theme.text.tertiary};
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #9ca3af;
     transition: color 0.2s ease;
 
     ${TaskItem}:hover & {
-        color: #f97316;
+        color: #008060;
     }
 `;
 
 const TimerButton = styled.button`
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 6px 12px;
-    background: ${props => props.$active ? '#f97316' : props.theme.bg.tertiary};
-    color: ${props => props.$active ? 'white' : props.theme.text.secondary};
+    gap: 6px;
+    padding: 6px 14px;
+    background: ${props => props.$active ? '#008060' : '#f1f5f9'};
+    color: ${props => props.$active ? 'white' : '#475569'};
     border: none;
-    border-radius: 20px;
+    border-radius: 9999px;
     font-size: 0.75rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
-    margin-right: 12px;
     min-width: ${props => props.$active ? '80px' : '32px'};
     justify-content: center;
 
     &:hover {
-        background: ${props => props.$active ? '#0043ce' : props.theme.bg.hover};
-        color: ${props => props.$active ? 'white' : props.theme.text.primary};
+        background: ${props => props.$active ? '#006a4e' : '#e2e8f0'};
     }
 
     &:disabled {
@@ -1064,59 +1072,59 @@ const TimerButton = styled.button`
 
 const EmptyState = styled.div`
     text-align: center;
-    padding: 40px;
-    color: ${props => props.theme.text.tertiary};
-    font-size: 0.875rem;
+    padding: 36px;
+    color: #9ca3af;
+    font-size: 0.85rem;
 `;
 
 const UrgentCard = styled(CardBase)`
-    border-color: ${props => props.theme.mode === 'dark' ? 'rgba(239, 68, 68, 0.3)' : '#fee2e2'};
-    background: ${props => props.theme.mode === 'dark' ? 'rgba(239, 68, 68, 0.05)' : '#fff1f2'};
+    border-color: #fee2e2;
+    background: #fffafa;
 `;
 
 const PulseBadge = styled.span`
-    background: #da1e28;
+    background: #ef4444;
     color: white;
     padding: 2px 8px;
-    border-radius: 0;
-    font-size: 0.75rem;
-    font-weight: 400;
+    border-radius: 9999px;
+    font-size: 0.72rem;
+    font-weight: 600;
 `;
 
 const UrgentList = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 `;
 
 const UrgentItem = styled.div`
     display: flex;
     align-items: flex-start;
     gap: 12px;
-    padding: 12px;
-    background: ${props => props.theme.bg.card};
-    border-radius: 0;
-    border: 1px solid #da1e28;
+    padding: 12px 14px;
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #fecaca;
     animation: ${fadeInUp} 0.4s ease-out forwards;
     animation-delay: ${props => props.$delay}s;
     opacity: 0;
 
     h4 {
-        margin: 0 0 4px;
-        font-size: 0.875rem;
+        margin: 0 0 3px;
+        font-size: 0.85rem;
         font-weight: 600;
-        color: #ef4444;
+        color: #dc2626;
     }
 
     span {
-        font-size: 0.75rem;
-        color: ${props => props.theme.mode === 'dark' ? '#fca5a5' : '#ef4444'};
+        font-size: 0.72rem;
+        color: #ef4444;
         font-weight: 500;
     }
 
     .pulse {
         color: #ef4444;
-        margin-top: 6px;
+        margin-top: 4px;
         animation: ${pulse} 1.5s infinite;
     }
 `;
@@ -1134,14 +1142,14 @@ const Timeline = styled.div`
         top: 8px;
         bottom: 0;
         width: 2px;
-        background: ${props => props.theme.border};
+        background: #f1f5f9;
     }
 `;
 
 const TimelineItem = styled.div`
     position: relative;
-    padding-left: 24px;
-    margin-bottom: 24px;
+    padding-left: 20px;
+    margin-bottom: 20px;
     animation: ${fadeInUp} 0.4s ease-out forwards;
     animation-delay: ${props => props.$delay}s;
     opacity: 0;
@@ -1154,49 +1162,49 @@ const TimelineItem = styled.div`
 const TimelineDot = styled.div`
     position: absolute;
     left: -4px;
-    top: 6px;
-    width: 16px;
-    height: 16px;
-    background: ${props => props.theme.bg.card};
+    top: 5px;
+    width: 14px;
+    height: 14px;
+    background: #ffffff;
     border: 2px solid ${props => props.$color};
-    border-radius: 0; /* Carbon - squares for timeline */
+    border-radius: 50%;
     z-index: 1;
 `;
 
 const TimelineContent = styled.div`
     h5 {
-        margin: 0 0 4px;
-        font-size: 0.875rem;
+        margin: 0 0 2px;
+        font-size: 0.85rem;
         font-weight: 600;
-        color: ${props => props.theme.text.primary};
+        color: #111827;
     }
 
     span {
-        font-size: 0.75rem;
-        color: ${props => props.theme.text.tertiary};
+        font-size: 0.72rem;
+        color: #9ca3af;
     }
 `;
 
 const CompletedCard = styled(CardBase)`
     margin-top: 24px;
-    border-color: ${props => props.theme.mode === 'dark' ? 'rgba(34, 197, 94, 0.2)' : '#d1fae5'};
-    background: ${props => props.theme.bg.card}; /* Flat carbon */
+    border-color: #e5e7eb;
+    background: #ffffff;
 `;
 
 const CompletedList = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 `;
 
 const CompletedItem = styled.div`
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 16px;
-    background: ${props => props.theme.bg.card};
-    border: 1px solid ${props => props.theme.mode === 'dark' ? 'rgba(34, 197, 94, 0.2)' : '#d1fae5'};
-    border-radius: 0; /* Carbon */
+    gap: 14px;
+    padding: 12px 16px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
     cursor: pointer;
     transition: all 0.2s ease;
     animation: ${fadeInUp} 0.4s ease-out forwards;
@@ -1204,12 +1212,12 @@ const CompletedItem = styled.div`
     opacity: 0;
 
     &:hover {
-        border-color: #24A148; /* Carbon Green 50 */
-        background: ${props => props.theme.bg.hover};
+        border-color: #008060;
+        background: #f8fafc;
     }
 
     svg:last-child {
-        color: ${props => props.theme.text.tertiary};
+        color: #9ca3af;
         margin-left: auto;
     }
 `;
@@ -1218,9 +1226,9 @@ const CompletedCheckmark = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: ${props => props.theme.text.primary};
+    font-size: 2rem;
+    font-weight: 700;
+    color: #008060;
     margin: 0;
 `;
 
@@ -1230,42 +1238,42 @@ const CompletedContent = styled.div`
 `;
 
 const CompletedTitle = styled.h3`
-    margin: 0 0 8px;
-    font-size: 0.9375rem;
+    margin: 0 0 6px;
+    font-size: 0.875rem;
     font-weight: 600;
-    color: ${props => props.theme.text.primary};
+    color: #111827;
 `;
 
 const CompletedMeta = styled(TaskMeta)`
     .success {
-        background: ${props => props.theme.mode === 'dark' ? 'rgba(34, 197, 94, 0.2)' : '#d1fae5'};
-        color: #059669;
+        background: #ecfdf5;
+        color: #008060;
     }
 `;
 
 const ExpandButton = styled.button`
     width: 100%;
-    padding: 12px;
-    margin-top: 12px;
-    background: #0F62FE; /* Carbon Blue */
+    padding: 10px 18px;
+    margin-top: 14px;
+    background: #111827;
     color: white;
     border: none;
-    border-radius: 0; /* Carbon */
-    font-size: 0.875rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
 
     &:hover {
-        background: #0043CE; /* Carbon hover */
+        background: #008060;
     }
 `;
 
 // ─── Bulk Operations ──────────────────────────────────────────────────────────
 
 const TaskCheckbox = styled.button`
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -1274,13 +1282,13 @@ const TaskCheckbox = styled.button`
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    color: ${props => props.theme.text.tertiary};
+    color: #9ca3af;
     transition: all 0.15s;
     margin-right: 4px;
 
     &:hover {
-        background: ${props => props.theme.bg.hover};
-        color: #6366f1;
+        background: #f1f5f9;
+        color: #008060;
     }
 `;
 
@@ -1292,13 +1300,12 @@ const BulkToolbar = styled.div`
     z-index: 200;
     display: flex;
     align-items: center;
-    gap: 8px;
-    background: ${props => props.theme.mode === 'dark' ? '#161616' : '#ffffff'};
-    color: ${props => props.theme.text.primary};
-    padding: 12px 24px;
-    border-radius: 0;
-    border: 1px solid #0f62fe;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    gap: 10px;
+    background: #111827;
+    color: #ffffff;
+    padding: 8px 18px;
+    border-radius: 9999px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     animation: ${fadeInUp} 0.3s ease-out;
 
     @media print { display: none; }
@@ -1306,9 +1313,9 @@ const BulkToolbar = styled.div`
 
 const BulkCount = styled.span`
     font-size: 13px;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.7);
-    margin-right: 8px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    margin-right: 6px;
     white-space: nowrap;
 `;
 
@@ -1316,30 +1323,25 @@ const BulkBtn = styled.button`
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 7px 14px;
-    font-size: 13px;
+    padding: 6px 14px;
+    font-size: 12px;
     font-weight: 600;
-    border-radius: 100px;
+    border-radius: 9999px;
     border: none;
     cursor: pointer;
     transition: all 0.15s;
     white-space: nowrap;
 
     background: ${props => props.$danger
-        ? '#da1e28'
+        ? '#ef4444'
         : props.$ghost
-            ? 'transparent'
-            : '#0f62fe'};
-    color: ${props => props.$ghost ? props.theme.text.secondary : 'white'};
-    border: ${props => props.$ghost ? `1px solid ${props.theme.border}` : 'none'};
-    border-radius: 0;
+            ? 'rgba(255, 255, 255, 0.1)'
+            : '#008060'};
+    color: white;
 
     &:hover {
-        background: ${props => props.$danger
-            ? 'rgba(239, 68, 68, 0.45)'
-            : props.$ghost
-                ? 'rgba(255, 255, 255, 0.16)'
-                : 'rgba(99, 102, 241, 0.5)'};
+        opacity: 0.9;
+        transform: translateY(-1px);
     }
 `;
 

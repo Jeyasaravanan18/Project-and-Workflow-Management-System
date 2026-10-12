@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import styled from 'styled-components';
-import { Zap, Sparkles, TrendingUp, Filter } from 'lucide-react';
+import { Sparkles, TrendingUp, Filter, ArrowLeft, ArrowRight } from 'lucide-react';
 
 const AutomationTemplates = () => {
     const navigate = useNavigate();
@@ -55,32 +55,34 @@ const AutomationTemplates = () => {
     if (loading) {
         return (
             <Container>
-                <Header>
-                    <h1>Automation Templates</h1>
-                </Header>
-                <LoadingState>Loading templates...</LoadingState>
+                <LoadingState>Loading automation templates...</LoadingState>
             </Container>
         );
     }
 
     return (
         <Container>
+            <BackNav onClick={() => navigate('/admin/automations')}>
+                <ArrowLeft size={16} /> Back to Automations
+            </BackNav>
+
             <Header>
                 <div>
-                    <h1><Sparkles size={32} /> Automation Templates</h1>
-                    <Subtitle>Start with pre-built workflows and customize to your needs</Subtitle>
+                    <Badge><Sparkles size={12} /> Ready-to-use workflows</Badge>
+                    <Title>Automation Templates</Title>
+                    <Subtitle>Choose from curated automation recipes to speed up your team's workflow</Subtitle>
                 </div>
             </Header>
 
             {featuredTemplates.length > 0 && (
                 <FeaturedSection>
                     <SectionTitle>
-                        <TrendingUp size={20} />
+                        <TrendingUp size={18} color="#008060" />
                         Featured Templates
                     </SectionTitle>
                     <TemplateGrid>
                         {featuredTemplates.map(template => (
-                            <TemplateCard key={template._id} featured>
+                            <TemplateCard key={template._id} $featured>
                                 <FeaturedBadge>⭐ Featured</FeaturedBadge>
                                 <TemplateIcon>{template.icon || '⚡'}</TemplateIcon>
                                 <TemplateName>{template.name}</TemplateName>
@@ -90,7 +92,7 @@ const AutomationTemplates = () => {
                                     <UsageCount>{template.usageCount || 0} uses</UsageCount>
                                 </TemplateFooter>
                                 <UseButton onClick={() => useTemplate(template._id)}>
-                                    Use Template
+                                    Use Template <ArrowRight size={14} />
                                 </UseButton>
                             </TemplateCard>
                         ))}
@@ -98,18 +100,22 @@ const AutomationTemplates = () => {
                 </FeaturedSection>
             )}
 
-            <CategoryFilter>
-                <Filter size={18} />
-                {categories.map(cat => (
-                    <CategoryButton
-                        key={cat.id}
-                        active={selectedCategory === cat.id}
-                        onClick={() => setSelectedCategory(cat.id)}
-                    >
-                        {cat.label}
-                    </CategoryButton>
-                ))}
-            </CategoryFilter>
+            <FilterBar>
+                <FilterLabel>
+                    <Filter size={15} /> Filter:
+                </FilterLabel>
+                <CategoryGroup>
+                    {categories.map(cat => (
+                        <CategoryButton
+                            key={cat.id}
+                            $active={selectedCategory === cat.id}
+                            onClick={() => setSelectedCategory(cat.id)}
+                        >
+                            {cat.label}
+                        </CategoryButton>
+                    ))}
+                </CategoryGroup>
+            </FilterBar>
 
             <TemplateGrid>
                 {filteredTemplates.filter(t => !t.featured).map(template => (
@@ -122,7 +128,7 @@ const AutomationTemplates = () => {
                             <UsageCount>{template.usageCount || 0} uses</UsageCount>
                         </TemplateFooter>
                         <UseButton onClick={() => useTemplate(template._id)}>
-                            Use Template
+                            Use Template <ArrowRight size={14} />
                         </UseButton>
                     </TemplateCard>
                 ))}
@@ -130,7 +136,7 @@ const AutomationTemplates = () => {
 
             {filteredTemplates.length === 0 && (
                 <EmptyState>
-                    <p>No templates found in this category</p>
+                    <p>No templates found in this category.</p>
                 </EmptyState>
             )}
         </Container>
@@ -139,164 +145,218 @@ const AutomationTemplates = () => {
 
 // Styled Components
 const Container = styled.div`
-    padding: 2rem;
-    max-width: 1400px;
+    padding: 32px;
+    max-width: 1300px;
     margin: 0 auto;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+`;
+
+const BackNav = styled.button`
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    color: #64748b;
+    font-size: 0.84rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 18px;
+    padding: 0;
+    transition: color 0.15s;
+
+    &:hover {
+        color: #111827;
+    }
 `;
 
 const Header = styled.div`
-    margin-bottom: 2rem;
+    margin-bottom: 28px;
+`;
 
-    h1 {
-        font-size: 2rem;
-        font-weight: 700;
-        color: #1e293b;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        margin: 0;
-    }
+const Badge = styled.div`
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ecfdf5;
+    color: #008060;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid #a7f3d0;
+    margin-bottom: 8px;
+`;
+
+const Title = styled.h1`
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+    letter-spacing: -0.02em;
 `;
 
 const Subtitle = styled.p`
     color: #64748b;
-    margin-top: 0.5rem;
-    font-size: 0.95rem;
+    margin-top: 4px;
+    font-size: 0.875rem;
 `;
 
 const FeaturedSection = styled.div`
-    margin-bottom: 3rem;
+    margin-bottom: 32px;
 `;
 
 const SectionTitle = styled.h2`
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #1e293b;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #111827;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
+    gap: 8px;
+    margin-bottom: 16px;
 `;
 
-const CategoryFilter = styled.div`
+const FilterBar = styled.div`
     display: flex;
     align-items: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    padding: 1rem;
-    background: #f8fafc;
-    border-radius: 8px;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+`;
+
+const FilterLabel = styled.span`
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #64748b;
+`;
+
+const CategoryGroup = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 8px;
     flex-wrap: wrap;
 `;
 
 const CategoryButton = styled.button`
-    padding: 0.5rem 1rem;
-    background: ${props => props.active ? 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)' : 'white'};
-    color: ${props => props.active ? 'white' : '#64748b'};
-    border: 2px solid ${props => props.active ? 'transparent' : '#e2e8f0'};
-    border-radius: 6px;
-    font-weight: 600;
+    padding: 6px 14px;
+    background: ${props => props.$active ? '#008060' : '#ffffff'};
+    color: ${props => props.$active ? '#ffffff' : '#374151'};
+    border: 1px solid ${props => props.$active ? '#008060' : '#e5e7eb'};
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
-    text-transform: capitalize;
+    transition: all 0.15s ease;
 
     &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background: ${props => props.$active ? '#008060' : '#f8fafc'};
+        border-color: ${props => props.$active ? '#008060' : '#d1d5db'};
     }
 `;
 
 const TemplateGrid = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.5rem;
+    gap: 18px;
 `;
 
 const TemplateCard = styled.div`
-    background: white;
-    border: 2px solid ${props => props.featured ? '#fbbf24' : '#e2e8f0'};
-    border-radius: 12px;
-    padding: 1.5rem;
-    transition: all 0.2s;
+    background: #ffffff;
+    border: 1px solid ${props => props.$featured ? '#a7f3d0' : '#e5e7eb'};
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    transition: all 0.15s ease;
     position: relative;
+    display: flex;
+    flex-direction: column;
 
     &:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-        border-color: ${props => props.featured ? '#f59e0b' : '#6366f1'};
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        border-color: ${props => props.$featured ? '#008060' : '#cbd5e1'};
     }
 `;
 
 const FeaturedBadge = styled.div`
     position: absolute;
-    top: -10px;
-    right: 1rem;
-    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-    color: white;
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3);
+    top: 14px;
+    right: 14px;
+    background: #ecfdf5;
+    color: #008060;
+    border: 1px solid #a7f3d0;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 600;
 `;
 
 const TemplateIcon = styled.div`
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
+    font-size: 2rem;
+    margin-bottom: 12px;
 `;
 
 const TemplateName = styled.h3`
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #1e293b;
-    margin: 0 0 0.75rem 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 8px 0;
 `;
 
 const TemplateDescription = styled.p`
     color: #64748b;
-    font-size: 0.9rem;
+    font-size: 0.84rem;
     line-height: 1.5;
-    margin-bottom: 1rem;
+    margin: 0 0 16px 0;
+    flex: 1;
 `;
 
 const TemplateFooter = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid #e2e8f0;
+    margin-bottom: 14px;
+    padding-top: 12px;
+    border-top: 1px solid #f1f5f9;
 `;
 
 const CategoryBadge = styled.span`
-    padding: 0.25rem 0.75rem;
-    background: #f0f0ff;
-    color: #6366f1;
-    border-radius: 12px;
-    font-size: 0.75rem;
-    font-weight: 600;
+    padding: 3px 8px;
+    background: #f8fafc;
+    color: #475569;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 500;
     text-transform: capitalize;
+    border: 1px solid #e2e8f0;
 `;
 
 const UsageCount = styled.span`
-    font-size: 0.85rem;
-    color: #64748b;
+    font-size: 0.78rem;
+    color: #94a3b8;
 `;
 
 const UseButton = styled.button`
     width: 100%;
-    padding: 0.75rem;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-    color: white;
+    padding: 10px 16px;
+    background: #111827;
+    color: #ffffff;
     border: none;
-    border-radius: 8px;
-    font-weight: 600;
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.15s ease;
 
     &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
+        background: #008060;
     }
 `;
 
@@ -304,13 +364,17 @@ const LoadingState = styled.div`
     text-align: center;
     padding: 4rem 2rem;
     color: #64748b;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
 `;
 
 const EmptyState = styled.div`
     text-align: center;
     padding: 3rem 2rem;
     color: #64748b;
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    margin-top: 20px;
 `;
 
 export default AutomationTemplates;

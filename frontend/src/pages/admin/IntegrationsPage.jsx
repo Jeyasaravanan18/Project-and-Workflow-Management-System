@@ -554,79 +554,63 @@ const logPulse = keyframes`
 
 // Styled Components
 const Container = styled.div`
-    padding: 2.5rem;
+    padding: 8px 0 40px 0;
     max-width: 1600px;
     margin: 0 auto;
     min-height: 100vh;
-    background: #f4f4f4; /* Carbon Gray 10 */
+    background: transparent;
 `;
 
 const HeaderSection = styled.div`
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
 `;
 
 const Hero = styled.div`
     background: #ffffff;
-    border-radius: 0; /* Carbon crisp edge */
-    padding: 3rem;
-    margin-bottom: 2.5rem;
+    border-radius: 14px;
+    padding: 2rem 2.5rem;
+    margin-bottom: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     position: relative;
     overflow: hidden;
-
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: #0f62fe; /* Carbon Blue 60 accent */
-    }
 `;
 
 const HeroContent = styled.div`
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.5rem;
     position: relative;
     z-index: 1;
 `;
 
 const HeroIconWrapper = styled.div`
-    width: 64px;
-    height: 64px;
-    border-radius: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #0f62fe; /* Carbon Blue 60 */
-    color: #ffffff;
-    border: 1px solid #0043ce;
-    position: relative;
-
-    svg {
-        position: relative;
-        z-index: 1;
-    }
+    background: #ecfdf5;
+    color: #008060;
+    flex-shrink: 0;
 `;
 
 const HeroText = styled.div`
     h1 {
-        font-size: 1.75rem;
-        font-weight: 300; /* Carbon Light */
-        color: #161616;
-        letter-spacing: 0;
-        margin: 0 0 0.5rem 0;
-        font-family: inherit;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #111827;
+        letter-spacing: -0.02em;
+        margin: 0 0 0.4rem 0;
     }
 
     p {
-        font-size: 1.125rem;
-        color: ${props => props.theme.text.secondary};
+        font-size: 0.95rem;
+        color: #6b7280;
         margin: 0;
         line-height: 1.5;
         max-width: 600px;
@@ -635,81 +619,76 @@ const HeroText = styled.div`
 
 const HeroStats = styled.div`
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
 `;
 
 const StatBadge = styled.div`
-    background: #ffffff;
-    padding: 1rem 1.5rem;
-    border-radius: 0;
+    background: #f8fafc;
+    padding: 0.85rem 1.4rem;
+    border-radius: 12px;
     text-align: left;
-    border: 1px solid #e0e0e0;
-    transition: background 0.2s ease;
+    border: 1px solid #e5e7eb;
+    transition: all 0.2s ease;
 
     &:hover {
-        background: #f4f4f4;
+        background: #f1f5f9;
     }
 `;
 
 const StatValue = styled.div`
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #0f62fe;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #008060;
     line-height: 1;
     margin-bottom: 0.25rem;
 `;
 
 const StatLabel = styled.div`
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     font-weight: 600;
-    color: ${props => props.theme.text.secondary};
+    color: #6b7280;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
 `;
 
 const Controls = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2.5rem;
-    gap: 2rem;
-    background: #ffffff;
-    padding: 0;
-    border-radius: 0;
-    border: none;
-    box-shadow: none;
+    margin-bottom: 2rem;
+    gap: 1.5rem;
+    flex-wrap: wrap;
 `;
 
 const SearchBar = styled.div`
     flex: 1;
-    max-width: 480px;
+    max-width: 440px;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
     background: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-bottom: 1px solid #8d8d8d; /* Carbon style bottom accent */
-    border-radius: 0;
-    padding: 0 1rem;
-    height: 48px;
-    transition: border 0.2s;
+    border: 1px solid #e5e7eb;
+    border-radius: 9999px;
+    padding: 0 1.2rem;
+    height: 42px;
+    transition: all 0.2s;
 
     &:focus-within {
-        border-color: #0f62fe;
-        box-shadow: inset 0 0 0 1px #0f62fe;
+        border-color: #008060;
+        box-shadow: 0 0 0 3px rgba(0,128,96,0.1);
     }
 
-    svg { color: #525252; }
+    svg { color: #9ca3af; }
 
     input {
         width: 100%;
         border: none;
         background: transparent;
         font-size: 0.875rem;
-        color: #161616;
+        color: #111827;
         outline: none;
 
-        &::placeholder { color: #8d8d8d; }
+        &::placeholder { color: #9ca3af; }
     }
 `;
 
@@ -717,37 +696,36 @@ const CategoryTabs = styled.div`
     display: flex;
     gap: 0.5rem;
     overflow-x: auto;
-    padding-bottom: 4px;
+    padding-bottom: 2px;
 
     &::-webkit-scrollbar {
-        height: 4px;
+        height: 3px;
     }
-    
     &::-webkit-scrollbar-thumb {
-        background: ${props => props.theme.border};
-        border-radius: 4px;
+        background: #e2e8f0;
+        border-radius: 3px;
     }
 `;
 
 const CategoryTab = styled.button`
     display: flex;
     align-items: center;
-    gap: 0.625rem;
+    gap: 0.5rem;
     padding: 0 1rem;
-    height: 48px;
-    background: ${props => props.$active ? '#ffffff' : '#f4f4f4'};
-    color: ${props => props.$active ? '#0f62fe' : '#525252'};
-    border: 1px solid #e0e0e0;
-    border-bottom: 2px solid ${props => props.$active ? '#0f62fe' : 'transparent'};
-    border-radius: 0;
-    font-weight: ${props => props.$active ? '600' : '400'};
-    font-size: 0.875rem;
+    height: 40px;
+    background: ${props => props.$active ? '#ecfdf5' : '#ffffff'};
+    color: ${props => props.$active ? '#008060' : '#4b5563'};
+    border: 1px solid ${props => props.$active ? '#a7f3d0' : '#e5e7eb'};
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 0.85rem;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.15s;
     white-space: nowrap;
 
     &:hover {
-        background: ${props => props.$active ? '#ffffff' : '#e5e5e5'};
+        background: ${props => props.$active ? '#ecfdf5' : '#f8fafc'};
+        border-color: ${props => props.$active ? '#a7f3d0' : '#cbd5e1'};
     }
 `;
 
@@ -755,32 +733,30 @@ const CategoryIconWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
-    border-radius: 0;
-    background: transparent;
-    color: ${props => props.$active ? '#0f62fe' : props.$color};
-    transition: all 0.2s;
+    width: 20px;
+    height: 20px;
+    color: ${props => props.$active ? '#008060' : props.$color};
 
     svg {
-        width: 16px;
-        height: 16px;
+        width: 15px;
+        height: 15px;
     }
 `;
 
 const IntegrationGrid = styled.div`
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 1.5rem;
 `;
 
 const IntegrationCard = styled.div`
     background: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 0;
-    padding: 24px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 22px;
     position: relative;
-    transition: border 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    transition: all 0.2s ease;
     animation: ${fadeIn} 0.4s ease-out;
     animation-delay: ${props => props.$delay}s;
     animation-fill-mode: backwards;
@@ -789,53 +765,55 @@ const IntegrationCard = styled.div`
     height: 100%;
 
     &:hover {
-        border-color: #0f62fe;
+        border-color: #008060;
+        box-shadow: 0 6px 18px rgba(0,128,96,0.06);
+        transform: translateY(-2px);
     }
 `;
 
 const PopularBadge = styled.div`
     position: absolute;
-    top: 0;
-    right: 0;
-    background: #0f62fe;
-    color: white;
-    padding: 4px 12px;
-    font-size: 0.75rem;
+    top: 16px;
+    right: 16px;
+    background: #ecfdf5;
+    color: #008060;
+    padding: 3px 10px;
+    font-size: 0.72rem;
     font-weight: 600;
-    border-radius: 0;
+    border-radius: 9999px;
 `;
 
 const ComingSoonBadge = styled.div`
     position: absolute;
-    top: 0;
-    right: 0;
-    background: #e0e0e0;
-    color: #161616;
-    padding: 4px 12px;
-    font-size: 0.75rem;
+    top: 16px;
+    right: 16px;
+    background: #f1f5f9;
+    color: #64748b;
+    padding: 3px 10px;
+    font-size: 0.72rem;
     font-weight: 600;
-    border-radius: 0;
+    border-radius: 9999px;
 `;
 
 const CardHeader = styled.div`
     display: flex;
     align-items: flex-start;
-    gap: 1.25rem;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid ${props => props.theme.border};
+    gap: 1.1rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid #f1f5f9;
 `;
 
 const IntegrationLogo = styled.div`
-    width: 48px;
-    height: 48px;
-    background: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 0;
+    width: 46px;
+    height: 46px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
+    font-size: 1.8rem;
     flex-shrink: 0;
 `;
 
@@ -846,93 +824,90 @@ const CardTitleArea = styled.div`
 `;
 
 const IntegrationName = styled.h3`
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: #161616;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #111827;
     margin: 0;
+    letter-spacing: -0.01em;
 `;
 
 const CategoryLabel = styled.div`
-    font-size: 0.625rem;
-    color: #525252;
+    font-size: 0.65rem;
+    color: #6b7280;
     text-transform: uppercase;
     font-weight: 600;
     letter-spacing: 0.5px;
-    background: #f4f4f4;
+    background: #f1f5f9;
     padding: 2px 8px;
-    border-radius: 0;
+    border-radius: 6px;
     align-self: flex-start;
-    border: 1px solid #e0e0e0;
 `;
 
 const StatusBadge = styled.div`
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 4px 12px;
-    border-radius: 0;
-    font-size: 0.75rem;
-    font-weight: 400;
-    margin-top: 0.5rem;
+    gap: 0.4rem;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    margin-top: 0.4rem;
     width: fit-content;
     
     ${props => props.$status === 'connected' && `
-        background: #defbe6;
-        color: #198038;
-        border: 1px solid #8aef9a;
+        background: #ecfdf5;
+        color: #008060;
     `}
     
     ${props => props.$status === 'error' && `
-        background: #fff1f1;
-        color: #da1e28;
-        border: 1px solid #ffb3b8;
+        background: #fef2f2;
+        color: #ef4444;
     `}
     
     ${props => props.$status === 'pending' && `
-        background: #fcf4d6;
-        color: #8a3800;
-        border: 1px solid #ffcf00;
+        background: #fffbeb;
+        color: #d97706;
     `}
 `;
 
 const IntegrationDescription = styled.p`
-    font-size: 0.95rem;
-    color: ${props => props.theme.text.secondary};
-    line-height: 1.6;
-    margin: 0 0 1.5rem 0;
+    font-size: 0.875rem;
+    color: #6b7280;
+    line-height: 1.55;
+    margin: 0 0 1.25rem 0;
     flex-grow: 1;
 `;
 
 const FeatureList = styled.div`
-    background: #f4f4f4;
-    border-radius: 0;
-    padding: 16px;
-    margin-bottom: 24px;
-    border: 1px solid #e0e0e0;
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 20px;
+    border: 1px solid #e5e7eb;
 `;
 
 const Feature = styled.div`
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    font-size: 0.875rem;
-    color: ${props => props.theme.text.secondary};
-    margin-bottom: 0.5rem;
+    gap: 0.6rem;
+    font-size: 0.8rem;
+    color: #4b5563;
+    margin-bottom: 0.4rem;
 
     &:last-child { margin-bottom: 0; }
 
     svg {
-        color: #10b981;
+        color: #008060;
         flex-shrink: 0;
-        width: 16px;
-        height: 16px;
+        width: 14px;
+        height: 14px;
     }
 `;
 
 const CardActions = styled.div`
     display: grid;
     grid-template-columns: 1fr auto;
-    gap: 1rem;
+    gap: 0.75rem;
     margin-top: auto;
 `;
 
@@ -941,19 +916,20 @@ const PrimaryButton = styled.button`
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0 1rem;
-    height: 48px;
-    background: #0f62fe;
+    padding: 0 1.2rem;
+    height: 40px;
+    background: #111827;
     color: white;
     border: none;
-    border-radius: 0;
-    font-weight: 400;
-    font-size: 0.875rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 0.85rem;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.2s;
 
     &:hover {
-        background: #0043ce;
+        background: #008060;
+        transform: translateY(-1px);
     }
 `;
 
@@ -962,25 +938,25 @@ const SecondaryButton = styled.button`
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0 1rem;
-    height: 48px;
+    padding: 0 1.2rem;
+    height: 40px;
     background: #ffffff;
-    color: #161616;
-    border: 1px solid #161616;
-    border-radius: 0;
-    font-weight: 400;
-    font-size: 0.875rem;
+    color: #111827;
+    border: 1px solid #e5e7eb;
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 0.85rem;
     cursor: pointer;
     transition: all 0.2s;
 
     &:hover {
-        background: #393939;
-        color: white;
+        background: #f8fafc;
+        border-color: #cbd5e1;
     }
 
     &:disabled {
-        border-color: #c6c6c6;
-        color: #c6c6c6;
+        border-color: #e5e7eb;
+        color: #9ca3af;
         cursor: not-allowed;
     }
 
@@ -988,24 +964,24 @@ const SecondaryButton = styled.button`
 `;
 
 const DangerButton = styled(SecondaryButton)`
-    color: #da1e28;
-    border-color: #da1e28;
-    background: #ffffff;
+    color: #ef4444;
+    border-color: #fee2e2;
+    background: #fff5f5;
 
     &:hover {
-        background: #da1e28;
-        color: white;
+        background: #fee2e2;
+        color: #dc2626;
     }
 `;
 
 const DisabledButton = styled(SecondaryButton)`
-    background: ${props => props.theme.bg.tertiary};
-    color: ${props => props.theme.text.tertiary};
-    border-color: ${props => props.theme.border};
+    background: #f1f5f9;
+    color: #9ca3af;
+    border-color: #e5e7eb;
     cursor: not-allowed;
 
     &:hover {
-        background: ${props => props.theme.bg.tertiary};
+        background: #f1f5f9;
         transform: none;
     }
 `;
@@ -1014,17 +990,17 @@ const DocLink = styled.a`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     background: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 0;
-    color: #525252;
+    border: 1px solid #e5e7eb;
+    border-radius: 9999px;
+    color: #6b7280;
     transition: all 0.2s;
 
     &:hover {
-        color: #0f62fe;
-        border-color: #0f62fe;
+        color: #008060;
+        border-color: #008060;
     }
 `;
 
@@ -1035,17 +1011,17 @@ const EmptyState = styled.div`
     justify-content: center;
     padding: 4rem;
     text-align: center;
-    color: ${props => props.theme.text.tertiary};
+    color: #9ca3af;
 
     p {
-        font-size: 1.125rem;
-        color: ${props => props.theme.text.secondary};
+        font-size: 1.1rem;
+        color: #4b5563;
         margin: 1rem 0 0.5rem 0;
         font-weight: 500;
     }
 
     small {
-        color: ${props => props.theme.text.tertiary};
+        color: #9ca3af;
     }
 `;
 
@@ -1056,8 +1032,8 @@ const Modal = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(22, 22, 22, 0.7);
-    backdrop-filter: blur(2px);
+    background: rgba(17, 24, 39, 0.6);
+    backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1068,48 +1044,48 @@ const Modal = styled.div`
 
 const ModalContent = styled.div`
     background: #ffffff;
-    border-radius: 0;
+    border-radius: 16px;
     width: 100%;
-    max-width: 640px;
+    max-width: 600px;
     max-height: 90vh;
     overflow-y: auto;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #e5e7eb;
 `;
 
 const ModalHeader = styled.div`
-    padding: 2rem;
-    border-bottom: 1px solid ${props => props.theme.border};
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #f1f5f9;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
 
     > div {
         display: flex;
-        gap: 1.5rem;
+        gap: 1.25rem;
         align-items: center;
     }
 `;
 
 const ModalLogo = styled(IntegrationLogo)`
-    width: 56px;
-    height: 56px;
+    width: 52px;
+    height: 52px;
     font-size: 2rem;
-    border-radius: 0;
+    border-radius: 14px;
 `;
 
 const ModalTitle = styled.h2`
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #161616;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #111827;
     margin: 0 0 0.25rem 0;
 `;
 
 const ModalSubtitle = styled.p`
-    font-size: 0.875rem;
-    color: ${props => props.theme.text.secondary};
+    font-size: 0.85rem;
+    color: #6b7280;
     margin: 0;
     max-width: 350px;
     line-height: 1.5;
@@ -1118,61 +1094,61 @@ const ModalSubtitle = styled.p`
 const CloseButton = styled.button`
     background: transparent;
     border: none;
-    color: ${props => props.theme.text.tertiary};
+    color: #9ca3af;
     cursor: pointer;
     padding: 0.5rem;
     border-radius: 8px;
     transition: all 0.2s;
 
     &:hover {
-        background: ${props => props.theme.bg.hover};
-        color: ${props => props.theme.text.secondary};
+        background: #f1f5f9;
+        color: #111827;
     }
 `;
 
 const ModalBody = styled.div`
-    padding: 2rem;
+    padding: 1.5rem 2rem;
 `;
 
 const SetupInstructions = styled.div`
-    background: #f4f4f4;
-    border: 1px solid #e0e0e0;
-    border-radius: 0;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
 
     strong {
         display: block;
-        color: ${props => props.theme.text.primary};
-        margin-bottom: 1rem;
-        font-size: 0.95rem;
+        color: #111827;
+        margin-bottom: 0.75rem;
+        font-size: 0.9rem;
     }
 
     ol {
         margin: 0;
         padding-left: 1.25rem;
-        color: ${props => props.theme.text.secondary};
-        font-size: 0.95rem;
+        color: #4b5563;
+        font-size: 0.85rem;
         line-height: 1.6;
 
         li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
             &:last-child { margin-bottom: 0; }
         }
     }
 `;
 
 const FormGroup = styled.div`
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
     &:last-child { margin-bottom: 0; }
 `;
 
 const Label = styled.label`
     display: block;
-    font-size: 0.875rem;
+    font-size: 0.85rem;
     font-weight: 600;
-    color: ${props => props.theme.text.primary};
-    margin-bottom: 0.5rem;
+    color: #111827;
+    margin-bottom: 0.4rem;
 `;
 
 const Required = styled.span`
@@ -1183,86 +1159,86 @@ const Required = styled.span`
 const Input = styled.input`
     width: 100%;
     padding: 0 1rem;
-    height: 48px;
-    border: 1px solid #e0e0e0;
-    border-bottom: 1px solid #8d8d8d;
-    border-radius: 0;
+    height: 44px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
     font-size: 0.875rem;
-    color: #161616;
-    background: #ffffff;
-    transition: border 0.2s;
+    color: #111827;
+    background: #f8fafc;
+    transition: all 0.2s;
 
     &:focus {
         outline: none;
-        border-color: #0f62fe;
-        box-shadow: inset 0 0 0 1px #0f62fe;
+        background: #ffffff;
+        border-color: #008060;
+        box-shadow: 0 0 0 3px rgba(0,128,96,0.1);
     }
     
     &::placeholder {
-        color: #8d8d8d;
+        color: #9ca3af;
     }
 `;
 
 const OAuthPlaceholder = styled.div`
     text-align: center;
     padding: 2rem 0;
-    color: ${props => props.theme.text.secondary};
+    color: #6b7280;
 
     svg {
-        color: ${props => props.theme.text.tertiary};
+        color: #008060;
         margin-bottom: 1rem;
     }
 
     h3 {
-        color: ${props => props.theme.text.primary};
-        font-size: 1.125rem;
+        color: #111827;
+        font-size: 1.1rem;
         margin-bottom: 0.5rem;
     }
 `;
 
 const ModalFooter = styled.div`
-    padding: 1.5rem 2rem;
-    border-top: 1px solid #e0e0e0;
+    padding: 1.25rem 2rem;
+    border-top: 1px solid #f1f5f9;
     display: flex;
     justify-content: flex-end;
-    gap: 1rem;
-    background: #f4f4f4;
+    gap: 0.75rem;
+    background: #f8fafc;
 `;
 
 const ActivityLog = styled.div`
     background: #ffffff;
-    border-radius: 0;
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 0.85rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid #e5e7eb;
 `;
 
 const LogHeader = styled.div`
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: ${props => props.theme.text.tertiary};
-    margin-bottom: 0.75rem;
+    color: #6b7280;
+    margin-bottom: 0.6rem;
     
-    svg { color: #f59e0b; }
+    svg { color: #008060; }
 `;
 
 const LogList = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.6rem;
 `;
 
 const LogItem = styled.div`
     display: flex;
     align-items: flex-start;
-    gap: 0.75rem;
-    font-size: 0.8125rem;
-    padding: 0.25rem;
+    gap: 0.6rem;
+    font-size: 0.8rem;
+    padding: 0.2rem;
     border-radius: 4px;
     animation: ${logPulse} 2s ease-out;
 `;
@@ -1271,15 +1247,15 @@ const LogDot = styled.div`
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    margin-top: 0.375rem;
+    margin-top: 0.35rem;
     flex-shrink: 0;
     
     background: ${props => {
         switch(props.$status) {
-            case 'success': return '#10b981';
+            case 'success': return '#008060';
             case 'error': return '#ef4444';
             case 'warning': return '#f59e0b';
-            default: return '#6366f1';
+            default: return '#008060';
         }
     }};
 `;
@@ -1290,31 +1266,31 @@ const LogText = styled.div`
     flex-direction: column;
     
     strong {
-        color: ${props => props.theme.text.primary};
+        color: #111827;
         text-transform: capitalize;
     }
     
     span {
-        color: ${props => props.theme.text.secondary};
-        font-size: 0.75rem;
+        color: #6b7280;
+        font-size: 0.72rem;
     }
 `;
 
 const LogTime = styled.div`
     font-size: 0.7rem;
-    color: ${props => props.theme.text.tertiary};
+    color: #9ca3af;
     white-space: nowrap;
 `;
 
 const LogEmpty = styled.div`
     font-size: 0.75rem;
-    color: ${props => props.theme.text.tertiary};
+    color: #9ca3af;
     font-style: italic;
     text-align: center;
 `;
 
 const Section = styled.div`
-    margin-bottom: 4rem;
+    margin-bottom: 3.5rem;
 `;
 
 const SectionHeader = styled.div`
@@ -1322,40 +1298,41 @@ const SectionHeader = styled.div`
     align-items: baseline;
     justify-content: space-between;
     gap: 1rem;
-    border-bottom: 1px solid ${props => props.theme.border};
-    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 0.85rem;
     margin-bottom: 1.5rem;
 `;
 
 const SectionTitle = styled.h2`
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #161616;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #111827;
     margin: 0;
+    letter-spacing: -0.01em;
 `;
 
 const SectionMeta = styled.span`
-    font-size: 0.875rem;
-    color: ${props => props.theme.text.tertiary};
+    font-size: 0.8rem;
+    color: #6b7280;
     font-weight: 500;
 `;
 
 const HealthBar = styled.div`
     display: flex;
-    height: 8px;
-    border-radius: 0;
+    height: 6px;
+    border-radius: 9999px;
     overflow: hidden;
-    gap: 4px;
-    margin-bottom: 2rem;
-    background: #e0e0e0;
+    gap: 3px;
+    margin-bottom: 1.5rem;
+    background: #e5e7eb;
 `;
 
 const HealthSegment = styled.div`
     flex: 1;
-    border-radius: 100px;
+    border-radius: 9999px;
     background: ${props => {
         switch(props.$status) {
-            case 'connected': return '#10b981';
+            case 'connected': return '#008060';
             case 'error': return '#ef4444';
             case 'pending': return '#f59e0b';
             default: return '#94a3b8';
@@ -1370,16 +1347,15 @@ const HealthSegment = styled.div`
 const LastSync = styled.div`
     display: inline-flex;
     align-items: center;
-    gap: 0.375rem;
-    font-size: 0.625rem;
-    color: #525252;
-    margin-bottom: 1rem;
+    gap: 0.35rem;
+    font-size: 0.7rem;
+    color: #6b7280;
+    margin-bottom: 0.85rem;
     padding: 2px 8px;
-    background: #f4f4f4;
-    border-radius: 0;
-    border: 1px solid #e0e0e0;
+    background: #f1f5f9;
+    border-radius: 6px;
 
-    svg { flex-shrink: 0; }
+    svg { flex-shrink: 0; color: #9ca3af; }
 `;
 
 export default IntegrationsPage;

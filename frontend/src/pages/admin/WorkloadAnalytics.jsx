@@ -662,34 +662,35 @@ const Badge = styled.div`
 `;
 
 const Title = styled.h1`
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: #0f172a;
-    margin-bottom: 8px;
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 6px;
     letter-spacing: -0.02em;
 `;
 
 const Subtitle = styled.p`
-    font-size: 1.125rem;
-    color: #64748b;
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin: 0;
 `;
 
 const Actions = styled.div`
     display: flex;
-    gap: 12px;
+    gap: 10px;
 `;
 
 const ActionButton = styled.button`
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 20px;
+    padding: 8px 18px;
     background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    color: #475569;
-    font-weight: 600;
-    font-size: 0.9rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 9999px;
+    color: #111827;
+    font-weight: 500;
+    font-size: 0.85rem;
     cursor: pointer;
     transition: all 0.2s;
 
@@ -697,16 +698,14 @@ const ActionButton = styled.button`
         transform: translateY(-1px);
         background: #f8fafc;
         border-color: #cbd5e1;
-        color: #1e293b;
     }
 
     &.primary {
-        background: #0f172a;
+        background: #111827;
         color: white;
         border: none;
         &:hover {
-            background: #1e293b;
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+            background: #008060;
         }
     }
 
@@ -723,8 +722,8 @@ const ActionButton = styled.button`
 const MetricsGrid = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-    margin-bottom: 32px;
+    gap: 16px;
+    margin-bottom: 24px;
 
     @media (max-width: 1200px) {
         grid-template-columns: repeat(2, 1fr);
@@ -733,25 +732,26 @@ const MetricsGrid = styled.div`
 
 const MetricCard = styled.div`
     background: white;
-    padding: 24px;
-    border-radius: 16px;
-    border: 1px solid ${props => props.$highlight ? '#fbd38d' : '#e2e8f0'};
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+    padding: 22px;
+    border-radius: 14px;
+    border: 1px solid ${props => props.$highlight ? '#fed7aa' : '#e5e7eb'};
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
     display: flex;
     align-items: center;
     gap: 16px;
-    animation: ${fadeIn} 0.5s ease-out backwards;
+    animation: ${fadeIn} 0.4s ease-out backwards;
     animation-delay: ${props => props.$delay}s;
-    transition: transform 0.2s;
+    transition: all 0.2s;
 
     &:hover {
         transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.04);
     }
 `;
 
 const IconWrapper = styled.div`
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     border-radius: 12px;
     background: ${props => `${props.$color}15`};
     color: ${props => props.$color};
@@ -767,21 +767,22 @@ const MetricInfo = styled.div`
 
 const Value = styled.span`
     font-size: 1.75rem;
-    font-weight: 800;
-    color: #0f172a;
+    font-weight: 700;
+    color: #111827;
     line-height: 1.2;
+    letter-spacing: -0.02em;
 `;
 
 const Label = styled.span`
-    font-size: 0.875rem;
-    color: #64748b;
+    font-size: 0.8rem;
+    color: #6b7280;
     font-weight: 500;
 `;
 
 const ContentSplit = styled.div`
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 24px;
+    gap: 20px;
     align-items: start;
 
     @media (max-width: 1024px) {
@@ -791,20 +792,22 @@ const ContentSplit = styled.div`
 
 const ChartSection = styled.div`
     background: white;
-    padding: 24px;
-    border-radius: 20px;
-    border: 1px solid #e2e8f0;
+    padding: 22px;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     min-height: 400px;
-    animation: ${fadeIn} 0.5s ease-out backwards;
+    animation: ${fadeIn} 0.4s ease-out backwards;
     animation-delay: ${props => props.$delay}s;
 `;
 
 const ListSection = styled.div`
     background: white;
-    padding: 24px;
-    border-radius: 20px;
-    border: 1px solid #e2e8f0;
-    animation: ${fadeIn} 0.5s ease-out backwards;
+    padding: 22px;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    animation: ${fadeIn} 0.4s ease-out backwards;
     animation-delay: ${props => props.$delay}s;
     display: flex;
     flex-direction: column;
@@ -814,18 +817,18 @@ const CardHeader = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 
     h3 {
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 700;
-        color: #0f172a;
+        color: #111827;
         margin: 0;
     }
 
     .meta {
-        font-size: 0.875rem;
-        color: #64748b;
+        font-size: 0.8rem;
+        color: #6b7280;
     }
 
     .actions {
@@ -844,62 +847,65 @@ const SearchInput = styled.div`
     
     svg {
         position: absolute;
-        left: 10px;
+        left: 12px;
         top: 50%;
         transform: translateY(-50%);
-        color: #94a3b8;
+        color: #9ca3af;
     }
 
     input {
-        padding: 8px 12px 8px 32px;
-        border: 1px solid #e2e8f0;
-        border-radius: 8px;
-        font-size: 0.875rem;
-        color: #0f172a;
+        padding: 7px 12px 7px 34px;
+        border: 1px solid #e5e7eb;
+        border-radius: 9999px;
+        font-size: 0.85rem;
+        color: #111827;
         width: 150px;
+        background: #f8fafc;
         transition: all 0.2s;
 
         &:focus {
             outline: none;
-            border-color: #cbd5e1;
-            width: 200px;
+            background: #ffffff;
+            border-color: #008060;
+            width: 180px;
         }
 
         &::placeholder {
-            color: #cbd5e1;
+            color: #9ca3af;
         }
     }
 `;
 
 const FilterTabs = styled.div`
     display: flex;
-    gap: 8px;
+    gap: 6px;
     margin-bottom: 16px;
-    padding-bottom: 16px;
+    padding-bottom: 14px;
     border-bottom: 1px solid #f1f5f9;
     overflow-x: auto;
 `;
 
 const Tab = styled.button`
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 9999px;
+    font-size: 0.78rem;
+    font-weight: 500;
     cursor: pointer;
     border: none;
-    background: ${props => props.$active ? '#0f172a' : 'transparent'};
-    color: ${props => props.$active ? 'white' : '#64748b'};
-    transition: all 0.2s;
+    background: ${props => props.$active ? '#ecfdf5' : 'transparent'};
+    color: ${props => props.$active ? '#008060' : '#6b7280'};
+    transition: all 0.15s;
 
     &:hover {
-        background: ${props => props.$active ? '#0f172a' : '#f1f5f9'};
+        background: ${props => props.$active ? '#ecfdf5' : '#f8fafc'};
+        color: ${props => props.$active ? '#008060' : '#111827'};
     }
 `;
 
 const MembersList = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
     max-height: 500px;
     overflow-y: auto;
     padding-right: 4px;
@@ -920,14 +926,15 @@ const MemberRow = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px;
-    border-radius: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
     background: #f8fafc;
-    transition: background 0.2s;
+    border: 1px solid #e5e7eb;
+    transition: all 0.15s;
 
     &:hover {
         background: #f1f5f9;
-        cursor: default;
+        border-color: #cbd5e1;
     }
 `;
 
@@ -937,14 +944,14 @@ const MemberInfo = styled.div`
     gap: 12px;
 
     .name {
-        font-size: 0.9rem;
+        font-size: 0.875rem;
         font-weight: 600;
-        color: #0f172a;
+        color: #111827;
     }
 
     .role {
-        font-size: 0.75rem;
-        color: #64748b;
+        font-size: 0.72rem;
+        color: #6b7280;
     }
 `;
 
@@ -958,14 +965,14 @@ const Avatar = styled.div`
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
 `;
 
 const StatusPill = styled.div`
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 0.75rem;
-    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-size: 0.72rem;
+    font-weight: 600;
     display: flex;
     align-items: center;
     gap: 4px;
@@ -980,9 +987,9 @@ const StatusPill = styled.div`
                 `;
             case 'Optimal':
                 return `
-                    background: #f0fdf4;
-                    color: #15803d;
-                    border: 1px solid #dcfce7;
+                    background: #ecfdf5;
+                    color: #008060;
+                    border: 1px solid #a7f3d0;
                 `;
             default:
                 return `
@@ -1004,6 +1011,7 @@ const EmptyState = styled.div`
     
     p {
         font-size: 0.875rem;
+        margin: 0;
     }
 `;
 
@@ -1033,14 +1041,14 @@ const ExportDropdownMenu = styled.div`
     top: calc(100% + 8px);
     right: 0;
     background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 14px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06);
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     min-width: 220px;
     z-index: 1000;
     overflow: hidden;
     animation: ${dropdownFadeIn} 0.18s ease-out;
-    padding: 8px;
+    padding: 6px;
 `;
 
 const ExportDropdownItem = styled.button`
@@ -1048,12 +1056,12 @@ const ExportDropdownItem = styled.button`
     align-items: center;
     gap: 10px;
     width: 100%;
-    padding: 10px 12px;
+    padding: 9px 12px;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     background: transparent;
-    color: #0f172a;
-    font-size: 0.875rem;
+    color: #111827;
+    font-size: 0.85rem;
     font-weight: 500;
     cursor: pointer;
     text-align: left;
@@ -1064,7 +1072,7 @@ const ExportDropdownItem = styled.button`
     }
 
     svg {
-        color: #64748b;
+        color: #6b7280;
         flex-shrink: 0;
     }
 `;
@@ -1072,13 +1080,12 @@ const ExportDropdownItem = styled.button`
 const ExportBadge = styled.span`
     margin-left: auto;
     padding: 2px 8px;
-    border-radius: 6px;
+    border-radius: 9999px;
     font-size: 0.65rem;
     font-weight: 700;
     letter-spacing: 0.05em;
     background: ${(props) => props.$color}18;
     color: ${(props) => props.$color};
-    border: 1px solid ${(props) => props.$color}30;
 `;
 
 export default WorkloadAnalytics;

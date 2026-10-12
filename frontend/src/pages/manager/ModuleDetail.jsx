@@ -272,10 +272,10 @@ const LoadingWrapper = styled.div`
 `;
 
 const Spinner = styled.div`
-    width: 32px;
-    height: 32px;
-    border: 2px solid #e2e8f0;
-    border-top-color: #0f62fe;
+    width: 36px;
+    height: 36px;
+    border: 3px solid #e5e7eb;
+    border-top-color: #008060;
     border-radius: 50%;
     animation: ${rotate} 0.8s linear infinite;
 `;
@@ -284,42 +284,42 @@ const PrimaryButton = styled.button`
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 20px;
-    background: #0f62fe; /* Carbon Blue */
+    padding: 9px 20px;
+    background: #111827;
     color: white;
     border: none;
-    border-radius: 0; /* Carbon */
-    font-weight: 400;
-    font-size: 0.875rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 0.85rem;
     cursor: pointer;
-    transition: background 0.2s ease;
-    box-shadow: none;
+    transition: all 0.2s ease;
 
     &:hover {
-        background: #0043ce;
+        background: #008060;
+        transform: translateY(-1px);
     }
 `;
 
 const HeaderCard = styled.div`
-    background: ${props => props.theme.bg.card};
-    border-radius: 0; /* Carbon */
-    border: 1px solid ${props => props.theme.border};
-    padding: 32px;
-    margin-bottom: 32px;
-    box-shadow: none;
-    animation: ${fadeIn} 0.5s ease-out;
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    padding: 28px 32px;
+    margin-bottom: 28px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    animation: ${fadeIn} 0.4s ease-out;
 `;
 
 const HeaderMain = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 48px;
-    margin-bottom: 24px;
+    gap: 40px;
+    margin-bottom: 20px;
 
     @media (max-width: 968px) {
         flex-direction: column;
-        gap: 24px;
+        gap: 20px;
     }
 `;
 
@@ -331,41 +331,42 @@ const TitleSection = styled.div`
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 `;
 
 const ModuleTitle = styled.h1`
-    font-size: 1.75rem;
-    font-weight: 400; /* Carbon */
-    color: ${props => props.theme.text.primary};
-    letter-spacing: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #111827;
+    letter-spacing: -0.02em;
+    margin: 0;
 `;
 
 const MetaSection = styled.div`
     display: flex;
-    gap: 24px;
-    color: #64748b;
+    gap: 20px;
+    color: #6b7280;
 `;
 
 const MetaItem = styled.div`
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 0.875rem;
+    gap: 6px;
+    font-size: 0.85rem;
     font-weight: 500;
     
     svg {
-        color: #94a3b8;
+        color: #9ca3af;
     }
 `;
 
 const ProgressSection = styled.div`
     flex: 1;
-    max-width: 400px;
-    background: ${props => props.theme.bg.tertiary};
-    padding: 20px;
-    border-radius: 0; /* Carbon */
-    border: 1px solid ${props => props.theme.border};
+    max-width: 380px;
+    background: #f8fafc;
+    padding: 18px 20px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
 
     @media (max-width: 968px) {
         width: 100%;
@@ -377,40 +378,40 @@ const ProgressLabel = styled.div`
     display: flex;
     justify-content: space-between;
     margin-bottom: 8px;
-    font-size: 0.875rem;
+    font-size: 0.85rem;
     font-weight: 600;
-    color: #475569;
+    color: #4b5563;
 `;
 
 const ProgressValue = styled.span`
-    color: #0f62fe;
+    color: #008060;
 `;
 
 const ProgressBar = styled.div`
-    height: 4px; /* Slimmer */
-    background: ${props => props.theme.bg.primary};
-    border-radius: 0;
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 9999px;
     overflow: hidden;
 `;
 
 const ProgressFill = styled.div`
     height: 100%;
-    background: #198038; /* Success green */
-    border-radius: 0;
-    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #008060;
+    border-radius: 9999px;
+    transition: width 0.5s ease-out;
 `;
 
 const TeamSection = styled.div`
-    padding-top: 24px;
+    padding-top: 20px;
     border-top: 1px solid #f1f5f9;
 `;
 
 const TeamLabel = styled.div`
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: #94a3b8;
-    margin-bottom: 12px;
+    color: #9ca3af;
+    margin-bottom: 10px;
     letter-spacing: 0.05em;
 `;
 
@@ -420,51 +421,51 @@ const TeamList = styled.div`
 `;
 
 const BoardContainer = styled.div`
-    animation: ${fadeIn} 0.5s ease-out 0.2s;
+    animation: ${fadeIn} 0.4s ease-out 0.1s;
     animation-fill-mode: backwards;
 `;
 
 const EmptyBoard = styled.div`
     text-align: center;
-    padding: 80px 24px;
-    background: ${props => props.theme.bg.card};
-    border-radius: 0; /* Carbon */
-    border: 1px dashed ${props => props.theme.border};
+    padding: 70px 24px;
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px dashed #e5e7eb;
     display: flex;
     flex-direction: column;
     align-items: center;
 
     svg {
-        margin-bottom: 24px;
+        margin-bottom: 20px;
     }
 `;
 
 const EmptyTitle = styled.h3`
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 8px;
+    color: #111827;
+    margin-bottom: 6px;
 `;
 
 const EmptyDesc = styled.p`
-    font-size: 1rem;
-    color: #64748b;
-    margin-bottom: 32px;
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin-bottom: 24px;
 `;
 
 const KanbanGrid = styled.div`
     display: grid;
     grid-template-columns: repeat(${props => props.columns}, minmax(300px, 1fr));
-    gap: 24px;
+    gap: 20px;
     overflow-x: auto;
     padding-bottom: 24px;
 `;
 
 const KanbanColumn = styled.div`
-    background: ${props => props.theme.bg.tertiary};
-    border-radius: 0; /* Carbon */
+    background: #f8fafc;
+    border-radius: 14px;
     padding: 16px;
-    border: 1px solid ${props => props.theme.border};
+    border: 1px solid #e5e7eb;
     min-height: 500px;
     display: flex;
     flex-direction: column;
@@ -474,26 +475,25 @@ const ColumnHeader = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
-    padding: 0 8px;
+    margin-bottom: 14px;
+    padding: 0 4px;
 `;
 
 const ColumnTitle = styled.h3`
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: ${props => props.theme.text.secondary};
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #4b5563;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 `;
 
 const CountBadge = styled.span`
-    background: ${props => props.theme.bg.card};
-    color: ${props => props.theme.text.tertiary};
+    background: #ecfdf5;
+    color: #008060;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
     padding: 2px 8px;
-    border-radius: 0; /* Carbon */
-    border: 1px solid ${props => props.theme.border};
+    border-radius: 9999px;
     min-width: 24px;
     text-align: center;
 `;
@@ -512,8 +512,8 @@ const EmptyColumn = styled.div`
     justify-content: center;
     color: #cbd5e1;
     font-style: italic;
-    font-size: 0.875rem;
-    border: 2px dashed #f1f5f9;
+    font-size: 0.85rem;
+    border: 2px dashed #e2e8f0;
     border-radius: 12px;
     margin-top: 8px;
 `;
@@ -522,7 +522,7 @@ const StyledTaskCardWrapper = styled.div`
     transition: all 0.2s ease;
     
     &:hover {
-        /* No translate, just border highlight if child doesn't handle it */
+        transform: translateY(-2px);
     }
 `;
 

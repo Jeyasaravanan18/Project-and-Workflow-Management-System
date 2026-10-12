@@ -2,24 +2,36 @@ import { useEffect, useState } from 'react';
 import api from '../../services/api';
 import AnalyticsChart from '../../components/AnalyticsChart';
 import PinnableDashboardCard, { PinnedCardsBar } from '../../components/PinnableDashboardCard';
-import { Users, FolderKanban, ListTodo, Activity, TrendingUp, RefreshCw, BarChart3, UserPlus, Plus, CheckCircle2, Clock, Zap } from 'lucide-react';
+import { Users, FolderKanban, ListTodo, Activity, TrendingUp, RefreshCw, BarChart3, UserPlus, Plus, CheckCircle2, Clock, Zap, Calendar as CalendarIcon, ChevronLeft, ChevronRight, SlidersHorizontal, Sparkles, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { formatDistanceToNow } from 'date-fns';
+import { useAuth } from '../../context/AuthContext';
 
 const OrgDashboard = () => {
     const navigate = useNavigate();
+    const { user } = useAuth();
     const [stats, setStats] = useState({
         usersCount: 0,
         projectsCount: 0,
         tasksCount: 0,
-        activeProjects: 0
+        activeProjects: 0,
+        completedTasks: 0,
+        totalTasks: 0,
+        completionRate: 0
     });
     const [workloadData, setWorkloadData] = useState([]);
     const [workloadSummary, setWorkloadSummary] = useState(null);
     const [recentActivity, setRecentActivity] = useState([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
+
+    // Current date helpers for Brevo calendar
+    const today = new Date();
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const currentMonth = monthNames[today.getMonth()];
+    const currentYear = today.getFullYear();
+    const currentDay = today.getDate();
 
     const fetchData = async () => {
         try {
@@ -32,11 +44,8 @@ const OrgDashboard = () => {
                 api.get('/analytics/recent-activities')
             ]);
 
-            // Validate all responses as arrays
             const usersData = Array.isArray(usersRes.data) ? usersRes.data : (usersRes.data?.data || []);
             const projectsData = Array.isArray(projectsRes.data) ? projectsRes.data : (projectsRes.data?.data || []);
-
-            // FIXED: Backend returns data nested in data.data
             const workloadResponse = workloadRes.data?.data || { topLoaded: [], summary: null };
             const statsData = statsRes.data || {};
             const activitiesData = Array.isArray(activitiesRes.data) ? activitiesRes.data : (activitiesRes.data?.data || []);
@@ -51,11 +60,8 @@ const OrgDashboard = () => {
                 completionRate: statsData.completionRate || 0
             });
 
-            // Store summary for display
             setWorkloadSummary(workloadResponse.summary);
 
-            // Display top 8 most loaded members for the chart
-            // Display top 8 most loaded members for the chart
             const topLoaded = Array.isArray(workloadResponse.topLoaded) ? workloadResponse.topLoaded : [];
             setWorkloadData(topLoaded.slice(0, 8).map(u => ({
                 name: u.name || 'Unknown',
@@ -63,8 +69,6 @@ const OrgDashboard = () => {
                 status: u.status
             })));
 
-
-            // Real activity data with formatted timestamps
             const iconMap = {
                 'FolderKanban': FolderKanban,
                 'CheckCircle2': CheckCircle2,
@@ -81,7 +85,6 @@ const OrgDashboard = () => {
             })));
         } catch (error) {
             console.error(error);
-            // Set safe defaults on error
             setStats({
                 usersCount: 0,
                 projectsCount: 0,
@@ -109,111 +112,183 @@ const OrgDashboard = () => {
             <Container>
                 <Loading>
                     <Spinner />
-                    <p>Loading organization overview...</p>
+                    <p>Loading workspace overview...</p>
                 </Loading>
             </Container>
         );
     }
 
     const completionRate = stats.completionRate || 0;
+    const userName = user?.name ? user.name.split(' ')[0] : 'there';
 
     return (
         <Container>
-            {/* Hero Section */}
-            <HeroSection>
-                <HeroContent>
-                    <WelcomeText>Organization Dashboard</WelcomeText>
-                    <SubText>Monitor your organization's performance and activity</SubText>
-                </HeroContent>
-                <HeroActions>
-                    <RefreshButton onClick={fetchData} disabled={refreshing}>
-                        <RefreshCw size={18} className={refreshing ? 'spin' : ''} />
-                        Refresh Data
-                    </RefreshButton>
-                </HeroActions>
-            </HeroSection>
+            {/* Brevo Greeting Bar */}
+            <GreetingBar>
+                <GreetingTitle>Hello {userName}</GreetingTitle>
+                <GreetingActions>
+                    <CustomizeBtn onClick={fetchData} title="Refresh data">
+                        <RefreshCw size={15} className={refreshing ? 'spin' : ''} />
+                        <span>Refresh data</span>
+                    </CustomizeBtn>
+                    <UpgradePillBtn onClick={() => navigate('/projects')}>
+                        <Plus size={15} />
+                        <span>Create project</span>
+                    </UpgradePillBtn>
+                </GreetingActions>
+            </GreetingBar>
 
-            {/* Pinned Cards Summary Bar */}
+            {/* Brevo Top Widgets: Calendar & Get Started Banners */}
+            <TopWidgetsGrid>
+                {/* Brevo Mini Calendar Card */}
+                <CalendarCard>
+                    <CalendarNav>
+                        <ChevronLeft size={16} color="#6B7280" style={{ cursor: 'pointer' }} />
+                        <CalendarMonthText>{currentMonth} {currentYear}</CalendarMonthText>
+                        <ChevronRight size={16} color="#6B7280" style={{ cursor: 'pointer' }} />
+                    </CalendarNav>
+
+                    <WeekDaysRow>
+                        <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                    </WeekDaysRow>
+
+                    <DaysGrid>
+                        {/* Sample month dates with today highlighted */}
+                        <DayNum $muted>28</DayNum><DayNum $muted>29</DayNum><DayNum $muted>30</DayNum>
+                        <DayNum>1</DayNum><DayNum>2</DayNum><DayNum>3</DayNum><DayNum>4</DayNum>
+                        <DayNum>5</DayNum><DayNum>6</DayNum><DayNum>7</DayNum><DayNum>8</DayNum><DayNum>9</DayNum><DayNum>10</DayNum><DayNum>11</DayNum>
+                        <DayNum $active={true}>{currentDay}</DayNum>
+                        <DayNum>13</DayNum><DayNum>14</DayNum><DayNum>15</DayNum><DayNum>16</DayNum><DayNum>17</DayNum><DayNum>18</DayNum>
+                        <DayNum>19</DayNum><DayNum>20</DayNum><DayNum>21</DayNum><DayNum>22</DayNum><DayNum>23</DayNum><DayNum>24</DayNum><DayNum>25</DayNum>
+                        <DayNum>26</DayNum><DayNum>27</DayNum><DayNum>28</DayNum><DayNum>29</DayNum><DayNum>30</DayNum><DayNum>31</DayNum><DayNum $muted>1</DayNum>
+                    </DaysGrid>
+                </CalendarCard>
+
+                {/* Brevo 'Get started with ProjectFlow' Card */}
+                <OnboardingCard>
+                    <OnboardingHeader>
+                        <OnboardingTitle>Get started with ProjectFlow</OnboardingTitle>
+                        <DarkPillButton onClick={() => navigate('/projects')}>
+                            Create project
+                        </DarkPillButton>
+                    </OnboardingHeader>
+
+                    <StepsRow>
+                        {/* Step 1 */}
+                        <StepBox onClick={() => navigate('/projects')}>
+                            <StepNumberBox>
+                                <svg width="44" height="60" viewBox="0 0 44 60" fill="none">
+                                    <path d="M14 16 L26 8 L26 56 L16 56" stroke="#008060" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path d="M10 24 C10 10, 28 6, 36 18 C38 32, 16 38, 10 24 Z" fill="#D1FAE5" opacity="0.6" />
+                                </svg>
+                            </StepNumberBox>
+                            <StepInfo>
+                                <h4>Add your first project</h4>
+                                <p>Create a project, assign team members, and track workflows in real time.</p>
+                                <StepActionLink>
+                                    <span>Create your project</span>
+                                    <ArrowRight size={14} />
+                                </StepActionLink>
+                            </StepInfo>
+                        </StepBox>
+
+                        {/* Step 2 */}
+                        <StepBox onClick={() => navigate('/admin/automations')}>
+                            <StepNumberBox>
+                                <svg width="44" height="60" viewBox="0 0 44 60" fill="none">
+                                    <path d="M10 18 C12 8, 34 8, 34 22 C34 34, 12 40, 10 52 L36 52" stroke="#008060" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path d="M26 12 C36 12, 42 26, 34 38 C28 42, 18 36, 26 12 Z" fill="#D1FAE5" opacity="0.6" />
+                                </svg>
+                            </StepNumberBox>
+                            <StepInfo>
+                                <h4>Create your automations</h4>
+                                <p>Set up automated triggers and notifications to streamline approvals.</p>
+                                <StepActionLink>
+                                    <span>Explore automations</span>
+                                    <ArrowRight size={14} />
+                                </StepActionLink>
+                            </StepInfo>
+                        </StepBox>
+                    </StepsRow>
+                </OnboardingCard>
+            </TopWidgetsGrid>
+
+            {/* Brevo Middle Row: Feature Callout & Workspace Usage */}
+            <MiddleWidgetsGrid>
+                {/* Organize your team Card */}
+                <CalloutCard>
+                    <CalloutVisual>
+                        <svg width="84" height="84" viewBox="0 0 84 84" fill="none">
+                            <rect x="14" y="22" width="46" height="42" rx="6" fill="#FEF3C7" opacity="0.7"/>
+                            <rect x="26" y="14" width="46" height="42" rx="6" fill="#ECFDF5" stroke="#A7F3D0" strokeWidth="1.5"/>
+                            <path d="M36 44 L44 34 L54 40 L64 26" stroke="#008060" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <circle cx="64" cy="26" r="3.5" fill="#008060" />
+                            <circle cx="42" cy="62" r="12" fill="#008060" />
+                        </svg>
+                    </CalloutVisual>
+                    <CalloutContent>
+                        <h3>Organize your team & workflows</h3>
+                        <p>With roles and smart assignment, align team members with projects and sprint goals.</p>
+                        <DarkPillButton onClick={() => navigate('/admin/users')}>
+                            Manage team
+                        </DarkPillButton>
+                    </CalloutContent>
+                </CalloutCard>
+
+                {/* Workspace Usage Card */}
+                <UsageCard>
+                    <UsageTitle>Your workspace usage</UsageTitle>
+                    
+                    <UsageItem>
+                        <UsageItemHeader>
+                            <span className="label">Active Projects</span>
+                            <span className="count">{stats.activeProjects} active out of {stats.projectsCount || 1}</span>
+                        </UsageItemHeader>
+                        <ProgressBar>
+                            <ProgressFill $percent={Math.min(100, Math.round((stats.activeProjects / (stats.projectsCount || 1)) * 100))} $color="#008060" />
+                        </ProgressBar>
+                    </UsageItem>
+
+                    <UsageItem>
+                        <UsageItemHeader>
+                            <span className="label">Completed Tasks</span>
+                            <span className="count">{stats.completedTasks} completed out of {stats.totalTasks || 1}</span>
+                        </UsageItemHeader>
+                        <ProgressBar>
+                            <ProgressFill $percent={completionRate} $color="#4F46E5" />
+                        </ProgressBar>
+                    </UsageItem>
+
+                    <UsageItem>
+                        <UsageItemHeader>
+                            <span className="label">Team Seats</span>
+                            <span className="count">{stats.usersCount} team members active</span>
+                        </UsageItemHeader>
+                        <ProgressBar>
+                            <ProgressFill $percent={Math.min(100, stats.usersCount * 10)} $color="#0D9488" />
+                        </ProgressBar>
+                    </UsageItem>
+                </UsageCard>
+            </MiddleWidgetsGrid>
+
+            {/* Pinned Cards Bar */}
             <PinnedCardsBar allCards={[
-                { id: 'stat-team-members',   title: 'Team Members',   value: stats.usersCount,     subtitle: 'Total active users',       color: '#475569' },
-                { id: 'stat-active-projects',title: 'Active Projects', value: stats.activeProjects,  subtitle: `of ${stats.projectsCount} total`, color: '#22c55e' },
-                { id: 'stat-active-tasks',   title: 'Active Tasks',   value: stats.tasksCount,     subtitle: 'Currently in progress',    color: '#0F62FE' },
-                { id: 'stat-completion-rate',title: 'Completion Rate', value: `${completionRate}%`, subtitle: 'Project activity',          color: '#6366f1' },
+                { id: 'stat-team-members',   title: 'Team Members',   value: stats.usersCount,     subtitle: 'Total active users',       color: '#008060' },
+                { id: 'stat-active-projects',title: 'Active Projects', value: stats.activeProjects,  subtitle: `of ${stats.projectsCount} total`, color: '#008060' },
+                { id: 'stat-active-tasks',   title: 'Active Tasks',   value: stats.tasksCount,     subtitle: 'Currently in progress',    color: '#4F46E5' },
+                { id: 'stat-completion-rate',title: 'Completion Rate', value: `${completionRate}%`, subtitle: 'Project velocity',          color: '#10B981' },
             ]} />
-            {/* Main Stats Grid */}
+
+            {/* Main Content Grid: Charts & Activity */}
             <MainGrid>
-                {/* Left Column - Stats Cards */}
+                {/* Left Section - Workload Distribution */}
                 <LeftSection>
-                    <StatsGrid>
-                        <PinnableDashboardCard cardId="stat-team-members">
-                        <StatCard $delay={0} color="#475569" onClick={() => navigate('/admin/users')}>
-                            <StatContent>
-                                <StatIcon color="#475569">
-                                    <Users size={28} />
-                                </StatIcon>
-                                <StatDetails>
-                                    <StatValue>{stats.usersCount}</StatValue>
-                                    <StatLabel>Team Members</StatLabel>
-                                    <StatTrend>Total active users</StatTrend>
-                                </StatDetails>
-                            </StatContent>
-                        </StatCard>
-                        </PinnableDashboardCard>
-
-                        <PinnableDashboardCard cardId="stat-active-projects">
-                        <StatCard $delay={0.1} color="#22c55e" onClick={() => navigate('/projects')}>
-                            <StatContent>
-                                <StatIcon color="#22c55e">
-                                    <FolderKanban size={28} />
-                                </StatIcon>
-                                <StatDetails>
-                                    <StatValue>{stats.activeProjects}</StatValue>
-                                    <StatLabel>Active Projects</StatLabel>
-                                    <StatTrend>of {stats.projectsCount} total</StatTrend>
-                                </StatDetails>
-                            </StatContent>
-                        </StatCard>
-                        </PinnableDashboardCard>
-
-                        <PinnableDashboardCard cardId="stat-active-tasks">
-                        <StatCard $delay={0.2} color="#0F62FE">
-                            <StatContent>
-                                <StatIcon color="#0F62FE">
-                                    <ListTodo size={28} />
-                                </StatIcon>
-                                <StatDetails>
-                                    <StatValue>{stats.tasksCount}</StatValue>
-                                    <StatLabel>Active Tasks</StatLabel>
-                                    <StatTrend>Currently in progress</StatTrend>
-                                </StatDetails>
-                            </StatContent>
-                        </StatCard>
-                        </PinnableDashboardCard>
-
-                        <PinnableDashboardCard cardId="stat-completion-rate">
-                        <StatCard $delay={0.3} color="#6366f1">
-                            <StatContent>
-                                <StatIcon color="#6366f1">
-                                    <TrendingUp size={28} />
-                                </StatIcon>
-                                <StatDetails>
-                                    <StatValue>{completionRate}%</StatValue>
-                                    <StatLabel>Completion Rate</StatLabel>
-                                    <StatTrend>Project activity</StatTrend>
-                                </StatDetails>
-                            </StatContent>
-                        </StatCard>
-                        </PinnableDashboardCard>
-                    </StatsGrid>
-
-                    {/* Workload Chart */}
                     <ChartCard>
                         <CardHeader>
-                            <BarChart3 size={20} />
+                            <BarChart3 size={20} color="#008060" />
                             <h3>Team Workload Distribution</h3>
                         </CardHeader>
 
-                        {/* Summary Stats */}
                         {workloadSummary && (
                             <WorkloadSummary>
                                 <SummaryItem>
@@ -221,458 +296,448 @@ const OrgDashboard = () => {
                                     <SummaryValue>{workloadSummary.totalMembers}</SummaryValue>
                                 </SummaryItem>
                                 <SummaryDivider />
-                                <SummaryItem color="#ef4444">
+                                <SummaryItem color="#EF4444">
                                     <SummaryLabel>Overloaded</SummaryLabel>
                                     <SummaryValue>{workloadSummary.overloaded}</SummaryValue>
                                 </SummaryItem>
                                 <SummaryDivider />
-                                <SummaryItem color="#22c55e">
+                                <SummaryItem color="#008060">
                                     <SummaryLabel>Optimal</SummaryLabel>
                                     <SummaryValue>{workloadSummary.optimal}</SummaryValue>
                                 </SummaryItem>
                                 <SummaryDivider />
-                                <SummaryItem color="#94a3b8">
+                                <SummaryItem color="#94A3B8">
                                     <SummaryLabel>Idle</SummaryLabel>
                                     <SummaryValue>{workloadSummary.idle}</SummaryValue>
-                                </SummaryItem>
-                                <SummaryDivider />
-                                <SummaryItem>
-                                    <SummaryLabel>Avg Tasks</SummaryLabel>
-                                    <SummaryValue>{workloadSummary.avgTasksPerMember}</SummaryValue>
                                 </SummaryItem>
                             </WorkloadSummary>
                         )}
 
                         {workloadData.length > 0 ? (
                             <>
-                                <ChartLabel>Top {workloadData.length} Most Loaded Members</ChartLabel>
+                                <ChartLabel>Top {workloadData.length} Loaded Members</ChartLabel>
                                 <ChartWrapper>
                                     <AnalyticsChart
                                         data={workloadData}
                                         type="bar"
                                         dataKey="tasks"
-                                        color="#475569"
+                                        color="#008060"
                                     />
                                 </ChartWrapper>
-                                {workloadSummary && workloadSummary.totalMembers > 8 && (
-                                    <ViewMoreButton onClick={() => navigate('/analytics/workload')}>
-                                        View All {workloadSummary.totalMembers} Members →
-                                    </ViewMoreButton>
-                                )}
                             </>
                         ) : (
                             <EmptyChart>
-                                <BarChart3 size={48} />
-                                <p>No workload data available</p>
+                                <BarChart3 size={40} color="#CBD5E1" />
+                                <p>No workload data recorded yet</p>
                             </EmptyChart>
                         )}
                     </ChartCard>
                 </LeftSection>
 
-                {/* Right Column - Activity & Quick Actions */}
+                {/* Right Section - Recent Activity */}
                 <RightSection>
-                    {/* Quick Actions */}
-                    <QuickActionsCard>
-                        <CardHeader>
-                            <Zap size={20} style={{ color: '#0F62FE' }} />
-                            <h3>Quick Actions</h3>
-                        </CardHeader>
-                        <ActionsList>
-                            <ActionButton onClick={() => navigate('/admin/users')}>
-                                <ActionIcon color="#475569">
-                                    <UserPlus size={20} />
-                                </ActionIcon>
-                                <ActionText>
-                                    <h4>Invite Team Member</h4>
-                                    <p>Add new users to your organization</p>
-                                </ActionText>
-                            </ActionButton>
-                            <ActionButton onClick={() => navigate('/projects')}>
-                                <ActionIcon color="#22c55e">
-                                    <Plus size={20} />
-                                </ActionIcon>
-                                <ActionText>
-                                    <h4>Create Project</h4>
-                                    <p>Start a new project</p>
-                                </ActionText>
-                            </ActionButton>
-                        </ActionsList>
-                    </QuickActionsCard>
-
-                    {/* Activity Feed */}
                     <ActivityCard>
                         <CardHeader>
-                            <Activity size={20} />
+                            <Activity size={20} color="#008060" />
                             <h3>Recent Activity</h3>
                         </CardHeader>
-                        <ActivityList>
-                            {recentActivity.map((activity, index) => (
-                                <ActivityItem key={index} $delay={index * 0.1}>
-                                    <ActivityIcon color={activity.color}>
-                                        <activity.icon size={16} />
-                                    </ActivityIcon>
-                                    <ActivityContent>
-                                        <ActivityMessage>{activity.message}</ActivityMessage>
-                                        <ActivityTime>{activity.time}</ActivityTime>
-                                    </ActivityContent>
-                                </ActivityItem>
-                            ))}
-                        </ActivityList>
+                        {recentActivity.length === 0 ? (
+                            <EmptyActivity>
+                                <Clock size={36} color="#CBD5E1" />
+                                <p>No recent activity logs</p>
+                            </EmptyActivity>
+                        ) : (
+                            <ActivityList>
+                                {recentActivity.slice(0, 6).map((activity, idx) => (
+                                    <ActivityItem key={idx}>
+                                        <ActivityDot />
+                                        <ActivityContent>
+                                            <ActivityMessage>{activity.message}</ActivityMessage>
+                                            <ActivityTime>{activity.time}</ActivityTime>
+                                        </ActivityContent>
+                                    </ActivityItem>
+                                ))}
+                            </ActivityList>
+                        )}
                     </ActivityCard>
                 </RightSection>
             </MainGrid>
-        </Container >
+        </Container>
     );
 };
 
-// Animations
-const fadeIn = keyframes`
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-`;
+// --- Brevo Styled Components ---
 
-const slideIn = keyframes`
-    from { opacity: 0; transform: translateX(20px); }
-    to { opacity: 1; transform: translateX(0); }
-`;
-
-const rotate = keyframes`
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-`;
-
-const pulse = keyframes`
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
-`;
-
-// Styled Components
-const Container = styled.div`
-    padding: 32px;
-    background: ${props => props.theme.bg.primary};
-    min-height: 100vh;
-    max-width: 1600px;
-    margin: 0 auto;
-`;
-
-const Loading = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 70vh;
-    color: ${props => props.theme.text.secondary};
-    p { margin-top: 20px; font-size: 1rem; }
-`;
-
-const Spinner = styled.div`
-    width: 50px;
-    height: 50px;
-    border: 4px solid ${props => props.theme.border};
-    border-top-color: ${props => props.theme.text.secondary};
-    border-radius: 50%;
-    animation: ${rotate} 1s linear infinite;
-`;
-
-const HeroSection = styled.div`
+const GreetingBar = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 32px;
-    animation: ${fadeIn} 0.5s ease-out;
+    margin-bottom: 24px;
 `;
 
-const HeroContent = styled.div``;
-
-const WelcomeText = styled.h1`
-    font-size: 2rem;
+const GreetingTitle = styled.h1`
+    font-size: 1.85rem;
     font-weight: 700;
-    color: ${props => props.theme.text.primary};
-    margin-bottom: 8px;
+    color: #111827;
+    margin: 0;
+    letter-spacing: -0.02em;
 `;
 
-const SubText = styled.p`
-    font-size: 1rem;
-    color: ${props => props.theme.text.secondary};
-`;
-
-const HeroActions = styled.div`
+const GreetingActions = styled.div`
     display: flex;
+    align-items: center;
     gap: 12px;
 `;
 
-const RefreshButton = styled.button`
-    display: flex;
+const CustomizeBtn = styled.button`
+    display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 12px 24px;
-    background: #0F62FE; /* Carbon Blue */
-    color: white; /* Carbon */
-    border: none; /* Carbon */
-    border-radius: 0; /* Carbon */
+    padding: 8px 16px;
+    background: transparent;
+    border: none;
+    color: #4F46E5;
+    font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: none; /* Carbon */
+    border-radius: 9999px;
+    transition: all 0.15s ease;
 
-    &:hover:not(:disabled) {
-        background: #0043CE; /* Carbon Blue Hover */
+    &:hover {
+        background: #EEF2FF;
     }
 
-    &:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-
-    .spin { animation: ${rotate} 1s linear infinite; }
+    .spin { animation: rotate 1s linear infinite; }
 `;
 
-const MainGrid = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 380px;
-    gap: 24px;
+const UpgradePillBtn = styled.button`
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    background: #FEF3C7;
+    border: 1px solid #FDE68A;
+    border-radius: 9999px;
+    color: #92400E;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
 
-    @media (max-width: 1200px) {
+    &:hover {
+        background: #FDE68A;
+        transform: translateY(-1px);
+    }
+`;
+
+const TopWidgetsGrid = styled.div`
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+
+    @media (max-width: 1024px) {
         grid-template-columns: 1fr;
     }
 `;
 
-const LeftSection = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+const CalendarCard = styled.div`
+    background: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 `;
 
-const RightSection = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-`;
-
-const StatsGrid = styled.div`
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-`;
-
-const StatCard = styled.div`
-    background: ${props => props.theme.bg.card};
-    border-radius: 0; /* Carbon */
-    padding: 24px;
-    border: 1px solid ${props => props.theme.border};
-    box-shadow: none; /* Carbon */
-    transition: all 0.3s ease;
-    animation: ${fadeIn} 0.5s ease-out;
-    animation-delay: ${props => props.$delay}s;
-    opacity: 0;
-    animation-fill-mode: forwards;
-    cursor: ${props => props.onClick ? 'pointer' : 'default'};
-
-    &:hover {
-        background: ${p => p.theme.bg.tertiary};
-        border-color: ${props => props.color};
-    }
-`;
-
-const StatContent = styled.div`
-    display: flex;
-    gap: 16px;
-    align-items: start;
-`;
-
-const StatIcon = styled.div`
-    width: 56px;
-    height: 56px;
-    background: transparent; /* Carbon - flat no bg needed for icon wrapper */
-    border: 1px solid ${props => props.theme.border}; /* Structured */
-    border-radius: 0; /* Carbon */
+const CalendarNav = styled.div`
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: ${props => props.color};
-    flex-shrink: 0;
+    justify-content: space-between;
+    margin-bottom: 16px;
 `;
 
-const StatDetails = styled.div`
-    flex: 1;
-`;
-
-const StatValue = styled.div`
-    font-size: 2rem;
-    font-weight: 700;
-    color: ${props => props.theme.text.primary};
-    line-height: 1;
-    margin-bottom: 4px;
-`;
-
-const StatLabel = styled.div`
+const CalendarMonthText = styled.span`
     font-size: 0.875rem;
     font-weight: 600;
-    color: ${props => props.theme.text.secondary};
-    margin-bottom: 2px;
+    color: #111827;
 `;
 
-const StatTrend = styled.div`
-    font-size: 0.75rem;
-    color: ${props => props.theme.text.tertiary};
-`;
-
-const ChartCard = styled.div`
-    background: ${props => props.theme.bg.card};
-    border-radius: 0; /* Carbon */
-    padding: 24px;
-    border: 1px solid ${props => props.theme.border};
-    box-shadow: none; /* Carbon */
-    animation: ${fadeIn} 0.5s ease-out 0.4s;
-    animation-fill-mode: backwards;
-`;
-
-const CardHeader = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
-
-    h3 {
-        font-size: 1.125rem;
-        font-weight: 700;
-        color: ${props => props.theme.text.primary};
-        flex: 1;
-    }
-
-    svg {
-        color: ${props => props.theme.text.secondary};
-        
-        &.amber { color: #f97316; }
-    }
-`;
-
-const ChartWrapper = styled.div`
-    height: 300px;
-    min-height: 300px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    
-    & > div {
-        height: 100%;
-        width: 100%;
-    }
-`;
-
-const EmptyChart = styled.div`
+const WeekDaysRow = styled.div`
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
     text-align: center;
-    padding: 60px 20px;
-    color: ${props => props.theme.text.tertiary};
-
-    svg {
-        margin: 0 auto 16px;
-    }
-
-    p {
-        color: ${props => props.theme.text.secondary};
-        font-size: 0.875rem;
-    }
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: #9CA3AF;
+    margin-bottom: 12px;
 `;
 
-const QuickActionsCard = styled.div`
-    background: ${props => props.theme.bg.card};
-    border-radius: 0; /* Carbon */
-    padding: 24px;
-    border: 1px solid ${props => props.theme.border};
-    box-shadow: none; /* Carbon */
-    animation: ${slideIn} 0.5s ease-out 0.2s;
-    animation-fill-mode: backwards;
+const DaysGrid = styled.div`
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    text-align: center;
 `;
 
-const ActionsList = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-`;
-
-const ActionButton = styled.button`
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px;
-    background: ${props => props.theme.bg.tertiary};
-    border: 1px solid ${props => props.theme.border}; /* Flat border */
-    border-radius: 0; /* Carbon */
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: left;
-
-    &:hover {
-        background: ${props => props.theme.bg.card};
-        border-color: ${props => props.theme.text.tertiary};
-    }
-`;
-
-const ActionIcon = styled.div`
-    width: 40px;
-    height: 40px;
-    background: transparent;
-    border: 1px solid ${props => props.theme.border};
-    border-radius: 0; /* Carbon */
+const DayNum = styled.div`
+    font-size: 0.8125rem;
+    font-weight: ${props => props.$active ? '700' : '500'};
+    color: ${props => props.$active ? '#ffffff' : props.$muted ? '#D1D5DB' : '#374151'};
+    background: ${props => props.$active ? '#4F46E5' : 'transparent'};
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: ${props => props.color};
+    margin: 0 auto;
+    cursor: pointer;
+
+    &:hover {
+        background: ${props => props.$active ? '#4338CA' : '#F3F4F6'};
+    }
+`;
+
+const OnboardingCard = styled.div`
+    background: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+`;
+
+const OnboardingHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+`;
+
+const OnboardingTitle = styled.h2`
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+`;
+
+const DarkPillButton = styled.button`
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    background: #111827;
+    color: #ffffff;
+    border: none;
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    &:hover {
+        background: #1F2937;
+        transform: translateY(-1px);
+    }
+`;
+
+const StepsRow = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+`;
+
+const StepBox = styled.div`
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+    border: 1px solid #F3F4F6;
+    border-radius: 12px;
+    background: #FAFAFA;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: #ffffff;
+        border-color: #A7F3D0;
+        box-shadow: 0 4px 12px rgba(0, 128, 96, 0.08);
+        transform: translateY(-2px);
+    }
+`;
+
+const StepNumberBox = styled.div`
     flex-shrink: 0;
 `;
 
-const ActionText = styled.div`
+const StepInfo = styled.div`
     flex: 1;
 
     h4 {
-        font-size: 0.875rem;
+        font-size: 0.9375rem;
         font-weight: 600;
-        color: ${props => props.theme.text.primary};
-        margin-bottom: 2px;
+        color: #111827;
+        margin: 0 0 4px 0;
     }
 
     p {
         font-size: 0.75rem;
-        color: ${props => props.theme.text.secondary};
+        color: #6B7280;
+        line-height: 1.4;
+        margin: 0 0 10px 0;
     }
 `;
 
-const ActivityCard = styled.div`
-    background: ${props => props.theme.bg.card};
-    border-radius: 0; /* Carbon */
+const StepActionLink = styled.div`
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #4F46E5;
+
+    &:hover {
+        text-decoration: underline;
+    }
+`;
+
+const MiddleWidgetsGrid = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+    }
+`;
+
+const CalloutCard = styled.div`
+    background: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 14px;
     padding: 24px;
-    border: 1px solid ${props => props.theme.border};
-    box-shadow: none; /* Carbon */
-    animation: ${slideIn} 0.5s ease-out 0.3s;
-    animation-fill-mode: backwards;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+`;
+
+const CalloutVisual = styled.div`
+    flex-shrink: 0;
+`;
+
+const CalloutContent = styled.div`
+    flex: 1;
+
+    h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #111827;
+        margin: 0 0 6px 0;
+    }
+
+    p {
+        font-size: 0.8125rem;
+        color: #6B7280;
+        line-height: 1.45;
+        margin: 0 0 14px 0;
+    }
+`;
+
+const UsageCard = styled.div`
+    background: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+`;
+
+const UsageTitle = styled.h3`
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 18px 0;
+`;
+
+const UsageItem = styled.div`
+    margin-bottom: 14px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+`;
+
+const UsageItemHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8125rem;
+    margin-bottom: 6px;
+
+    .label {
+        font-weight: 600;
+        color: #374151;
+    }
+
+    .count {
+        color: #6B7280;
+    }
+`;
+
+const ProgressBar = styled.div`
+    height: 6px;
+    background: #F3F4F6;
+    border-radius: 9999px;
+    overflow: hidden;
+`;
+
+const ProgressFill = styled.div`
+    height: 100%;
+    width: ${props => props.$percent}%;
+    background: ${props => props.$color || '#008060'};
+    border-radius: 9999px;
+    transition: width 0.4s ease;
+`;
+
+const ActivityCard = styled.div`
+    background: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 `;
 
 const ActivityList = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
 `;
 
 const ActivityItem = styled.div`
     display: flex;
+    align-items: flex-start;
     gap: 12px;
-    animation: ${fadeIn} 0.4s ease-out;
-    animation-delay: ${props => props.$delay}s;
-    opacity: 0;
-    animation-fill-mode: forwards;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #F9FAFB;
+
+    &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
 `;
 
-const ActivityIcon = styled.div`
-    width: 36px;
-    height: 36px;
-    background: transparent;
-    border: 1px solid ${props => props.theme.border};
-    border-radius: 0; /* Carbon */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: ${props => props.color};
+const ActivityDot = styled.div`
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #008060;
+    margin-top: 6px;
     flex-shrink: 0;
 `;
 
@@ -681,82 +746,171 @@ const ActivityContent = styled.div`
 `;
 
 const ActivityMessage = styled.div`
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: ${props => props.theme.text.primary};
-    margin-bottom: 2px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #1F2937;
 `;
 
 const ActivityTime = styled.div`
     font-size: 0.75rem;
-    color: ${props => props.theme.text.secondary};
+    color: #9CA3AF;
+    margin-top: 2px;
+`;
+
+const EmptyActivity = styled.div`
+    text-align: center;
+    padding: 30px 10px;
+    color: #9CA3AF;
+    font-size: 0.8125rem;
+`;
+
+// Animations
+const fadeIn = keyframes`
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+`;
+
+const rotate = keyframes`
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+`;
+
+// Base Layout
+const Container = styled.div`
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-bottom: 40px;
+`;
+
+const Loading = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    color: #6B7280;
+    p { margin-top: 16px; font-size: 0.9375rem; }
+`;
+
+const Spinner = styled.div`
+    width: 44px;
+    height: 44px;
+    border: 3px solid #E5E7EB;
+    border-top-color: #008060;
+    border-radius: 50%;
+    animation: ${rotate} 0.8s linear infinite;
+`;
+
+const MainGrid = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 20px;
+    margin-top: 24px;
+
+    @media (max-width: 1024px) {
+        grid-template-columns: 1fr;
+    }
+`;
+
+const LeftSection = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+`;
+
+const RightSection = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+`;
+
+const ChartCard = styled.div`
+    background: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+`;
+
+const CardHeader = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #111827;
+        margin: 0;
+    }
+`;
+
+const ChartWrapper = styled.div`
+    height: 280px;
+    width: 100%;
+`;
+
+const ChartLabel = styled.div`
+    font-size: 0.8125rem;
+    color: #6B7280;
+    font-weight: 600;
+    margin-bottom: 12px;
+`;
+
+const EmptyChart = styled.div`
+    text-align: center;
+    padding: 50px 20px;
+    color: #9CA3AF;
+
+    svg {
+        margin: 0 auto 12px;
+    }
+
+    p {
+        color: #6B7280;
+        font-size: 0.875rem;
+        margin: 0;
+    }
 `;
 
 const WorkloadSummary = styled.div`
     display: flex;
     align-items: center;
     gap: 16px;
-    padding: 16px;
-    background: ${props => props.theme.bg.tertiary};
-    border-radius: 0; /* Carbon */
+    padding: 12px 16px;
+    background: #F9FAFB;
+    border-radius: 10px;
     margin-bottom: 20px;
+    border: 1px solid #F3F4F6;
     flex-wrap: wrap;
-    border: 1px solid ${props => props.theme.border};
 `;
 
 const SummaryItem = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 2px;
 `;
 
 const SummaryLabel = styled.div`
-    font-size: 0.75rem;
-    color: ${props => props.theme.text.secondary};
-    font-weight: 500;
+    font-size: 0.6875rem;
+    color: #6B7280;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.025em;
+    letter-spacing: 0.04em;
 `;
 
 const SummaryValue = styled.div`
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     font-weight: 700;
-    color: ${props => props.color || props.theme.text.primary};
+    color: ${props => props.color || '#111827'};
 `;
 
 const SummaryDivider = styled.div`
     width: 1px;
-    height: 32px;
-    background: ${props => props.theme.border};
-`;
-
-const ChartLabel = styled.div`
-    font-size: 0.875rem;
-    color: ${props => props.theme.text.secondary};
-    font-weight: 600;
-    margin-bottom: 12px;
-    text-align: center;
-`;
-
-const ViewMoreButton = styled.button`
-    width: 100%;
-    padding: 12px;
-    margin-top: 16px;
-    background: ${props => props.theme.bg.tertiary};
-    border: 1px solid ${props => props.theme.border};
-    border-radius: 0; /* Carbon */
-    color: ${props => props.theme.text.secondary};
-    font-weight: 600;
-    font-size: 0.875rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    
-    &:hover {
-        background: ${props => props.theme.bg.card};
-        border-color: ${props => props.theme.text.primary};
-        color: ${props => props.theme.text.primary};
-    }
+    height: 24px;
+    background: #E5E7EB;
 `;
 
 export default OrgDashboard;

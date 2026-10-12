@@ -7,58 +7,82 @@ const ThemeContext = createContext();
 export const lightTheme = {
     mode: 'light',
     bg: {
-        primary: '#F4F4F4', // Carbon Gray 10 Base
-        secondary: '#FFFFFF', // Carbon Gray 10 Layer 1 (Cards)
-        tertiary: '#E5E5E5', // Carbon Gray 10 Layer 2
+        primary: '#F8FAFC', // Brevo crisp soft background
+        secondary: '#FFFFFF', // Card layer
+        tertiary: '#F1F5F9', // Subtle accent background
         card: '#FFFFFF',
-        hover: '#E5E5E5', // Gray 10 Hover
+        hover: '#F8FAFC',
+        activeLight: '#ECFDF5', // Brevo light emerald badge/active
     },
     text: {
-        primary: '#161616', // Gray 100
-        secondary: '#525252', // Gray 70
-        tertiary: '#8D8D8D', // Gray 50
+        primary: '#111827', // Crisp dark text
+        secondary: '#4B5563', // Neutral text
+        tertiary: '#9CA3AF', // Muted text
     },
-    border: '#E0E0E0', // Gray 20
+    border: '#E5E7EB', // Subtle neutral border
+    borderFocus: '#008060',
     accent: {
-        primary: '#0F62FE', // Blue 60
-        secondary: '#0043CE', // Blue 70 (Hover)
-        success: '#24A148', // Green 50
-        danger: '#DA1E28', // Red 60
-        warning: '#F1C21B', // Yellow 30
+        primary: '#008060', // Brevo Emerald Green
+        secondary: '#006D52', // Darker emerald hover
+        light: '#ECFDF5', // Light green tag/badge
+        dark: '#111827', // High-contrast Brevo action black
+        success: '#10B981',
+        danger: '#EF4444',
+        warning: '#F59E0B',
+        info: '#3B82F6',
+    },
+    radius: {
+        sm: '6px',
+        md: '10px',
+        lg: '14px',
+        xl: '18px',
+        pill: '9999px',
     },
     shadow: {
-        sm: 'none',
-        md: '0 2px 6px rgba(0,0,0,0.1)',
-        lg: '0 4px 8px rgba(0,0,0,0.1)',
+        sm: '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
+        md: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.03)',
+        lg: '0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -4px rgba(0, 0, 0, 0.03)',
     }
 };
 
 export const darkTheme = {
     mode: 'dark',
     bg: {
-        primary: '#161616', // Carbon Gray 90 Base
-        secondary: '#262626', // Carbon Gray 90 Layer 1 (Cards)
-        tertiary: '#393939', // Carbon Gray 90 Layer 2
-        card: '#262626',
-        hover: '#393939', // Gray 90 Hover
+        primary: '#0B0F17',
+        secondary: '#131B2A',
+        tertiary: '#1E293B',
+        card: '#131B2A',
+        hover: '#1E293B',
+        activeLight: 'rgba(0, 128, 96, 0.15)',
     },
     text: {
-        primary: '#F4F4F4', // Gray 10
-        secondary: '#C6C6C6', // Gray 30
-        tertiary: '#8D8D8D', // Gray 50
+        primary: '#F9FAFB',
+        secondary: '#94A3B8',
+        tertiary: '#64748B',
     },
-    border: '#393939', // Gray 80
+    border: '#1E293B',
+    borderFocus: '#10B981',
     accent: {
-        primary: '#0F62FE', // Blue 60 (Carbon uses Blue 60 on Gray 90)
-        secondary: '#0043CE', // Blue 70 (Hover)
-        success: '#42BE65', // Green 40
-        danger: '#FA4D56', // Red 50
-        warning: '#F1C21B', // Yellow 30
+        primary: '#10B981',
+        secondary: '#059669',
+        light: 'rgba(16, 185, 129, 0.15)',
+        dark: '#F9FAFB',
+        success: '#10B981',
+        danger: '#F87171',
+        warning: '#FBBF24',
+        info: '#60A5FA',
+    },
+    radius: {
+        sm: '6px',
+        md: '10px',
+        lg: '14px',
+        xl: '18px',
+        pill: '9999px',
     },
     shadow: {
-        sm: 'none',
-        md: '0 4px 8px rgba(0,0,0,0.5)',
-        lg: '0 8px 16px rgba(0,0,0,0.5)',
+        sm: '0 1px 2px 0 rgba(0, 0, 0, 0.3)',
+        md: '0 4px 6px -1px rgba(0, 0, 0, 0.4)',
+        lg: '0 10px 15px -3px rgba(0, 0, 0, 0.5)',
     }
 };
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../services/api';
 import styled from 'styled-components';
-import { Zap, Save, Play, ArrowRight, Plus, Trash2, ChevronDown, X } from 'lucide-react';
+import { Zap, Save, Play, ArrowRight, Plus, Trash2, X, ArrowLeft } from 'lucide-react';
 
 const AutomationBuilder = () => {
     const navigate = useNavigate();
@@ -39,12 +39,11 @@ const AutomationBuilder = () => {
     const fetchUsers = async () => {
         try {
             const res = await api.get('/users');
-            // Handle nested data structure: {success: true, data: [...]} or direct array
             const usersData = Array.isArray(res.data) ? res.data : (res.data?.data || []);
             setUsers(usersData);
         } catch (error) {
             console.error('Error fetching users:', error);
-            setUsers([]); // Set empty array on error
+            setUsers([]);
         }
     };
 
@@ -139,21 +138,26 @@ const AutomationBuilder = () => {
 
     return (
         <Container>
+            <BackNav onClick={() => navigate('/admin/automations')}>
+                <ArrowLeft size={16} /> Back to Automations
+            </BackNav>
+
             <Header>
                 <div>
-                    <h1><Zap size={28} /> {id ? 'Edit' : 'Create'} Automation</h1>
-                    <Subtitle>Build your workflow automation step by step</Subtitle>
+                    <Badge><Zap size={12} /> Workflow Designer</Badge>
+                    <Title>{id ? 'Edit' : 'Create'} Automation</Title>
+                    <Subtitle>Build, configure, and automate your workflow pipeline step by step.</Subtitle>
                 </div>
                 <HeaderActions>
                     {id && (
                         <TestButton onClick={handleTest}>
-                            <Play size={18} />
-                            Test
+                            <Play size={15} />
+                            Test Run
                         </TestButton>
                     )}
                     <SaveButton onClick={handleSave} disabled={loading}>
-                        <Save size={18} />
-                        {loading ? 'Saving...' : 'Save'}
+                        <Save size={15} />
+                        {loading ? 'Saving...' : 'Save Automation'}
                     </SaveButton>
                 </HeaderActions>
             </Header>
@@ -201,8 +205,8 @@ const AutomationBuilder = () => {
                                 }
                             })}
                         >
-                            <option value="event">Event</option>
-                            <option value="schedule">Schedule</option>
+                            <option value="event">Event Trigger</option>
+                            <option value="schedule">Scheduled Cron</option>
                         </Select>
                     </FormGroup>
 
@@ -248,7 +252,7 @@ const AutomationBuilder = () => {
                     )}
                 </Section>
 
-                <Arrow><ArrowRight size={24} /></Arrow>
+                <Arrow><ArrowRight size={20} /></Arrow>
 
                 {/* Conditions */}
                 <Section>
@@ -288,18 +292,18 @@ const AutomationBuilder = () => {
                             />
 
                             <IconButton onClick={() => removeCondition(index)} $danger>
-                                <X size={18} />
+                                <X size={16} />
                             </IconButton>
                         </ConditionRow>
                     ))}
 
                     <AddButton onClick={addCondition}>
-                        <Plus size={18} />
+                        <Plus size={16} />
                         Add Condition
                     </AddButton>
                 </Section>
 
-                <Arrow><ArrowRight size={24} /></Arrow>
+                <Arrow><ArrowRight size={20} /></Arrow>
 
                 {/* Actions */}
                 <Section>
@@ -312,8 +316,8 @@ const AutomationBuilder = () => {
                         <ActionCard key={index}>
                             <ActionHeader>
                                 <ActionTitle>Action {index + 1}: {action.type.replace(/_/g, ' ')}</ActionTitle>
-                                <IconButton onClick={() => removeAction(index)} danger>
-                                    <Trash2 size={18} />
+                                <IconButton onClick={() => removeAction(index)} $danger>
+                                    <Trash2 size={16} />
                                 </IconButton>
                             </ActionHeader>
 
@@ -475,7 +479,7 @@ const AutomationBuilder = () => {
             </BuilderContainer>
 
             <VariableHint>
-                💡 <strong>Tip:</strong> Use variables like <code>{'{{task.title}}'}</code>, <code>{'{{user.name}}'}</code>, <code>{'{{task.priority}}'}</code> in messages
+                💡 <strong>Tip:</strong> Use variables like <code>{'{{task.title}}'}</code>, <code>{'{{user.name}}'}</code>, <code>{'{{task.priority}}'}</code> in action messages.
             </VariableHint>
         </Container>
     );
@@ -483,55 +487,88 @@ const AutomationBuilder = () => {
 
 // Styled Components
 const Container = styled.div`
-    padding: 2rem;
-    max-width: 1200px;
+    padding: 32px;
+    max-width: 1100px;
     margin: 0 auto;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+`;
+
+const BackNav = styled.button`
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    color: #64748b;
+    font-size: 0.84rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 18px;
+    padding: 0;
+    transition: color 0.15s;
+
+    &:hover {
+        color: #111827;
+    }
 `;
 
 const Header = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 2rem;
+    margin-bottom: 24px;
+`;
 
-    h1 {
-        font-size: 1.75rem;
-        font-weight: 700;
-        color: #1e293b;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        margin: 0;
-    }
+const Badge = styled.div`
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ecfdf5;
+    color: #008060;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid #a7f3d0;
+    margin-bottom: 8px;
+`;
+
+const Title = styled.h1`
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+    letter-spacing: -0.02em;
 `;
 
 const Subtitle = styled.p`
     color: #64748b;
-    margin-top: 0.5rem;
-    font-size: 0.95rem;
+    margin-top: 4px;
+    font-size: 0.875rem;
 `;
 
 const HeaderActions = styled.div`
     display: flex;
-    gap: 1rem;
+    gap: 10px;
+    align-items: center;
 `;
 
 const SaveButton = styled.button`
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-    color: white;
+    gap: 6px;
+    padding: 10px 18px;
+    background: #111827;
+    color: #ffffff;
     border: none;
-    border-radius: 8px;
-    font-weight: 600;
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 0.8125rem;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.15s ease;
 
     &:hover:not(:disabled) {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
+        background: #008060;
     }
 
     &:disabled {
@@ -541,61 +578,66 @@ const SaveButton = styled.button`
 `;
 
 const TestButton = styled.button`
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: white;
-    color: #6366f1;
-    border: 2px solid #6366f1;
-    border-radius: 8px;
-    font-weight: 600;
+    gap: 6px;
+    padding: 10px 18px;
+    background: #ffffff;
+    color: #111827;
+    border: 1px solid #e5e7eb;
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 0.8125rem;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.15s ease;
 
     &:hover {
-        background: #f0f0ff;
+        border-color: #008060;
+        color: #008060;
+        background: #ecfdf5;
     }
 `;
 
 const BuilderContainer = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 20px;
 `;
 
 const Section = styled.div`
-    background: white;
-    border: 2px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 1.5rem;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 `;
 
 const SectionTitle = styled.h2`
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #1e293b;
-    margin: 0 0 1.5rem 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 20px 0;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 10px;
 `;
 
 const StepNumber = styled.span`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-    color: white;
+    width: 28px;
+    height: 28px;
+    background: #ecfdf5;
+    color: #008060;
+    border: 1px solid #a7f3d0;
     border-radius: 50%;
-    font-size: 0.9rem;
+    font-size: 0.8125rem;
     font-weight: 700;
 `;
 
 const FormGroup = styled.div`
-    margin-bottom: 1.25rem;
+    margin-bottom: 16px;
 
     &:last-child {
         margin-bottom: 0;
@@ -605,130 +647,145 @@ const FormGroup = styled.div`
 const Label = styled.label`
     display: block;
     font-weight: 600;
-    color: #475569;
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
+    color: #374151;
+    margin-bottom: 6px;
+    font-size: 0.84rem;
 `;
 
 const Input = styled.input`
     width: 100%;
-    padding: 0.75rem;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    transition: all 0.2s;
+    padding: 10px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    color: #111827;
+    background: #ffffff;
+    box-sizing: border-box;
+    transition: all 0.15s ease;
 
     &:focus {
         outline: none;
-        border-color: #6366f1;
-        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        border-color: #008060;
+        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.12);
     }
 `;
 
 const TextArea = styled.textarea`
     width: 100%;
-    padding: 0.75rem;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 0.95rem;
+    padding: 10px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    color: #111827;
+    background: #ffffff;
     font-family: inherit;
     resize: vertical;
-    transition: all 0.2s;
+    box-sizing: border-box;
+    transition: all 0.15s ease;
 
     &:focus {
         outline: none;
-        border-color: #6366f1;
-        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        border-color: #008060;
+        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.12);
     }
 `;
 
 const Select = styled.select`
     width: 100%;
-    padding: 0.75rem;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    background: white;
+    padding: 10px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    color: #111827;
+    background: #ffffff;
+    box-sizing: border-box;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.15s ease;
 
     &:focus {
         outline: none;
-        border-color: #6366f1;
-        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        border-color: #008060;
+        box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.12);
     }
 `;
 
 const Hint = styled.p`
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     color: #64748b;
-    margin-top: 0.5rem;
+    margin-top: 6px;
+    margin-bottom: 0;
 `;
 
 const Arrow = styled.div`
     display: flex;
     justify-content: center;
-    color: #cbd5e1;
+    color: #94a3b8;
 `;
 
 const ConditionRow = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr auto;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: center;
 `;
 
 const AddButton = styled.button`
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1rem;
-    background: #f8fafc;
-    color: #6366f1;
-    border: 2px dashed #cbd5e1;
-    border-radius: 8px;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: #ffffff;
+    color: #008060;
+    border: 1px dashed #a7f3d0;
+    border-radius: 10px;
     font-weight: 600;
+    font-size: 0.8125rem;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.15s ease;
     width: 100%;
 
     &:hover {
-        background: #f0f0ff;
-        border-color: #6366f1;
+        background: #ecfdf5;
+        border-color: #008060;
     }
 `;
 
 const ActionCard = styled.div`
     background: #f8fafc;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 1.25rem;
-    margin-bottom: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
 `;
 
 const ActionHeader = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 12px;
 `;
 
 const ActionTitle = styled.h3`
-    font-size: 1rem;
-    font-weight: 600;
-    color: #1e293b;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #111827;
     margin: 0;
     text-transform: capitalize;
 `;
 
 const IconButton = styled.button`
-    padding: 0.5rem;
+    padding: 6px;
     background: ${props => props.$danger ? '#fee2e2' : '#f8fafc'};
-    color: ${props => props.$danger ? '#dc2626' : '#475569'};
+    color: ${props => props.$danger ? '#dc2626' : '#64748b'};
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
 
     &:hover {
         background: ${props => props.$danger ? '#fecaca' : '#e2e8f0'};
@@ -736,47 +793,51 @@ const IconButton = styled.button`
 `;
 
 const ActionSelector = styled.div`
-    margin-top: 1rem;
+    margin-top: 16px;
 `;
 
 const ActionButtons = styled.div`
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 0.75rem;
-    margin-top: 0.75rem;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
 `;
 
 const ActionTypeButton = styled.button`
-    padding: 0.75rem 1rem;
-    background: white;
-    color: #475569;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
-    font-weight: 600;
+    padding: 10px 14px;
+    background: #ffffff;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 0.8125rem;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.15s ease;
 
     &:hover {
-        border-color: #6366f1;
-        color: #6366f1;
-        transform: translateY(-2px);
+        border-color: #008060;
+        color: #008060;
+        background: #ecfdf5;
     }
 `;
 
 const VariableHint = styled.div`
-    background: #eff6ff;
-    border: 2px solid #bfdbfe;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-top: 2rem;
-    color: #1e40af;
-    font-size: 0.9rem;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-top: 24px;
+    color: #065f46;
+    font-size: 0.84rem;
 
     code {
-        background: #dbeafe;
-        padding: 0.2rem 0.4rem;
-        border-radius: 4px;
-        font-family: 'Courier New', monospace;
+        background: #ffffff;
+        padding: 2px 6px;
+        border-radius: 6px;
+        border: 1px solid #a7f3d0;
+        font-family: monospace;
+        color: #008060;
+        font-size: 0.8rem;
     }
 `;
 

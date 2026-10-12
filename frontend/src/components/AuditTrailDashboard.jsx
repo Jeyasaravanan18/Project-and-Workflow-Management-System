@@ -407,82 +407,83 @@ const spin = keyframes`
 
 // Styled Components
 const DashboardContainer = styled.div`
-  padding: 40px;
-  background: ${(props) => props.theme.bg.primary};
+  padding: 32px;
+  background: #f8fafc;
   min-height: 100vh;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 `;
 
 const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
 
   .left {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
 
     svg {
-      color: #f97316;
+      color: #008060;
     }
 
     h1 {
       margin: 0 0 4px;
-      font-size: 2rem;
-      font-weight: 800;
-      color: ${(props) => props.theme.text.primary};
+      font-size: 1.875rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #111827;
     }
 
     p {
       margin: 0;
-      color: ${(props) => props.theme.text.secondary};
-      font-size: 0.9375rem;
+      color: #64748b;
+      font-size: 0.875rem;
     }
   }
 `;
 
 const ExportBtn = styled.button`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 20px;
-  background: #f97316;
+  padding: 10px 18px;
+  background: #111827;
   color: white;
   border: none;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 0.9375rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.8125rem;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.15s ease;
 
   &:hover {
-    background: #ea580c;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+    background: #008060;
   }
 `;
 
 const SummaryGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
   margin-bottom: 24px;
 `;
 
 const SummaryCard = styled.div`
-  background: ${(props) => props.theme.bg.card};
-  border-radius: 12px;
+  background: #ffffff;
+  border-radius: 14px;
   padding: 20px;
-  border: 1px solid ${(props) => props.theme.border};
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
   display: flex;
   align-items: center;
   gap: 16px;
-  animation: ${fadeIn} 0.5s ease-out;
+  animation: ${fadeIn} 0.4s ease-out;
 
   .icon {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -491,25 +492,26 @@ const SummaryCard = styled.div`
 
   .content {
     .value {
-      font-size: 1.875rem;
+      font-size: 1.5rem;
       font-weight: 700;
-      color: ${(props) => props.theme.text.primary};
+      color: #111827;
       line-height: 1;
       margin-bottom: 4px;
     }
 
     .label {
-      font-size: 0.875rem;
-      color: ${(props) => props.theme.text.secondary};
+      font-size: 0.8125rem;
+      color: #64748b;
     }
   }
 `;
 
 const FilterSection = styled.div`
-  background: ${(props) => props.theme.bg.card};
-  border-radius: 12px;
-  border: 1px solid ${(props) => props.theme.border};
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
   margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
   overflow: hidden;
 `;
 
@@ -518,16 +520,17 @@ const FilterToggle = styled.button`
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 16px 20px;
-  background: ${(props) => props.theme.bg.card};
+  padding: 14px 20px;
+  background: #ffffff;
   border: none;
   font-weight: 600;
-  color: ${(props) => props.theme.text.primary};
+  font-size: 0.875rem;
+  color: #111827;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.15s;
 
   &:hover {
-    background: ${(props) => props.theme.bg.hover};
+    background: #f8fafc;
   }
 `;
 
@@ -536,8 +539,8 @@ const FilterGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 16px;
   padding: 20px;
-  border-top: 1px solid ${(props) => props.theme.border};
-  background: ${(props) => props.theme.bg.tertiary};
+  border-top: 1px solid #e5e7eb;
+  background: #f8fafc;
 `;
 
 const FilterGroup = styled.div`
@@ -546,24 +549,25 @@ const FilterGroup = styled.div`
   gap: 6px;
 
   label {
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     font-weight: 600;
-    color: ${(props) => props.theme.text.secondary};
+    color: #475569;
   }
 
   select,
   input {
-    padding: 8px 12px;
-    border: 1px solid ${(props) => props.theme.border};
-    border-radius: 8px;
-    font-size: 0.875rem;
+    padding: 9px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 0.84rem;
     outline: none;
-    transition: border-color 0.2s;
-    background: ${(props) => props.theme.bg.card};
-    color: ${(props) => props.theme.text.primary};
+    transition: all 0.15s ease;
+    background: #ffffff;
+    color: #111827;
 
     &:focus {
-      border-color: #f97316;
+      border-color: #008060;
+      box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.12);
     }
   }
 `;
@@ -571,23 +575,25 @@ const FilterGroup = styled.div`
 const ApplyBtn = styled.button`
   grid-column: 1 / -1;
   padding: 10px 20px;
-  background: #f97316;
+  background: #111827;
   color: white;
   border: none;
-  border-radius: 8px;
-  font-weight: 600;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.84rem;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.15s ease;
 
   &:hover {
-    background: #ea580c;
+    background: #008060;
   }
 `;
 
 const TableCard = styled.div`
-  background: ${(props) => props.theme.bg.card};
-  border-radius: 12px;
-  border: 1px solid ${(props) => props.theme.border};
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
   overflow: hidden;
 `;
 
@@ -596,17 +602,17 @@ const Table = styled.table`
   border-collapse: collapse;
 
   thead {
-    background: ${(props) => props.theme.bg.tertiary};
-    border-bottom: 1px solid ${(props) => props.theme.border};
+    background: #f8fafc;
+    border-bottom: 1px solid #e5e7eb;
 
     th {
       text-align: left;
-      padding: 16px 20px;
+      padding: 14px 20px;
       font-size: 0.75rem;
-      font-weight: 700;
-      color: ${(props) => props.theme.text.secondary};
+      font-weight: 600;
+      color: #64748b;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
     }
   }
 
@@ -731,30 +737,31 @@ const Pagination = styled.div`
     gap: 12px;
 
     button {
-      padding: 6px 12px;
-      background: ${(props) => props.theme.bg.card};
-      border: 1px solid ${(props) => props.theme.border};
-      border-radius: 6px;
-      font-size: 0.875rem;
+      padding: 6px 14px;
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 9999px;
+      font-size: 0.8125rem;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s;
-      color: ${(props) => props.theme.text.primary};
+      transition: all 0.15s ease;
+      color: #111827;
 
       &:hover:not(:disabled) {
-        background: ${(props) => props.theme.bg.hover};
-        border-color: ${(props) => props.theme.text.tertiary};
+        background: #f8fafc;
+        border-color: #008060;
+        color: #008060;
       }
 
       &:disabled {
-        opacity: 0.5;
+        opacity: 0.4;
         cursor: not-allowed;
       }
     }
 
     span {
-      font-size: 0.875rem;
-      color: ${(props) => props.theme.text.secondary};
+      font-size: 0.8125rem;
+      color: #64748b;
     }
   }
 `;
@@ -765,15 +772,15 @@ const LoadingState = styled.div`
   align-items: center;
   justify-content: center;
   padding: 80px 20px;
-  color: ${(props) => props.theme.text.tertiary};
+  color: #64748b;
 
   .spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid ${(props) => props.theme.bg.tertiary};
-    border-top-color: #f97316;
+    width: 36px;
+    height: 36px;
+    border: 3px solid #e2e8f0;
+    border-top-color: #008060;
     border-radius: 50%;
-    animation: ${spin} 1s linear infinite;
+    animation: ${spin} 0.8s linear infinite;
     margin-bottom: 16px;
   }
 

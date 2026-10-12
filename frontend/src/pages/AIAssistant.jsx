@@ -146,7 +146,9 @@ const AIAssistant = () => {
             {/* Right: Chat Area */}
             <ChatPanel>
                 <ChatHeader>
-                    <Bot size={26} color="#3b82f6" />
+                    <BotAvatarBadge>
+                        <Bot size={22} color="#008060" />
+                    </BotAvatarBadge>
                     <HeaderText>
                         <h2>IT Support AI Assistant</h2>
                         <p>Ask me anything about workflows, troubleshooting, or best practices</p>
@@ -156,9 +158,11 @@ const AIAssistant = () => {
                 <Messages>
                     {messages.length === 0 ? (
                         <Welcome>
-                            <Bot size={60} color="#3b82f6" />
-                            <WelcomeTitle>Welcome to AI Assistant!</WelcomeTitle>
-                            <WelcomeSub>I can help you with:</WelcomeSub>
+                            <WelcomeIconWrap>
+                                <Bot size={44} color="#008060" />
+                            </WelcomeIconWrap>
+                            <WelcomeTitle>How can I help you today?</WelcomeTitle>
+                            <WelcomeSub>Select a prompt below or type your question to get instant guidance</WelcomeSub>
                             <SugGrid>
                                 {[
                                     ['How do I create a new project?', 'Creating projects'],
@@ -167,7 +171,7 @@ const AIAssistant = () => {
                                     ['How can I understand workload analytics?', 'Analytics insights'],
                                 ].map(([prompt, label]) => (
                                     <Sug key={label} onClick={() => setInputMessage(prompt)}>
-                                        <FileText size={18} color="#3b82f6" />
+                                        <FileText size={16} color="#008060" />
                                         <span>{label}</span>
                                     </Sug>
                                 ))}
@@ -177,12 +181,12 @@ const AIAssistant = () => {
                         messages.map((msg, idx) => (
                             <Msg key={idx} $isUser={msg.role === 'user'}>
                                 <MsgAvatar $isUser={msg.role === 'user'}>
-                                    {msg.role === 'user' ? <User size={18} /> : <Bot size={18} />}
+                                    {msg.role === 'user' ? <User size={16} /> : <Bot size={16} />}
                                 </MsgAvatar>
                                 <MsgBody>
                                     {msg.loading ? (
                                         <ThinkingBubble>
-                                            <Loader className="spin" size={15} />
+                                            <Loader className="spin" size={15} color="#008060" />
                                             <span>Thinking...</span>
                                         </ThinkingBubble>
                                     ) : (
@@ -226,7 +230,7 @@ const AIAssistant = () => {
                         disabled={loading}
                     />
                     <SendBtn type="submit" disabled={loading || !inputMessage.trim()}>
-                        {loading ? <Loader className="spin" size={20} /> : <Send size={20} />}
+                        {loading ? <Loader className="spin" size={18} /> : <Send size={18} />}
                     </SendBtn>
                 </InputRow>
             </ChatPanel>
@@ -241,28 +245,26 @@ const slideUp = keyframes`from { opacity:0; transform:translateY(8px); } to { op
 // ─── Layout ──────────────────────────────────────────────────────────────────
 const Container = styled.div`
     display: flex;
-    /* bleed out of MainContent's 24px padding on all 4 sides */
-    margin: -24px;
-    /* viewport - (24px top + 24px bottom padding from MainContent) */
-    height: calc(100vh - 48px);
+    margin: -28px -32px;
+    height: calc(100vh - 65px);
     overflow: hidden;
-    background: ${p => p.theme.bg.primary};
+    background: #f8fafc;
 `;
 
 // ─── Conversation Panel ───────────────────────────────────────────────────────
 const ConvPanel = styled.div`
-    width: 280px;
-    min-width: 220px;
-    background: ${p => p.theme.bg.card};
-    border-right: 1px solid ${p => p.theme.border};
+    width: 290px;
+    min-width: 240px;
+    background: #ffffff;
+    border-right: 1px solid #e5e7eb;
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
 `;
 
 const ConvHeader = styled.div`
-    padding: 20px 16px;
-    border-bottom: 1px solid ${p => p.theme.border};
+    padding: 18px 20px;
+    border-bottom: 1px solid #f1f5f9;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -271,49 +273,48 @@ const ConvHeader = styled.div`
 
 const ConvTitle = styled.h3`
     margin: 0;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 700;
-    color: ${p => p.theme.text.primary};
+    color: #111827;
+    letter-spacing: -0.01em;
 `;
 
 const NewChatBtn = styled.button`
     width: 34px; height: 34px;
-    border-radius: 8px;
+    border-radius: 9999px;
     border: none;
-    background: #3b82f6;
+    background: #111827;
     color: white;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
     transition: all 0.2s;
-    &:hover { background: #2563eb; transform: scale(1.05); }
+    &:hover { background: #008060; transform: scale(1.05); }
 `;
 
 const ConvList = styled.div`
     flex: 1;
     overflow-y: auto;
-    padding: 8px;
+    padding: 12px;
     &::-webkit-scrollbar { width: 4px; }
-    &::-webkit-scrollbar-thumb { background: ${p => p.theme.border}; border-radius: 4px; }
+    &::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 4px; }
 `;
 
 const ConvItem = styled.div`
-    padding: 12px;
+    padding: 12px 14px;
     border-radius: 10px;
     margin-bottom: 4px;
     cursor: pointer;
-    background: ${p => p.$active
-        ? (p.theme.mode === 'dark' ? 'rgba(59,130,246,0.18)' : '#eff6ff')
-        : 'transparent'};
-    border: 1px solid ${p => p.$active ? '#3b82f6' : 'transparent'};
+    background: ${p => p.$active ? '#ecfdf5' : 'transparent'};
+    border: 1px solid ${p => p.$active ? '#a7f3d0' : 'transparent'};
     position: relative;
     transition: all 0.15s;
-    &:hover { background: ${p => p.theme.bg.hover}; }
+    &:hover { background: ${p => p.$active ? '#ecfdf5' : '#f8fafc'}; }
 `;
 
 const ConvName = styled.div`
-    font-size: 0.875rem;
+    font-size: 0.85rem;
     font-weight: 600;
-    color: ${p => p.theme.text.primary};
+    color: #111827;
     margin-bottom: 3px;
     white-space: nowrap;
     overflow: hidden;
@@ -323,27 +324,27 @@ const ConvName = styled.div`
 
 const ConvMeta = styled.div`
     font-size: 0.72rem;
-    color: ${p => p.theme.text.tertiary};
+    color: #6b7280;
 `;
 
 const DelBtn = styled.button`
-    position: absolute; top: 8px; right: 8px;
+    position: absolute; top: 10px; right: 10px;
     width: 22px; height: 22px;
-    border-radius: 4px; border: none;
+    border-radius: 6px; border: none;
     background: transparent;
-    color: ${p => p.theme.text.tertiary};
+    color: #9ca3af;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
     opacity: 0;
     transition: all 0.15s;
     ${ConvItem}:hover & { opacity: 1; }
-    &:hover { background: ${p => p.theme.mode === 'dark' ? 'rgba(239,68,68,0.2)' : '#fee2e2'}; color: #ef4444; }
+    &:hover { background: #fee2e2; color: #ef4444; }
 `;
 
 const MutedText = styled.div`
     text-align: center;
-    padding: 20px;
-    color: ${p => p.theme.text.tertiary};
+    padding: 24px;
+    color: #9ca3af;
     font-size: 0.85rem;
 `;
 
@@ -352,44 +353,53 @@ const ChatPanel = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
-    background: ${p => p.theme.bg.primary};
+    background: #f8fafc;
     min-width: 0;
     overflow: hidden;
 `;
 
 const ChatHeader = styled.div`
-    padding: 18px 24px;
-    border-bottom: 1px solid ${p => p.theme.border};
+    padding: 16px 28px;
+    border-bottom: 1px solid #e5e7eb;
     display: flex;
     align-items: center;
     gap: 14px;
     flex-shrink: 0;
-    background: ${p => p.theme.bg.card};
+    background: #ffffff;
+`;
+
+const BotAvatarBadge = styled.div`
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    background: #ecfdf5;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
 `;
 
 const HeaderText = styled.div`
     h2 {
         margin: 0;
-        font-size: 1.15rem;
+        font-size: 1.05rem;
         font-weight: 700;
-        color: ${p => p.theme.text.primary};
+        color: #111827;
+        letter-spacing: -0.01em;
     }
     p {
-        margin: 3px 0 0;
-        font-size: 0.82rem;
-        color: ${p => p.theme.text.tertiary};
+        margin: 2px 0 0;
+        font-size: 0.8rem;
+        color: #6b7280;
     }
 `;
 
 const Messages = styled.div`
     flex: 1;
     overflow-y: auto;
-    padding: 24px;
+    padding: 28px;
     display: flex;
     flex-direction: column;
     gap: 20px;
     &::-webkit-scrollbar { width: 6px; }
-    &::-webkit-scrollbar-thumb { background: ${p => p.theme.border}; border-radius: 4px; }
+    &::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 4px; }
 `;
 
 // ─── Welcome Screen ───────────────────────────────────────────────────────────
@@ -403,17 +413,26 @@ const Welcome = styled.div`
     animation: ${slideUp} 0.4s ease;
 `;
 
+const WelcomeIconWrap = styled.div`
+    width: 72px; height: 72px;
+    border-radius: 20px;
+    background: #ecfdf5;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 8px;
+`;
+
 const WelcomeTitle = styled.h2`
-    margin: 16px 0 8px;
-    font-size: 1.5rem;
+    margin: 12px 0 6px;
+    font-size: 1.4rem;
     font-weight: 700;
-    color: ${p => p.theme.text.primary};
+    color: #111827;
+    letter-spacing: -0.02em;
 `;
 
 const WelcomeSub = styled.p`
     margin: 0 0 24px;
-    color: ${p => p.theme.text.secondary};
-    font-size: 0.95rem;
+    color: #6b7280;
+    font-size: 0.9rem;
 `;
 
 const SugGrid = styled.div`
@@ -426,25 +445,26 @@ const SugGrid = styled.div`
 
 const Sug = styled.button`
     padding: 16px 18px;
-    border-radius: 14px;
-    border: 1px solid ${p => p.theme.border};
-    background: ${p => p.theme.bg.card};
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     cursor: pointer;
     transition: all 0.2s;
     text-align: left;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     span {
-        font-size: 0.875rem;
+        font-size: 0.85rem;
         font-weight: 500;
-        color: ${p => p.theme.text.primary};
+        color: #111827;
     }
     &:hover {
-        border-color: #3b82f6;
-        background: ${p => p.theme.mode === 'dark' ? 'rgba(59,130,246,0.1)' : '#eff6ff'};
-        transform: translateY(-2px);
-        box-shadow: 0 4px 14px rgba(59,130,246,0.12);
+        border-color: #008060;
+        background: #ecfdf5;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0,128,96,0.08);
     }
 `;
 
@@ -458,34 +478,33 @@ const Msg = styled.div`
 `;
 
 const MsgAvatar = styled.div`
-    width: 34px; height: 34px;
+    width: 32px; height: 32px;
     border-radius: 50%;
-    background: ${p => p.$isUser
-        ? (p.theme.mode === 'dark' ? 'rgba(249,115,22,0.2)' : '#fff7ed')
-        : (p.theme.mode === 'dark' ? 'rgba(59,130,246,0.2)' : '#eff6ff')};
-    color: ${p => p.$isUser ? '#f97316' : '#3b82f6'};
+    background: ${p => p.$isUser ? '#111827' : '#ecfdf5'};
+    color: ${p => p.$isUser ? '#ffffff' : '#008060'};
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
 `;
 
 const MsgBody = styled.div`
     flex: 1;
-    max-width: 72%;
+    max-width: 70%;
     display: flex;
     flex-direction: column;
 `;
 
 const Bubble = styled.div`
-    padding: 12px 16px;
+    padding: 12px 18px;
     border-radius: 16px;
     ${p => p.$isUser
-        ? `background: #3b82f6; color: white; border-bottom-right-radius: 4px;`
-        : `background: ${p.theme.bg.card};
-           color: ${p.$error ? '#dc2626' : p.theme.text.primary};
-           border: 1px solid ${p.theme.border};
+        ? `background: #111827; color: white; border-bottom-right-radius: 4px; font-weight: 450;`
+        : `background: #ffffff;
+           color: ${p.$error ? '#dc2626' : '#1f2937'};
+           border: 1px solid #e5e7eb;
+           box-shadow: 0 1px 3px rgba(0,0,0,0.04);
            border-bottom-left-radius: 4px;`}
-    font-size: 0.9375rem;
-    line-height: 1.65;
+    font-size: 0.9rem;
+    line-height: 1.6;
     white-space: pre-wrap;
 `;
 
@@ -496,19 +515,19 @@ const ThinkingBubble = styled.div`
     padding: 12px 16px;
     border-radius: 16px;
     border-bottom-left-radius: 4px;
-    background: ${p => p.theme.bg.card};
-    border: 1px solid ${p => p.theme.border};
-    color: ${p => p.theme.text.secondary};
-    font-size: 0.875rem;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    color: #6b7280;
+    font-size: 0.85rem;
     .spin { animation: ${spin} 1s linear infinite; }
 `;
 
 // ─── Citations ────────────────────────────────────────────────────────────────
 const CitationBox = styled.div`
     margin-top: 10px;
-    padding: 12px;
-    background: ${p => p.theme.mode === 'dark' ? 'rgba(245,158,11,0.1)' : '#fffbeb'};
-    border-left: 3px solid #f59e0b;
+    padding: 12px 14px;
+    background: #ecfdf5;
+    border-left: 3px solid #008060;
     border-radius: 8px;
 `;
 
@@ -518,10 +537,10 @@ const CitHeader = styled.div`
     gap: 5px;
     font-size: 0.7rem;
     font-weight: 700;
-    color: ${p => p.theme.mode === 'dark' ? '#fbbf24' : '#92400e'};
+    color: #065f46;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 `;
 
 const CitItem = styled.div`
@@ -532,8 +551,8 @@ const CitItem = styled.div`
 const CitTag = styled.span`
     display: inline-block;
     padding: 1px 6px;
-    background: ${p => p.theme.mode === 'dark' ? 'rgba(245,158,11,0.2)' : '#fef3c7'};
-    color: ${p => p.theme.mode === 'dark' ? '#fbbf24' : '#92400e'};
+    background: #d1fae5;
+    color: #065f46;
     border-radius: 4px;
     font-size: 0.65rem;
     font-weight: 700;
@@ -545,59 +564,59 @@ const CitName = styled.div`
     display: inline;
     font-size: 0.8rem;
     font-weight: 600;
-    color: ${p => p.theme.mode === 'dark' ? '#fcd34d' : '#78350f'};
+    color: #065f46;
 `;
 
 const CitExcerpt = styled.div`
     margin-top: 3px;
     font-size: 0.72rem;
-    color: ${p => p.theme.mode === 'dark' ? '#d97706' : '#92400e'};
-    opacity: 0.85;
+    color: #047857;
+    opacity: 0.9;
 `;
 
 const MsgMeta = styled.div`
     margin-top: 5px;
     font-size: 0.7rem;
-    color: ${p => p.theme.text.tertiary};
+    color: #9ca3af;
 `;
 
 // ─── Input Bar ────────────────────────────────────────────────────────────────
 const InputRow = styled.form`
-    padding: 16px 20px;
-    border-top: 1px solid ${p => p.theme.border};
+    padding: 16px 28px;
+    border-top: 1px solid #e5e7eb;
     display: flex;
-    gap: 10px;
-    background: ${p => p.theme.bg.card};
+    gap: 12px;
+    background: #ffffff;
     flex-shrink: 0;
 `;
 
 const ChatInput = styled.input`
     flex: 1;
-    padding: 13px 18px;
-    border-radius: 14px;
-    border: 1.5px solid ${p => p.theme.border};
-    background: ${p => p.theme.bg.primary};
-    color: ${p => p.theme.text.primary};
-    font-size: 0.9375rem;
+    padding: 12px 20px;
+    border-radius: 9999px;
+    border: 1px solid #e5e7eb;
+    background: #f8fafc;
+    color: #111827;
+    font-size: 0.9rem;
     outline: none;
     transition: all 0.2s;
-    &::placeholder { color: ${p => p.theme.text.tertiary}; }
-    &:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.12); }
+    &::placeholder { color: #9ca3af; }
+    &:focus { border-color: #008060; background: #ffffff; box-shadow: 0 0 0 3px rgba(0,128,96,0.1); }
     &:disabled { opacity: 0.5; cursor: not-allowed; }
 `;
 
 const SendBtn = styled.button`
-    width: 48px; height: 48px;
-    border-radius: 14px;
+    width: 44px; height: 44px;
+    border-radius: 9999px;
     border: none;
-    background: #3b82f6;
+    background: #111827;
     color: white;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
     transition: all 0.2s;
     flex-shrink: 0;
-    &:hover:not(:disabled) { background: #2563eb; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
-    &:disabled { background: ${p => p.theme.bg.hover}; color: ${p => p.theme.text.tertiary}; cursor: not-allowed; }
+    &:hover:not(:disabled) { background: #008060; transform: translateY(-1px); }
+    &:disabled { background: #f1f5f9; color: #9ca3af; cursor: not-allowed; }
     .spin { animation: ${spin} 1s linear infinite; }
 `;
 

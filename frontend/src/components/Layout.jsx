@@ -5,6 +5,8 @@ import Sidebar from './Sidebar';
 import { OnboardingTour } from './OnboardingTour';
 import SessionTimeoutBanner from './SessionTimeoutBanner';
 
+import TopBar from './TopBar';
+
 const Layout = () => {
     const location = useLocation();
     const [isMobile, setIsMobile] = useState(false);
@@ -39,6 +41,7 @@ const Layout = () => {
             />
 
             <MainContent $collapsed={sidebarCollapsed}>
+                <TopBar />
                 <ContentWrapper className="animate-fade-in">
                     <Outlet />
                 </ContentWrapper>
@@ -83,15 +86,18 @@ const MainContent = styled.main`
     overflow-y: auto;
     overflow-x: hidden;
     position: relative;
-    padding: 24px;
-    background: ${props => props.theme.bg.tertiary};
+    display: flex;
+    flex-direction: column;
+    background: #F8FAFC;
     transition: margin-left 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.3s;
 `;
 
 const ContentWrapper = styled.div`
-    max-width: 1600px;
+    max-width: 1440px;
     margin: 0 auto;
     width: 100%;
+    padding: 28px 32px;
+    flex: 1;
 `;
 
 const MobileToggle = styled.button`

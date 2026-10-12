@@ -1,33 +1,34 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { ShieldX, ArrowLeft } from 'lucide-react';
+import { ShieldX, ArrowLeft, Home } from 'lucide-react';
 
 const Unauthorized = () => {
     const navigate = useNavigate();
 
     return (
         <Container>
-            <Content>
+            <Card>
                 <IconWrapper>
-                    <ShieldX size={80} />
+                    <ShieldX size={48} />
                 </IconWrapper>
-                <Title>Access Denied</Title>
+                <Title>Access Restricted</Title>
                 <Message>
-                    You don't have permission to access this page.
+                    You don't have permission to view or manage this workspace resource.
                 </Message>
                 <SubMessage>
-                    Please contact your administrator if you believe this is an error.
+                    Please contact your organization administrator if your role needs elevated access.
                 </SubMessage>
                 <ButtonGroup>
                     <BackButton onClick={() => navigate(-1)}>
-                        <ArrowLeft size={20} />
+                        <ArrowLeft size={16} />
                         Go Back
                     </BackButton>
                     <HomeButton onClick={() => navigate('/')}>
-                        Go to Dashboard
+                        <Home size={16} />
+                        Dashboard
                     </HomeButton>
                 </ButtonGroup>
-            </Content>
+            </Card>
         </Container>
     );
 };
@@ -37,83 +38,92 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-    padding: 24px;
+    background: #f8fafc;
+    padding: 32px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 `;
 
-const Content = styled.div`
+const Card = styled.div`
     text-align: center;
-    max-width: 500px;
+    max-width: 480px;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 48px 40px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 `;
 
 const IconWrapper = styled.div`
-    color: #ef4444;
-    margin-bottom: 24px;
-    
-    svg {
-        filter: drop-shadow(0 4px 6px rgba(239, 68, 68, 0.2));
-    }
+    color: #dc2626;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
 `;
 
 const Title = styled.h1`
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: #0f172a;
-    margin-bottom: 16px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.02em;
 `;
 
 const Message = styled.p`
-    font-size: 1.125rem;
+    font-size: 0.9rem;
     color: #475569;
-    margin-bottom: 8px;
+    margin: 0 0 6px 0;
 `;
 
 const SubMessage = styled.p`
-    font-size: 0.875rem;
-    color: #64748b;
-    margin-bottom: 32px;
+    font-size: 0.8125rem;
+    color: #94a3b8;
+    margin: 0 0 28px 0;
 `;
 
 const ButtonGroup = styled.div`
     display: flex;
-    gap: 12px;
+    gap: 10px;
     justify-content: center;
+    flex-wrap: wrap;
 `;
 
 const BackButton = styled.button`
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
+    gap: 6px;
+    padding: 10px 20px;
     background: white;
-    border: 2px solid #e2e8f0;
-    border-radius: 10px;
-    color: #475569;
-    font-weight: 600;
+    border: 1px solid #e5e7eb;
+    border-radius: 9999px;
+    color: #374151;
+    font-weight: 500;
+    font-size: 0.8125rem;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.15s ease;
 
     &:hover {
-        border-color: #475569;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        background: #f8fafc;
+        border-color: #d1d5db;
     }
 `;
 
 const HomeButton = styled.button`
-    padding: 12px 24px;
-    background: #475569;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    background: #111827;
     border: none;
-    border-radius: 10px;
+    border-radius: 9999px;
     color: white;
-    font-weight: 600;
+    font-weight: 500;
+    font-size: 0.8125rem;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.15s ease;
 
     &:hover {
-        background: #334155;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(71, 85, 105, 0.3);
+        background: #008060;
     }
 `;
 
